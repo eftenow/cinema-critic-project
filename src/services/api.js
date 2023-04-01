@@ -1,16 +1,13 @@
 import { getCurrentSessionToken } from "./authServices.js";
+import {HOST, APP_ID, KEY_REST_API} from "../../secrets.js";
 
-const host = 'https://parseapi.back4app.com';
-
-const appId = "ElbYEpOIquXfbOGKpfc9C5Pnicvjrl4u82rBJMtv";
-const keyRestAPI = "jH5QqdXi3KYQ57u3gCghGq9q3pHZZSincAAPbc7h";
 
 async function request(method, url, bodyData) {
     let options = {
         method,
         headers : {
-            "X-Parse-Application-Id": appId,
-            "X-Parse-REST-API-Key": keyRestAPI,
+            "X-Parse-Application-Id": APP_ID,
+            "X-Parse-REST-API-Key": KEY_REST_API,
             "X-Parse-Revocable-Session": 1
         }
     };
@@ -24,12 +21,10 @@ async function request(method, url, bodyData) {
     if (user && bodyData != undefined && method == 'put'){
         let sessionToken = getCurrentSessionToken();
         options.headers['X-Parse-Session-Token'] = sessionToken;
-        //let token = user.accessToken;
-        // options.headers['X-Authorization'] = token;
     }
 
     try {
-        let response = await fetch(host + url, options);
+        let response = await fetch(HOST + url, options);
         
         if (response.ok != true){
             if (response.status == 403){
