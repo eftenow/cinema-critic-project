@@ -1,0 +1,56 @@
+
+.about-section {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+    margin-top: 55px;
+    width: 40%;
+    align-items: center;
+    margin: 110px 70px;
+    
+  }
+  
+  .home-page {
+    display: flex;
+    background-repeat: no-repeat;
+    background-position: 25% 38%;
+    background-size: cover;
+    height: 92.4vh;
+    background-image: linear-gradient(rgba(0, 8, 51, 0.3), rgba(0, 8, 51, 0.3)), url("../images/marvel-endgame.jpg");
+    background-position: 60% 23%;
+    background-size: 160%;
+  }
+  
+  .about-section article {
+    width: 80%;
+    margin: 35px;
+    font-size: 18px;
+    text-align: center;
+    font-size: 21px;
+    margin-top: 64px;
+    margin-bottom: 52px;
+    color: rgb(156, 161, 173);
+  
+  }
+  
+  .start-btn{
+    font-size: 20px;
+  }
+  
+  img{
+    width: 100%;
+  }
+  
+  .about-section h2{
+    text-align: center;
+    font-size: 56px;
+    margin-bottom: 16px;
+  }
+  
+  .about-section h3{
+    text-align: center;
+    font-size: 28px;
+    font-weight: 500;
+    width: 92%;
+  }
+

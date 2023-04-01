@@ -1,0 +1,144 @@
+.leaderboard * {
+    color: rgb(55, 55, 56);
+
+}
+
+.popular-movies{
+    padding: 30px 0;
+}
+
+.leaderboard {
+    max-width: 950px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.movie-container {
+    position: relative;
+    display: flex;
+    align-items: center;
+    border: 1px solid #ddd;
+    margin-bottom: 20px;
+    padding: 20px;
+    border-radius: 12px;
+    background: #fff;
+}
+
+.movie-info {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+}
+
+
+
+
+
+.movie-details {
+    display: flex;
+    align-items: center;
+    flex: 6;
+}
+
+.movie-thumbnail {
+    flex: 1;
+    margin-right: 20px;
+}
+
+.movie-thumbnail img {
+    width: 100%;
+    height: auto;
+}
+
+.movie-text {
+    flex: 2;
+}
+
+.popular-movie-title {
+    font-size: 24px;
+    font-weight: bold;
+    margin: 0 0 10px;
+    position: absolute;
+    top: 5%;
+    right: 30%;
+}
+
+.movie-meta {
+    margin: 0;
+    margin-bottom: 10px;
+}
+
+.popular-movie-rating {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.movie-score {
+    font-size: 24px;
+    font-weight: bold;
+    margin: 0;
+    margin-right: 20px;
+}
+
+.rate-button {
+    background-color: #8e47f8;
+    border: none;
+    color: #dfdcdc;
+    padding: 10px 14px;
+    cursor: pointer;
+    border-radius: 6px;
+}
+
+.rate-button:hover{
+    background-color: #7126e0;
+    color: white;
+}
+
+.movie-description {
+    margin-bottom: 10px;
+}
+
+.movie-cast {
+    margin: 0;
+    margin-bottom: 10px;
+}
+
+.movie-watchlist {
+    flex: 1;
+    text-align: right;
+}
+
+.add-to-watchlist {
+    border: none;
+    position: absolute;
+    top: 4%;
+    right: 0;
+    font-size: 0.8rem;
+}
+
+
+
+#bookmark{
+    color: rgb(54, 52, 52);
+    background: floralwhite;
+}
+
+
+
+#plus{
+    color: rgb(221, 217, 217);
+    line-height: 1.5;
+}
+
+#plus:hover{
+    color: white;
+    cursor: pointer;
+}
+
+.fa-star{
+    color: #fbbc05
+}
+
+    

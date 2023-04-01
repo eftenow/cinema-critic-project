@@ -1,0 +1,33 @@
+.button {
+    border: none;
+    background-color: #8e47f8;
+    color: #cac7ff;
+    font-size: 1.2rem;
+    padding: 1rem 2rem;
+    border-radius: 0.5rem;
+    text-decoration: none;
+    transition: all 0.3s ease;
+  }
+  
+  .button:hover {
+    background-color: #7126e0;
+    color: #fff;
+  }
+
+
+  .search-form button i {
+    width: 12px;
+  }
+
+  .search-form button {
+    border: 0;
+    border-radius: 50%;
+    background: none;
+    opacity: 0.7;
+    cursor: pointer;
+  }
+  
+  
+  .search-form button[type="submit"]:hover {
+    cursor: pointer;
+  }
