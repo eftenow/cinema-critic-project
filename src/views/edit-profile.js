@@ -3,6 +3,7 @@ import { editUserInfo, getUser, getUserId } from '../services/authServices.js';
 import { hideUserReviews, renderUserReviews } from './userReviews.js';
 
 export const profileTemplate = (ctx, user) => html`
+<div class="user-container">
 <div class="edit-profile">
     <h2>Edit Profile</h2>
     <div class="info" id='edit-pic-container'>
@@ -46,6 +47,7 @@ export const profileTemplate = (ctx, user) => html`
             </div>
     </form>
 </div>
+</div>
 `
 
 
@@ -68,7 +70,7 @@ async function saveChangesHandler(ev, ctx) {
     const description = form.get('description');
     const userId = getUserId();
 
-    const editedUserData = {username, email, country, city, description};
+    const editedUserData = { username, email, country, city, description };
     await editUserInfo(userId, editedUserData);
 
     ctx.redirect('/myProfile');

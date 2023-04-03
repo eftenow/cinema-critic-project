@@ -4,8 +4,10 @@ import { getAll } from '../services/itemServices.js';
 export const productsTemplate = (product, isGuest) => html`
         <section class="movies-section">
             <h2>Movies</h2>
-        
-        
+                     
+            <div class="movies-list">
+            
+            <section class="sort-section"> 
             <div class="search-category">
                 <a href="#">
                     <span>Genre</span>
@@ -21,12 +23,46 @@ export const productsTemplate = (product, isGuest) => html`
                     <a href="#" class="menu-item">Thriller</a>
                     <a href="#" class="menu-item">Horror</a>
                 </div>
-        
-        
             </div>
-        
-        
-            <div class="movies-list">
+            <div class="search-category">
+                <a href="#">
+                    <span>Rating</span>
+                    <i class="fa-solid fa-angle-down"></i>
+                </a>
+                <div class="category-menu">
+                    <span class="subject">Sort by rating</span>
+                    <a href="#" class="menu-item">Best rated </a>
+                    <a href="#" class="menu-item">Worst rated</a>
+                    
+                </div>
+            </div>
+            <div class="search-category">
+                <a href="#">
+                    <span>Release year</span>
+                    <i class="fa-solid fa-angle-down"></i>
+                </a>
+                <div class="category-menu">
+                    <span class="subject">Sort by year</span>
+                    <a href="#" class="menu-item">Newest to oldest</a>
+                    <a href="#" class="menu-item">Oldest to newest</a>
+                    
+                </div>
+            </div>
+            <div class="search-category">
+                <a href="#">
+                    <span>Type</span>
+                    <i class="fa-solid fa-angle-down"></i>
+                </a>
+                <div class="category-menu">
+                    <span class="subject">Sort by type</span>
+                    <a href="#" class="menu-item">Movies</a>
+                    <a href="#" class="menu-item">Series</a>
+                    <a href="#" class="menu-item">All</a>
+                    
+                </div>
+            </div>
+        </section>
+
                 <div class="movie-card">
                     <div class="movie-image">
                         <img src="./images/avengers.jpg" alt="Movie Poster">
