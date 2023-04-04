@@ -49,7 +49,7 @@
   letter-spacing: 0.2px;
 }
 
-.details-movie-specifics{
+.details-movie-specifics {
   color: rgb(41, 41, 43);
   font-size: 18px;
   font-weight: 600;
@@ -102,11 +102,15 @@
 
 .specific-movie-reviews {
   padding: 20px;
-  padding-bottom: 40px;
+  padding-bottom: 16px;
   background-color: #f5f5f5;
   border-radius: 12px;
   width: 80%;
   margin: 0 auto;
+}
+
+.movie-score {
+  font-size: 22px;
 }
 
 .reviews-title {
@@ -119,7 +123,11 @@
   margin-bottom: 30px;
   border: 1px solid #ddd;
   padding: 20px;
-  border-radius: 5px;
+  border-radius: 8px;
+}
+
+.review * {
+  color: rgb(106 109 114);
 }
 
 .review-header {
@@ -143,13 +151,14 @@
 .reviewer-name {
   font-size: 18px;
   font-weight: bold;
-  margin-bottom: 5px;
+  color: rgb(55, 55, 56);
 }
 
 
 .review-body {
   font-size: 16px;
   line-height: 1.5;
+  margin-top: 16px;
 }
 
 
@@ -162,20 +171,30 @@
 }
 
 .add-review-form h3 {
+  margin-top: 20px;
   margin-bottom: 20px;
   font-size: 24px;
   font-weight: bold;
+  color: rgb(55, 55, 56);
+  text-align: center;
 }
 
 .specific-form-group {
   margin-bottom: 15px;
 }
 
+.submit-review-btn-wrapper {
+  display: flex;
+  justify-content: center;
+  margin: 16px 0 0 0;
+}
+
 .specific-form-group label {
   display: block;
-  margin-bottom: 5px;
-  font-size: 14px;
+  margin-bottom: 8px;
+  font-size: 17px;
   font-weight: bold;
+  color: rgb(115 117 120);
 }
 
 
@@ -183,36 +202,63 @@
 .specific-form-group select,
 .specific-form-group textarea {
   width: 100%;
+  height: 120px;
   padding: 10px;
   border-radius: 5px;
-  border: none;
   font-size: 16px;
-  background-color: #E5E5E5;
+  background-color: #ebe7e7;
+  border: 3px solid rgba(128, 128, 128, 0.842);
+  color: rgb(55, 55, 56);
+}
+
+.specific-form-group textarea:focus,
+.specific-form-group textarea:hover,
+.specific-form-group input:focus,
+.specific-form-group input:hover {
+  border-color: #8e47f8;
+  outline: none;
+}
+
+.review-title-details {
+  font-size: 1.4rem;
+  text-align: center;
+  color: rgb(55, 55, 56);
+  margin-bottom: 16px;
+}
+
+
+.specific-form-group input {
+  width: 50%;
+  height: auto;
 }
 
 .submit-review-btn {
   padding: 10px 20px;
-  background-color: #E50914;
+  background-color: #8e47f8;
   color: #FFF;
   border: none;
   border-radius: 5px;
   font-size: 16px;
-  font-weight: bold;
   cursor: pointer;
   transition: background-color 0.4s ease;
+  margin-top: 16px;
+  padding: 14px 20px;
+}
+
+.submit-review-btn:hover {
+  background-color: #7126e0;
 }
 
 
-.select-menu{
-  width: 260px;
+.select-menu {
+  width: 240px;
   cursor: pointer;
   position: relative;
 }
 
-.select{
-  background-color: rgb(31, 29, 29);
-  padding: 8px 12px;
-  color: #fff;
+.select {
+  background-color: #8e47f8;
+  padding: 12px;
   font-weight: 500;
   border-radius: 6px;
   display: flex;
@@ -220,7 +266,11 @@
   justify-content: space-between;
 }
 
-.options-list{
+.select span {
+  color: #fff;
+}
+
+.options-list {
   visibility: hidden;
   position: absolute;
   width: 100%;
@@ -232,7 +282,7 @@
   height: 0;
 }
 
-.option{
+.option {
   padding: 8px;
   border-radius: 4px;
   font-weight: 500;
@@ -241,21 +291,21 @@
 }
 
 .option:hover,
-.option.selected{
+.option.selected {
   color: #e3e3f1;
   background-color: #8e47f8;
 }
 
-.options-list::-webkit-scrollbar{
+.options-list::-webkit-scrollbar {
   width: 4px;
   background-color: #eee;
 }
 
-.options-list::-webkit-scrollbar-thumb{
+.options-list::-webkit-scrollbar-thumb {
   background-color: #8e47f8;
 }
 
-.options-list.active{
+.options-list.active {
   visibility: visible;
   height: 180px;
   border: 2px solid;

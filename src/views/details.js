@@ -43,11 +43,12 @@ const detailsTemplate = (item, isOwner, ctx) => html`
 
   <!-- Example review -->
   <div class="review">
+    <h3 class="review-title-details">Best series for the year!!</h3>
     <div class="review-header">
       <img src="https://via.placeholder.com/50x50" alt="Avatar" >
       <div class="review-info">
         <p class="reviewer-name">Peter</p>
-        <p class="movie-score reviewer-rating">Rating: 10 <i class="fa-solid fa-star"></i></p>
+        <p class="movie-score reviewer-rating">Rating: 10 <i id="star" class="fa-solid fa-star"></i></p>
       </div>
     </div>
     <div class="review-body">
@@ -56,11 +57,12 @@ const detailsTemplate = (item, isOwner, ctx) => html`
   </div>
 
   <div class="review">
+  <h3 class="review-title-details">Very good</h3>
     <div class="review-header">
       <img src="https://via.placeholder.com/50x50" alt="Avatar" >
       <div class="review-info">
         <p class="reviewer-name">George</p>
-        <p class="movie-score reviewer-rating">Rating: 9 <i class="fa-solid fa-star"></i></p>
+        <p class="movie-score reviewer-rating">Rating: 9 <i id="star" class="fa-solid fa-star"></i></p>
       </div>
     </div>
     <div class="review-body">
@@ -89,11 +91,16 @@ const detailsTemplate = (item, isOwner, ctx) => html`
       <div class="option">10 <i class="fa-solid fa-star"></i></div>
     </div>
   </div>
+  <div class="specific-form-group">
+      <label for="reviewer-review-text">Review Title:</label>
+      <input id="reviewer-review-text" name="reviewer-review-text" required>
+    </div>
+
     <div class="specific-form-group">
-      <label for="reviewer-review">Review:</label>
+      <label for="reviewer-review">Review Description:</label>
       <textarea id="reviewer-review" name="reviewer-review" required></textarea>
     </div>
-    <div class="specific-form-group">
+    <div class="specific-form-group submit-review-btn-wrapper">
       <button class="submit-review-btn" type="submit">Submit Review</button>
     </div>
   </form>

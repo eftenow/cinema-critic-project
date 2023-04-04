@@ -110,7 +110,8 @@
     background-color: #ffa600;
 }
 
-.fa-star {
+.fa-star,
+#star {
     color: #fbbc05
 }
 
