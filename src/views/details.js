@@ -7,7 +7,14 @@ const detailsTemplate = (item, isOwner, ctx) => html`
 <section class="specific-movie-details">
   <div class="movie-poster">
     <img src="../../images/king-of-tulsa.jpg" alt="Movie Poster">
-    <button class="add-to-watchlist">Add to Watchlist</button>
+    <div class="movie-watchlist">
+                <button class="add-to-watchlist details-watchlist">
+                <span class="fa-stack fa-2x">
+                        <i id="details-bookmark" class="fa-solid fa-bookmark fa-stack-2x"></i>
+                        <i id="plus" class="fa-solid fa-plus fa-stack-1x"></i>
+                    </span>
+                </button>
+            </div>
   </div>
   <div class="specific-movie-info">
     <h2 class="specific-movie-title">Tulsa King</h2>
