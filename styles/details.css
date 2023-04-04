@@ -1,69 +1,212 @@
-/* .movie-details {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: flex-start;
-    padding: 20px;
-    background-color: #f5f5f5;
-    border-radius: 10px;
-  }
+.specific-movie-details {
+  display: flex;
+  flex-wrap: wrap;
+  padding: 44px 32px 88px 32px;
+  position: relative;
+  width: 80%;
+  margin: 0px auto 40px auto;
+  background-color: #f5f5f5;
+  border-radius: 12px;
+}
+
+.movie-poster {
+  width: 37%;
+  margin-right: 50px;
+}
+
+.movie-poster img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: 10px;
   
-  .movie-poster {
-    margin-right: 20px;
-  }
+}
+
+.add-to-watchlist {
+  display: block;
+  margin-top: 10px;
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+  background-color: #3e3e3e;
+  color: #fff;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.add-to-watchlist:hover {
+  background-color: #1c1c1c;
+}
+.specific-movie-info{
+  width: 55%;
+  padding-top: 28px
+}
+.specific-movie-info * {
+  font-size: 18px;
+  color: rgb(41, 41, 43);
+  text-align: justify;
+  letter-spacing: 0.2px;
   
-  .movie-poster img {
-    width: 150px;
-    height: 225px;
-    object-fit: cover;
-    border-radius: 5px;
-  }
-  
-  .add-to-watchlist {
-    background-color: #3d3d3d;
-    color: #fff;
-    border: none;
-    padding: 10px 20px;
-    font-size: 16px;
-    border-radius: 5px;
-    margin-top: 10px;
-    cursor: pointer;
-  }
-  
-  .add-to-watchlist:hover {
-    background-color: #fff;
-    color: #3d3d3d;
-    border: 1px solid #3d3d3d;
-  }
-  
-  .movie-info {
-    flex: 1;
-  }
-  
-  .movie-title {
-    font-size: 24px;
-    margin-bottom: 10px;
-  }
-  
-  .movie-genre, .movie-runtime, .movie-release-year {
-    font-size: 16px;
-    margin-bottom: 5px;
-  }
-  
-  .movie-description {
-    font-size: 18px;
-    margin-top: 20px;
-  }
-  
-  .trailer-section {
-    margin-top: 40px;
-  }
-  
-  .trailer-section h3 {
-    font-size: 24px;
-    margin-bottom: 20px;
-  }
-  
-  .trailer-video {
-    border-radius: 10px;
-  } */
+}
+
+.specific-movie-title,
+.trailer-section h3 {
+  color: rgb(41, 41, 43);
+  font-size: 32px;
+  font-weight: bold;
+  text-align: center;
+  margin-bottom: 52px;
+}
+
+.trailer-section h3{
+  margin-top: 40px;
+}
+
+
+.specific-movie-genre {
+  margin-bottom: 5px;
+}
+
+.specific-movie-runtime,
+.specific-movie-release-year {
+  margin-bottom: 5px;
+}
+
+.specific-movie-description {
+  line-height: 1.5;
+}
+
+.trailer-section {
+  margin-top: 50px;
+  width: 100%;
+}
+
+.trailer-video {
+  width: 100%;
+  height: 520px;
+  border: none;
+  border-radius: 10px;
+}
+
+.specific-movie-reviews {
+  background-color: #F4F4F4;
+  padding: 20px;
+  border-radius: 10px;
+}
+
+.specific-movie-reviews {
+  padding: 20px;
+  background-color: #f5f5f5;
+  border-radius: 10px;
+  width: 80%;
+  margin: 0 auto;
+}
+
+.reviews-title {
+  margin-bottom: 20px;
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.review {
+  margin-bottom: 30px;
+  border: 1px solid #ddd;
+  padding: 20px;
+  border-radius: 5px;
+}
+
+.review-header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.review-header img {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  margin-right: 10px;
+}
+
+.review-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.reviewer-name {
+  font-size: 18px;
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+.reviewer-rating {
+  font-size: 14px;
+  font-weight: bold;
+  color: #666;
+}
+
+.review-body {
+  font-size: 16px;
+  line-height: 1.5;
+}
+
+/* Add Review Form */
+.add-review-form {
+  background-color: #F4F4F4;
+  margin-bottom: 88px;
+  padding: 20px;
+  border-radius: 10px;
+  margin-top: 20px;
+}
+
+/* Add Review Form Title */
+.add-review-form h3 {
+  margin-bottom: 20px;
+  font-size: 24px;
+  font-weight: bold;
+}
+
+/* Form Group */
+.specific-form-group {
+  margin-bottom: 15px;
+}
+
+/* Label */
+.specific-form-group label {
+  display: block;
+  margin-bottom: 5px;
+  font-size: 14px;
+  font-weight: bold;
+}
+
+/* Input, Select, Textarea */
+.specific-form-group input,
+.specific-form-group select,
+.specific-form-group textarea {
+  width: 100%;
+  padding: 10px;
+  border-radius: 5px;
+  border: none;
+  font-size: 16px;
+  background-color: #E5E5E5;
+}
+
+/* Submit Button */
+.submit-review-btn {
+  padding: 10px 20px;
+  background-color: #E50914;
+  color: #FFF;
+  border: none;
+  border-radius: 5px;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+/* Submit Button Hover */
+.submit-review-btn:hover {
+  background-color: #C9000E;
+}
