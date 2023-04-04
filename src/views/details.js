@@ -6,6 +6,7 @@ import { selectOption, showHideOptions } from '../../utils/dropdowns.js';
 
 const detailsTemplate = (item, isOwner, ctx) => html`
 <section class="specific-movie-details">
+  <div class='details-header'>
   <div class="movie-poster">
     <img src="../../images/king-of-tulsa.jpg" alt="Movie Poster">
     <div class="movie-watchlist">
@@ -19,6 +20,7 @@ const detailsTemplate = (item, isOwner, ctx) => html`
   </div>
   <div class="specific-movie-info">
     <h2 class="specific-movie-title details-movie-specifics">Tulsa King</h2>
+    <p class="specific-movie-genre"><span class="details-movie-specifics">Rating: </span>9.5 <i id ="star" class="fa-solid fa-star"></i></p>
     <p class="specific-movie-genre"><span class="details-movie-specifics">Genre: </span>Action</p>
     <p class="specific-movie-cast"> <span class="details-movie-specifics">Director: </span>Francis Ford Coppola</p>
     <p class="specific-movie-cast"> <span class="details-movie-specifics">Stars: </span>Marlon Brando, Al Pacino</p>
@@ -30,6 +32,7 @@ const detailsTemplate = (item, isOwner, ctx) => html`
                         Manfredi is exiled to Tulsa, Oklahoma, where he builds a new criminal empire with a group of
                         unlikely characters.</p>
     
+  </div>
   </div>
   <div class="trailer-section">
   

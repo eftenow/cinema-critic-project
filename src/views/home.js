@@ -12,7 +12,7 @@ const homeTempalte = () => html`
             blockbusters, hidden
             gems, and classic favorites. Start exploring Cinema Critic today and let your voice be heard!
         </article>
-        <a href="#" class="button start-btn">Get Started</a>
+        <a href="/movies" class="button start-btn">Get Started</a>
     </section>
 
 

@@ -3,7 +3,7 @@ import { getAll } from '../services/itemServices.js';
 
 export const productsTemplate = (product, isGuest) => html`
         <section class="movies-section">
-            <h2>Movies</h2>
+            <h2>Our suggestions</h2>
                      
             <div class="movies-list">
             

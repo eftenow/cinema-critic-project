@@ -70,6 +70,7 @@ const popularMoviesTemplate = (ctx) => html`
         </div>
         
     </div>
+    
     <div class="movie-container">
         <div class="movie-info">
             <div class="movie-details">

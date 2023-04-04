@@ -3,11 +3,10 @@ body {
     font-family: Arial, sans-serif;
   }
 
-  .login-title, .register-title{
-    margin: 44px 0px 68px 0px;
-  }
-  
-  .login-title, .register-title{
+.login-title, .register-title{
+    margin-top: 0;
+    margin-bottom: 60px;
+    padding-top: 44px;
     color: #333;
     text-align: center;
   }
@@ -17,7 +16,7 @@ body {
     border-radius: 5px;
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
     margin: 0 auto;
-    max-width: 600px;
+    max-width: 560px;
     padding: 36px 48px;
   }
   

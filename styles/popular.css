@@ -13,6 +13,10 @@
     padding: 20px;
 }
 
+.leaderboard:last-child{
+    margin-bottom: 40px;
+}
+
 .movie-container {
     position: relative;
     display: flex;

@@ -14,8 +14,7 @@ const navTemplate = (isAuthorized, user) => html`
                 <button type="submit"><i class="fa fa-search"></i></button>
             </form>
         </li>
-        <li><a href="/movies">Movies</a></li>
-        <li><a href="/series">TV Shows</a></li>
+        <li><a href="/movies">Movies and Shows</a></li>
         <li><a href="/popular">Popular</a></li>
         ${isAuthorized ?
         html`
