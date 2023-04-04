@@ -43,11 +43,16 @@
 }
 
 .specific-movie-info * {
-  font-size: 18px;
-  color: rgb(41, 41, 43);
+  font-size: 16px;
+  color: rgba(41, 41, 43, 0.753);
   text-align: justify;
   letter-spacing: 0.2px;
+}
 
+.details-movie-specifics{
+  color: rgb(41, 41, 43);
+  font-size: 18px;
+  font-weight: 600;
 }
 
 .specific-movie-title,
@@ -97,8 +102,9 @@
 
 .specific-movie-reviews {
   padding: 20px;
+  padding-bottom: 40px;
   background-color: #f5f5f5;
-  border-radius: 10px;
+  border-radius: 12px;
   width: 80%;
   margin: 0 auto;
 }
@@ -140,18 +146,13 @@
   margin-bottom: 5px;
 }
 
-.reviewer-rating {
-  font-size: 14px;
-  font-weight: bold;
-  color: #666;
-}
 
 .review-body {
   font-size: 16px;
   line-height: 1.5;
 }
 
-/* Add Review Form */
+
 .add-review-form {
   background-color: #F4F4F4;
   margin-bottom: 88px;
@@ -160,19 +161,16 @@
   margin-top: 20px;
 }
 
-/* Add Review Form Title */
 .add-review-form h3 {
   margin-bottom: 20px;
   font-size: 24px;
   font-weight: bold;
 }
 
-/* Form Group */
 .specific-form-group {
   margin-bottom: 15px;
 }
 
-/* Label */
 .specific-form-group label {
   display: block;
   margin-bottom: 5px;
@@ -180,7 +178,7 @@
   font-weight: bold;
 }
 
-/* Input, Select, Textarea */
+
 .specific-form-group input,
 .specific-form-group select,
 .specific-form-group textarea {
@@ -192,7 +190,6 @@
   background-color: #E5E5E5;
 }
 
-/* Submit Button */
 .submit-review-btn {
   padding: 10px 20px;
   background-color: #E50914;
@@ -202,10 +199,65 @@
   font-size: 16px;
   font-weight: bold;
   cursor: pointer;
-  transition: background-color 0.3s ease;
+  transition: background-color 0.4s ease;
 }
 
-/* Submit Button Hover */
-.submit-review-btn:hover {
-  background-color: #C9000E;
+
+.select-menu{
+  width: 260px;
+  cursor: pointer;
+  position: relative;
+}
+
+.select{
+  background-color: rgb(31, 29, 29);
+  padding: 8px 12px;
+  color: #fff;
+  font-weight: 500;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.options-list{
+  visibility: hidden;
+  position: absolute;
+  width: 100%;
+  background-color: #f9f9f9;
+  padding: 2px 20px;
+  max-height: 180px;
+  overflow-y: auto;
+  transition: .4s linear .2s;
+  height: 0;
+}
+
+.option{
+  padding: 8px;
+  border-radius: 4px;
+  font-weight: 500;
+  font-size: 14px;
+  transition: .3s ease-in-out;
+}
+
+.option:hover,
+.option.selected{
+  color: #e3e3f1;
+  background-color: #8e47f8;
+}
+
+.options-list::-webkit-scrollbar{
+  width: 4px;
+  background-color: #eee;
+}
+
+.options-list::-webkit-scrollbar-thumb{
+  background-color: #8e47f8;
+}
+
+.options-list.active{
+  visibility: visible;
+  height: 180px;
+  border: 2px solid;
+  border-radius: 8px;
 }

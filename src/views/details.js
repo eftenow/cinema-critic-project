@@ -1,6 +1,7 @@
 import { html } from '../../node_modules/lit-html/lit-html.js';
 import { deleteItem, getDetails, getLikesCount, likeAlbum, userAlreadyLiked } from '../services/itemServices.js';
 import { getUser, getUserId } from '../services/authServices.js';
+import { selectOption, showHideOptions } from '../../utils/dropdowns.js';
 
 
 const detailsTemplate = (item, isOwner, ctx) => html`
@@ -17,15 +18,15 @@ const detailsTemplate = (item, isOwner, ctx) => html`
             </div>
   </div>
   <div class="specific-movie-info">
-    <h2 class="specific-movie-title">Tulsa King</h2>
-    <p class="specific-movie-genre">Genre: Action</p>
-    <p class="specific-movie-cast">Director: Francis Ford Coppola</p>
-    <p class="specific-movie-cast">Stars: Marlon Brando, Al Pacino</p>
-    <p class="specific-movie-runtime">Seasons: 1</p>
-    <p class="specific-movie-runtime">Episodes: 10x</p>
-    <p class="specific-movie-runtime">Episode length: 50 minutes</p>
-    <p class="specific-movie-release-year">Release year: 2023</p>
-    <p class="specific-movie-description">Description: Following his release from prison, Mafia capo Dwight "The General"
+    <h2 class="specific-movie-title details-movie-specifics">Tulsa King</h2>
+    <p class="specific-movie-genre"><span class="details-movie-specifics">Genre: </span>Action</p>
+    <p class="specific-movie-cast"> <span class="details-movie-specifics">Director: </span>Francis Ford Coppola</p>
+    <p class="specific-movie-cast"> <span class="details-movie-specifics">Stars: </span>Marlon Brando, Al Pacino</p>
+    <p class="specific-movie-runtime"> <span class="details-movie-specifics">Seasons: </span>1</p>
+    <p class="specific-movie-runtime"> <span class="details-movie-specifics">Episodes: </span>10</p>
+    <p class="specific-movie-runtime"> <span class="details-movie-specifics">Episode length: </span>50 minutes</p>
+    <p class="specific-movie-release-year"><span class="details-movie-specifics">Release year:</span> 2023</p>
+    <p class="specific-movie-description"><span class="details-movie-specifics">Description: </span>Following his release from prison, Mafia capo Dwight "The General"
                         Manfredi is exiled to Tulsa, Oklahoma, where he builds a new criminal empire with a group of
                         unlikely characters.</p>
     
@@ -45,35 +46,49 @@ const detailsTemplate = (item, isOwner, ctx) => html`
     <div class="review-header">
       <img src="https://via.placeholder.com/50x50" alt="Avatar" >
       <div class="review-info">
-        <p class="reviewer-name">John Doe</p>
-        <p class="reviewer-rating">Rating: 8</p>
+        <p class="reviewer-name">Peter</p>
+        <p class="movie-score reviewer-rating">Rating: 10 <i class="fa-solid fa-star"></i></p>
       </div>
     </div>
     <div class="review-body">
-      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed sit amet mauris eu nisi sodales lobortis vel at ipsum. Proin dignissim, sapien sed aliquam pulvinar, velit velit rhoncus lacus, ac sollicitudin quam odio nec justo.</p>
+      <p>I really enjoyed Tulsa King, this is hands down one of the best series that came out in 2023.</p>
     </div>
   </div>
 
-  <!-- Form for adding new review -->
+  <div class="review">
+    <div class="review-header">
+      <img src="https://via.placeholder.com/50x50" alt="Avatar" >
+      <div class="review-info">
+        <p class="reviewer-name">George</p>
+        <p class="movie-score reviewer-rating">Rating: 9 <i class="fa-solid fa-star"></i></p>
+      </div>
+    </div>
+    <div class="review-body">
+      <p>Awesome series!</p>
+    </div>
+  </div>
+
   <form class="add-review-form">
     <h3>Add a Review:</h3>
-    
-    <div class="specific-form-group">
-      <label for="reviewer-rating">Rating:</label>
-      <select id="reviewer-rating" name="reviewer-rating" required>
-        <option value="" selected disabled>Select a Rating</option>
-        <option value="1">1</option>
-        <option value="2">2</option>
-        <option value="3">3</option>
-        <option value="4">4</option>
-        <option value="5">5</option>
-        <option value="6">6</option>
-        <option value="7">7</option>
-        <option value="8">8</option>
-        <option value="9">9</option>
-        <option value="10">10</option>
-      </select>
+<div class="select-menu specific-form-group">
+  <label for="select-rating">Rating: </label>
+    <div id='select-rating' class="select" @click="${showHideOptions}">
+      <span>Select rating</span>
+      <i class="fas fa-angle-down"></i>
     </div>
+    <div class="options-list" @click="${selectOption}">
+      <div class="option">1 <i class="fa-solid fa-star"></i></div>
+      <div class="option">2 <i class="fa-solid fa-star"></i></div>
+      <div class="option">3 <i class="fa-solid fa-star"></i></div>
+      <div class="option">4 <i class="fa-solid fa-star"></i></div>
+      <div class="option">5 <i class="fa-solid fa-star"></i></div>
+      <div class="option">6 <i class="fa-solid fa-star"></i></div>
+      <div class="option">7 <i class="fa-solid fa-star"></i></div>
+      <div class="option">8 <i class="fa-solid fa-star"></i></div>
+      <div class="option">9 <i class="fa-solid fa-star"></i></div>
+      <div class="option">10 <i class="fa-solid fa-star"></i></div>
+    </div>
+  </div>
     <div class="specific-form-group">
       <label for="reviewer-review">Review:</label>
       <textarea id="reviewer-review" name="reviewer-review" required></textarea>
