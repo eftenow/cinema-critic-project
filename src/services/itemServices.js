@@ -2,6 +2,7 @@ import {post, put, del, get} from './api.js';
 
 const endpoints = {
     allMovies: '/classes/Movie',
+    createMovie: '/classes/Movie',
     allSeries: '/classes/Series',
     create: '/data/shoes',
     details : '/data/shoes/',
@@ -13,8 +14,8 @@ export async function getAllMovies() {
     return get(endpoints.allMovies);
 };
 
-export async function createNewMovie(newItem) {
-    return post(endpoints.create, newItem);
+export async function createNewMovie(newMovie) {
+    return post(endpoints.createMovie, newMovie);
 };
 
 export async function editExistingMovie(id, editedItem) {

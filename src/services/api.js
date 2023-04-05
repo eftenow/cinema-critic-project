@@ -13,7 +13,7 @@ async function request(method, url, bodyData) {
     };
     
     if (bodyData != undefined){
-        options.headers['content-type'] = 'application/json';
+        options.headers['Content-Type'] = 'application/json';
         options['body'] = JSON.stringify(bodyData);
     };
     

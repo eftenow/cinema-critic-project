@@ -5,7 +5,7 @@ import { createNewMovie } from '../services/itemServices.js';
 const createTemplate = (ctx) => html`
 <section class='create-section'>
     <h2 class='create-title'>Create Movie</h2>
-<form class='create-form'>
+<form class='create-form' @submit="${(e)=>onCreateHandler(e, ctx)}">
 
 <div class="create-form-group">
     <label for="create-title-field">Title:</label>
@@ -61,29 +61,34 @@ const createTemplate = (ctx) => html`
 </section>`
 
 export function renderCreate(ctx) {
-    const create = createTemplate(ctx);
-    ctx.render(create);
+  const create = createTemplate(ctx);
+  ctx.render(create);
 };
 
 async function onCreateHandler(ev, ctx) {
-    ev.preventDefault();
-    let form = new FormData(ev.target);
-    let title = form.get('create-title-field');
-    let type = form.get('create-type');
-    let genre = form.get('create-genre');
+  ev.preventDefault();
 
-    let release = form.get('release');
-    let designer = form.get('designer');
-    let value = form.get('value');
+  let form = new FormData(ev.target);
+  let name = form.get('create-title-field');
+  let type = form.get('create-type');
+  let year = form.get('create-year');
+  let rating;
+  let image = form.get('create-imageUrl');
+  let description = form.get('create-description');
+  let director = form.get('create-director');
+  let genres = form.get('create-genre');
+  let stars = form.get('create-stars');
+  let movieLength = form.get('create-length');
 
-    let newItem = { title, type, genre, release, designer, value };
+  year = Number(year);
+  let newItem = {name, type, year, rating, image, description, stars, director, movieLength, genres}
 
-    if (Object.values(newItem).some((x) => !x)) {
-        return alert('All fields must be filled!')
-    };
+  if (Object.values(newItem).some((x) => !x && x != rating)) {
+    return alert('All fields must be filled!')
+  };
 
-    await createNewMovie(newItem);
+  await createNewMovie(newItem);
 
-    ctx.redirect('/dashboard');
+  ctx.redirect('/movies');
 
 };
