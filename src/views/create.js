@@ -1,5 +1,5 @@
 import { html } from '../../node_modules/lit-html/lit-html.js';
-import { createNew } from '../services/itemServices.js';
+import { createNewMovie } from '../services/itemServices.js';
 
 
 const createTemplate = (ctx) => html`
@@ -68,20 +68,21 @@ export function renderCreate(ctx) {
 async function onCreateHandler(ev, ctx) {
     ev.preventDefault();
     let form = new FormData(ev.target);
-    let brand = form.get('brand');
-    let model = form.get('model');
-    let imageUrl = form.get('imageUrl');
+    let title = form.get('create-title-field');
+    let type = form.get('create-type');
+    let genre = form.get('create-genre');
+
     let release = form.get('release');
     let designer = form.get('designer');
     let value = form.get('value');
 
-    let newItem = { brand, model, imageUrl, release, designer, value };
+    let newItem = { title, type, genre, release, designer, value };
 
     if (Object.values(newItem).some((x) => !x)) {
         return alert('All fields must be filled!')
     };
 
-    await createNew(newItem);
+    await createNewMovie(newItem);
 
     ctx.redirect('/dashboard');
 

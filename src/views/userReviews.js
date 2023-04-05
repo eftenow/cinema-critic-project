@@ -1,8 +1,4 @@
 import { html, render } from '../../node_modules/lit-html/lit-html.js';
-import { getAll } from '../services/itemServices.js';
-
-
-
 
 export const userReviews = (user, reviews, isOwner) => html`
 

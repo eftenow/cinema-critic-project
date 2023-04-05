@@ -11,7 +11,6 @@ import { renderMovies } from './views/movies.js';
 import { renderPopular } from './views/popular.js';
 import { renderProfile } from './views/profile.js';
 import { renderRegister } from './views/register.js';
-import { renderSeries } from './views/series.js';
 import {  renderUserReviews } from './views/userReviews.js';
 
 

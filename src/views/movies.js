@@ -1,13 +1,43 @@
 import { html } from '../../node_modules/lit-html/lit-html.js';
-import { getAll } from '../services/itemServices.js';
+import { getAllMovies } from '../services/itemServices.js';
 
-export const productsTemplate = (product, isGuest) => html`
+const movieTemplate = (movie) => html`
+<div class="movie-card">
+                    <div class="movie-image">
+                        <img src="${movie.image}" alt="Movie Poster">
+                        <div class="movie-rating">${movie.rating}</div>
+                    </div>
+                    <h3 class="movie-title">${movie.name}</h3>
+                    <button class="movie-details-button">Details</button>
+                </div>
+`
+
+export const moviesTemplate = (movies) => html`
         <section class="movies-section">
             <h2>Our suggestions</h2>
                      
             <div class="movies-list">
+            ${movies.length == 0
+        ? html`<h2 id='no-movies-msg'>There are no movies nor series added yet.</h2>`
+            : html`${movies.map(m => movieTemplate(m))}`}
             
-            <section class="sort-section"> 
+            </div>
+        </section>`
+
+
+
+export async function renderMovies(ctx) {
+    const listOfMovies = await getAllMovies();
+    const movies = moviesTemplate(listOfMovies.results);
+
+    ctx.render(movies);
+
+}
+
+
+
+
+{/* <section class="sort-section"> 
             <div class="search-category">
                 <a href="#">
                     <span>Genre</span>
@@ -115,24 +145,4 @@ export const productsTemplate = (product, isGuest) => html`
                     </div>
                     <h3 class="movie-title">Vikings</h3>
                     <button class="movie-details-button">Details</button>
-                </div>
-        
-                <div class="movie-card">
-                    <div class="movie-image">
-                        <img src="./images/wednesday.jpg" alt="Movie Poster">
-                        <div class="movie-rating">7.9</div>
-                    </div>
-                    <h3 class="movie-title">Wednesday</h3>
-                    <button class="movie-details-button">Details</button>
-                </div>
-            </div>
-        </section>`
-
-
-
-export async function renderMovies(ctx) {
-    const products = productsTemplate();
-
-    ctx.render(products);
-
-}
+                </div> */}

@@ -1,33 +1,42 @@
 import {post, put, del, get} from './api.js';
 
 const endpoints = {
-    all: '/data/shoes?sortBy=_createdOn%20desc',
+    allMovies: '/classes/Movie',
+    allSeries: '/classes/Series',
     create: '/data/shoes',
     details : '/data/shoes/',
     like: '/data/likes',
 
 };
 
-export async function getAll() {
-    return get(endpoints.all);
+export async function getAllMovies() {
+    return get(endpoints.allMovies);
 };
 
-export async function createNew(newItem) {
+export async function createNewMovie(newItem) {
     return post(endpoints.create, newItem);
 };
 
-export async function editExisting(id, editedItem) {
+export async function editExistingMovie(id, editedItem) {
     return put(endpoints.details + id, editedItem);
     
 }
 
-export async function getDetails(id) {
+export async function getMovieDetails(id) {
     return get(endpoints.details + id);
 };
 
-export async function deleteItem(id) {
+export async function deleteMovie(id) {
   return del(endpoints.details + id);  
 };
+
+
+
+
+
+
+
+
 
 export async function likeAlbum(albumId) {
     return post(endpoints.like, {albumId});

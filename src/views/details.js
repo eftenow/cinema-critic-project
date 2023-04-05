@@ -1,6 +1,4 @@
 import { html } from '../../node_modules/lit-html/lit-html.js';
-import { deleteItem, getDetails, getLikesCount, likeAlbum, userAlreadyLiked } from '../services/itemServices.js';
-import { getUser, getUserId } from '../services/authServices.js';
 import { selectOption, showHideOptions } from '../../utils/dropdowns.js';
 
 
@@ -120,15 +118,15 @@ export async function renderDetails(ctx) {
 
 
 
-async function onDeleteHandler(ev, ctx) {
-  ev.preventDefault();
-  const confirmation = confirm("Are you sure you want to delete this item?");
+// async function onDeleteHandler(ev, ctx) {
+//   ev.preventDefault();
+//   const confirmation = confirm("Are you sure you want to delete this item?");
 
-  if (confirmation == true) {
-    await deleteItem(ctx.params.id);
-    ctx.redirect('/dashboard');
-  } else {
-    return;
-  }
-};
+//   if (confirmation == true) {
+//     await deleteItem(ctx.params.id);
+//     ctx.redirect('/dashboard');
+//   } else {
+//     return;
+//   }
+// };
 

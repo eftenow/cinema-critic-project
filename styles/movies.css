@@ -11,6 +11,10 @@
     margin: 0 auto;
 }
 
+#no-movies-msg{
+    color: #7126e0;
+    width: 55%;
+}
 
 .movies-list {
     display: flex;
@@ -57,8 +61,8 @@
     position: absolute;
     top: 10px;
     right: 10px;
-    width: 42px;
-    height: 42px;
+    width: 19.5%;
+    height: 13%;
     display: flex;
     align-items: center;
     justify-content: center;
