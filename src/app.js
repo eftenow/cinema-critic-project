@@ -1,6 +1,7 @@
 import page from '../node_modules/page/page.mjs';
 import { setUpMiddleware } from './middlewares/renderMiddleware.js';
 import { logoutUser } from './services/authServices.js';
+import { renderCreate } from './views/create.js';
 import { renderDetails } from './views/details.js';
 import { renderEdit } from './views/edit-profile.js';
 
@@ -19,7 +20,7 @@ page(setUpMiddleware);
 page('/', renderHome);
 page('/index.html', renderHome);
 page('/movies', renderMovies);
-page('/series', renderSeries);
+page('/create', renderCreate);
 page('/popular', renderPopular);
 page('/userReviews', renderUserReviews);
 page('/login', renderLogin);
