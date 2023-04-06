@@ -28,17 +28,17 @@ const navTemplate = (isAuthorized, user) => html`
                 </div>
                 <hr>
                 <a href="/myProfile" class=sub-menu-link @click="${toggleMenu}">
-                    <img src="../../images/profile.png">
+                <i class="fa-solid fa-user"></i>
                     <p>Profile</p>
                     <span>></span>
                 </a>
                 <a href="/settings" class=sub-menu-link @click="${toggleMenu}">
-                    <img src="../../images/setting.png">
+                <i class="fa-solid fa-gear"></i>
                     <p>Settings</p>
                     <span>></span>
                 </a>
                 <a href="/logout" class=sub-menu-link @click="${toggleMenu}">
-                    <img src="../../images/logout.png">
+                <i class="fa-solid fa-right-from-bracket"></i>
                     <p>Logout</p>
                     <span>></span>
                 </a>
