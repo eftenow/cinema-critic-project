@@ -7,7 +7,7 @@
     padding: 30px 0;
     position: relative;
     background-color: #eceaff;
-    width: 72%;
+    width: 73%;
     margin: 0 auto;
 }
 
@@ -26,7 +26,7 @@
 }
 
 .movie-card {
-    width: calc(25% - 30px);
+    flex: 0 1 22%;
     background-color: #fff;
     border-radius: 16px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
@@ -74,7 +74,7 @@
 }
 
 .movie-card-title {
-    font-size: 18px;
+    font-size: 16px;
     text-align: center;
     margin: 20px 0;
     color: #adadb1;
@@ -154,7 +154,7 @@ option:checked {
 
 .search-category {
     border-radius: 24px;
-    padding: 22px 18px;
+    padding: 20px 14px;
     height: 18px;
     border: solid 1px #bcbdbe;
     background-color: #fff;
@@ -168,7 +168,7 @@ option:checked {
 .sort-section{
     position: absolute;
     left: 1.2%;
-    top: -12%;
+    top: -13%;
     display: flex;
 }
 
@@ -182,8 +182,8 @@ option:checked {
 }
 
 .search-category span{
-    font-size: .875rem;
-    line-height: 1.3;
+    font-size: 14px;
+    line-height: 1.2;
     color: #505257;
     letter-spacing: .31px;
     text-transform: uppercase;
@@ -211,7 +211,7 @@ option:checked {
 }
 
 .search-category:hover a i {
-    transform: rotate(360deg);
+    transform: rotate(180deg);
 }
 
 .category-menu {
@@ -256,10 +256,11 @@ option:checked {
 .category-menu .menu-item:hover {
     /* color: #fbbc05; */
     color: #8e47f8;
+    font-weight: bold;
 }
 
 .search-category:hover .category-menu {
-    top: calc(100% + 3px);
+    top: calc(100% + 2px);
     opacity: 1;
     pointer-events: all;
 }

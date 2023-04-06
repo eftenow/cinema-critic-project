@@ -1,4 +1,4 @@
-.create-title{
+.create-title {
     margin-bottom: 24px;
     font-size: 28px;
 }
@@ -21,7 +21,7 @@
     margin-bottom: 88px;
 }
 
-.create-form label{
+.create-form label {
     color: rgb(115 117 120);
 }
 
@@ -29,15 +29,21 @@
 .create-form input,
 .create-form textarea {
     color: rgb(41, 41, 43);
-    border: 2px solid lightgray ;
+    border: 2px solid lightgray;
 }
+
+.create-form textarea {
+    height: auto;
+    min-height: 100px;
+};
+
 .create-form select:hover,
 .create-form select:focus,
 .create-form input:hover,
-.create-form textarea:hover,
+.create-form textarea:focus,
 .create-form input:focus,
 .create-form textarea:hover {
-    border:#8e47f8 2px solid;
+    border: #8e47f8 2px solid;
     outline: none;
 }
 
