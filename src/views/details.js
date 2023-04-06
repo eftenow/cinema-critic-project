@@ -1,12 +1,13 @@
 import { html } from '../../node_modules/lit-html/lit-html.js';
 import { selectOption, showHideOptions } from '../../utils/dropdowns.js';
+import { getMovieDetails } from '../services/itemServices.js';
 
 
-const detailsTemplate = (item, isOwner, ctx) => html`
+const detailsTemplate = (movie, ctx) => html`
 <section class="specific-movie-details">
   <div class='details-header'>
   <div class="movie-poster">
-    <img src="../../images/king-of-tulsa.jpg" alt="Movie Poster">
+    <img src="${movie.image}" alt="Movie Poster">
     <div class="movie-watchlist">
                 <button class="add-to-watchlist details-watchlist">
                 <span class="fa-stack fa-2x">
@@ -17,25 +18,23 @@ const detailsTemplate = (item, isOwner, ctx) => html`
             </div>
   </div>
   <div class="specific-movie-info">
-    <h2 class="specific-movie-title details-movie-specifics">Tulsa King</h2>
-    <p class="specific-movie-genre"><span class="details-movie-specifics">Rating: </span>9.5 <i id ="star" class="fa-solid fa-star"></i></p>
-    <p class="specific-movie-genre"><span class="details-movie-specifics">Genre: </span>Action</p>
-    <p class="specific-movie-cast"> <span class="details-movie-specifics">Director: </span>Francis Ford Coppola</p>
-    <p class="specific-movie-cast"> <span class="details-movie-specifics">Stars: </span>Marlon Brando, Al Pacino</p>
-    <p class="specific-movie-runtime"> <span class="details-movie-specifics">Seasons: </span>1</p>
-    <p class="specific-movie-runtime"> <span class="details-movie-specifics">Episodes: </span>10</p>
-    <p class="specific-movie-runtime"> <span class="details-movie-specifics">Episode length: </span>50 minutes</p>
-    <p class="specific-movie-release-year"><span class="details-movie-specifics">Release year:</span> 2023</p>
-    <p class="specific-movie-description"><span class="details-movie-specifics">Description: </span>Following his release from prison, Mafia capo Dwight "The General"
-                        Manfredi is exiled to Tulsa, Oklahoma, where he builds a new criminal empire with a group of
-                        unlikely characters.</p>
+    <h2 class="specific-movie-title details-movie-specifics">${movie.name}</h2>
+    <p class="specific-movie-genre"><span class="details-movie-specifics">Rating: </span>${movie.rating} <i id ="star" class="fa-solid fa-star"></i></p>
+    <p class="specific-movie-genre"><span class="details-movie-specifics">Genre: </span>${movie.genres}</p>
+    <p class="specific-movie-cast"> <span class="details-movie-specifics">Director: </span>${movie.director}</p>
+    <p class="specific-movie-cast"> <span class="details-movie-specifics">Stars: </span>${movie.stars}</p>
+    <!-- <p class="specific-movie-runtime"> <span class="details-movie-specifics">Seasons: </span>1</p>
+    <p class="specific-movie-runtime"> <span class="details-movie-specifics">Episodes: </span>10</p> -->
+    <p class="specific-movie-runtime"> <span class="details-movie-specifics">Movie runtime: </span>${movie.movieLength}</p>
+    <p class="specific-movie-release-year"><span class="details-movie-specifics">Release year:</span> ${movie.year}</p>
+    <p class="specific-movie-description"><span class="details-movie-specifics">Description: </span> ${movie.description}</p>
     
   </div>
   </div>
   <div class="trailer-section">
   
     <h3>Trailer</h3>
-    <iframe class="trailer-video" width="560" height="315" src="https://www.youtube.com/embed/aaQSScwZPbA" frameborder="0" allowfullscreen></iframe>
+    <iframe class="trailer-video" width="560" height="315" src="${movie.trailer}" frameborder="0" allowfullscreen></iframe>
   </div>
 </section>
 
@@ -110,7 +109,9 @@ const detailsTemplate = (item, isOwner, ctx) => html`
 
 
 export async function renderDetails(ctx) {
-  const details = detailsTemplate();
+  const movieId = ctx.params.id;
+  const currentMovie = await getMovieDetails(movieId);
+  const details = detailsTemplate(currentMovie);
 
   ctx.render(details);
 };

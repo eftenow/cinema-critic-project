@@ -8,7 +8,7 @@ const movieTemplate = (movie) => html`
                         <div class="movie-rating">${movie.rating}</div>
                     </div>
                     <h3 class="movie-card-title">${movie.name}</h3>
-                    <button class="movie-details-button">Details</button>
+                    <a href="/movies/${movie.objectId}" class="movie-details-button">Details</a>
                 </div>
 `
 

@@ -26,7 +26,7 @@ page('/login', renderLogin);
 page('/register', renderRegister);
 page('/myProfile', renderProfile);
 page('/settings', renderEdit);
-page('/movies/details', renderDetails);
+page('/movies/:id', renderDetails);
 
 
 

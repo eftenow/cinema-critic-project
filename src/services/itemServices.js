@@ -5,7 +5,7 @@ const endpoints = {
     createMovie: '/classes/Movie',
     allSeries: '/classes/Series',
     create: '/data/shoes',
-    details : '/data/shoes/',
+    details : '/classes/Movie/',
     like: '/data/likes',
 
 };
