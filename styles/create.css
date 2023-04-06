@@ -35,7 +35,8 @@
 .create-form textarea {
     height: auto;
     min-height: 100px;
-};
+    resize: none;
+}
 
 .create-form select:hover,
 .create-form select:focus,
