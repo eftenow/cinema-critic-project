@@ -1,5 +1,5 @@
 import { html } from '../../node_modules/lit-html/lit-html.js';
-import { getAllMovies } from '../services/itemServices.js';
+import { getAllMovies, getAllSeries } from '../services/itemServices.js';
 
 const movieTemplate = (movie) => html`
 <div class="movie-card">
@@ -8,7 +8,7 @@ const movieTemplate = (movie) => html`
                         <div class="movie-rating">${movie.rating}</div>
                     </div>
                     <h3 class="movie-card-title">${movie.name}</h3>
-                    <a href="/movies/${movie.objectId}" class="movie-details-button">Details</a>
+                    <a href="/${movie.type}/${movie.objectId}" class="movie-details-button">Details</a>
                 </div>
 `
 
@@ -86,8 +86,17 @@ export const moviesTemplate = (movies) => html`
 
 
 export async function renderMovies(ctx) {
-    const listOfMovies = await getAllMovies();
-    const movies = moviesTemplate(listOfMovies.results);
+    const promises = Promise.all([
+        getAllMovies(),
+        getAllSeries()
+      ]);
+
+    const [listOfMovies, listOfSeries] = await promises;
+    const seriensAndMovies = listOfMovies.results
+    .concat(listOfSeries.results)
+    .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
+
+    const movies = moviesTemplate(seriensAndMovies);
 
     ctx.render(movies);
 

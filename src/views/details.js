@@ -1,9 +1,9 @@
 import { html } from '../../node_modules/lit-html/lit-html.js';
 import { selectOption, showHideOptions } from '../../utils/dropdowns.js';
-import { getMovieDetails } from '../services/itemServices.js';
+import { getMovieDetails, getSeriesDetails } from '../services/itemServices.js';
 
 
-const detailsTemplate = (movie, ctx) => html`
+const detailsTemplate = (movie, ctx, type) => html`
 <section class="specific-movie-details">
   <div class='details-header'>
   <div class="movie-poster">
@@ -23,9 +23,15 @@ const detailsTemplate = (movie, ctx) => html`
     <p class="specific-movie-genre"><span class="details-movie-specifics">Genre: </span>${movie.genres}</p>
     <p class="specific-movie-cast"> <span class="details-movie-specifics">Director: </span>${movie.director}</p>
     <p class="specific-movie-cast"> <span class="details-movie-specifics">Stars: </span>${movie.stars}</p>
-    <!-- <p class="specific-movie-runtime"> <span class="details-movie-specifics">Seasons: </span>1</p>
-    <p class="specific-movie-runtime"> <span class="details-movie-specifics">Episodes: </span>10</p> -->
-    <p class="specific-movie-runtime"> <span class="details-movie-specifics">Movie runtime: </span>${movie.movieLength}</p>
+    ${console.log(type)}
+    ${console.log(ctx)}
+    ${console.log(movie)}
+    ${type == 'series'
+    ? html`<p class="specific-movie-runtime"> <span class="details-movie-specifics">Seasons: </span>${movie.seasons}</p>
+    <p class="specific-movie-runtime"> <span class="details-movie-specifics">Total Episodes: </span>${movie.episodes}</p>
+    <p class="specific-movie-runtime"> <span class="details-movie-specifics">Episode length: </span>${movie.movieLength} minutes</p>`
+    : html`<p class="specific-movie-runtime"> <span class="details-movie-specifics">Movie runtime: </span>${movie.movieLength}</p>`}
+    
     <p class="specific-movie-release-year"><span class="details-movie-specifics">Release year:</span> ${movie.year}</p>
     <p class="specific-movie-description"><span class="details-movie-specifics">Description: </span> ${movie.description}</p>
     
@@ -41,7 +47,7 @@ const detailsTemplate = (movie, ctx) => html`
 <section class="specific-movie-reviews"> 
   <h2 class="reviews-title">Reviews:</h2>
 
-  <!-- Example review -->
+  
   <div class="review">
     <h3 class="review-title-details">Best series for the year!!</h3>
     <div class="review-header">
@@ -108,10 +114,20 @@ const detailsTemplate = (movie, ctx) => html`
 `
 
 
-export async function renderDetails(ctx) {
+export async function renderMovieDetails(ctx) {
+  const type = 'movie';
   const movieId = ctx.params.id;
   const currentMovie = await getMovieDetails(movieId);
-  const details = detailsTemplate(currentMovie);
+  const details = detailsTemplate(currentMovie, ctx, type);
+
+  ctx.render(details);
+};
+
+export async function renderSeriesDetails(ctx) {
+  const type = 'series';
+  const seriesId = ctx.params.id;
+  const currentSeries = await getSeriesDetails(seriesId);
+  const details = detailsTemplate(currentSeries, ctx, type);
 
   ctx.render(details);
 };

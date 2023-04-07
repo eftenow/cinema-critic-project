@@ -33,7 +33,7 @@
 }
 
 .details-watchlist {
-  font-size: 1rem;
+
     top: 5%;
     right: 2%;
 }
@@ -62,7 +62,7 @@
 
 .details-movie-specifics {
   color: rgb(41, 41, 43);
-  font-size: 16px;
+  font-size: 14px;
   font-weight: 600;
 }
 

@@ -2,10 +2,12 @@ import {post, put, del, get} from './api.js';
 
 const endpoints = {
     allMovies: '/classes/Movie',
+    allSeries: '/classes/Show',
     createMovie: '/classes/Movie',
-    allSeries: '/classes/Series',
+    createSerie: '/classes/Show',
     create: '/data/shoes',
-    details : '/classes/Movie/',
+    movieDetails : '/classes/Movie/',
+    seriesDetails : '/classes/Show/',
     like: '/data/likes',
 
 };
@@ -18,21 +20,34 @@ export async function createNewMovie(newMovie) {
     return post(endpoints.createMovie, newMovie);
 };
 
+
 export async function editExistingMovie(id, editedItem) {
-    return put(endpoints.details + id, editedItem);
+    return put(endpoints.movieDetails + id, editedItem);
     
 }
 
 export async function getMovieDetails(id) {
-    return get(endpoints.details + id);
+    return get(endpoints.movieDetails + id);
+    
 };
 
 export async function deleteMovie(id) {
-  return del(endpoints.details + id);  
+  return del(endpoints.movieDetails + id);  
 };
 
 
+////SERIES
+export async function getAllSeries() {
+    return get(endpoints.allSeries);
+};
 
+export async function createNewSeire(newSerie) {
+    return post(endpoints.createSerie, newSerie);
+};
+
+export async function getSeriesDetails(id) {
+    return get(endpoints.seriesDetails + id);
+};
 
 
 

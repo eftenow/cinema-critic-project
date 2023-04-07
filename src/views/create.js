@@ -1,24 +1,16 @@
 import { html } from '../../node_modules/lit-html/lit-html.js';
-import { createNewMovie } from '../services/itemServices.js';
+import { createNewMovie, createNewSeire } from '../services/itemServices.js';
 
 
-const createTemplate = (ctx) => html`
+
+const createTemplate = (ctx, type) => html`
 <section class='create-section'>
-    <h2 class='create-title'>Create Movie</h2>
-<form class='create-form' @submit="${(e)=>onCreateHandler(e, ctx)}">
+    ${type == 'series' ? html`<h2 class='create-title'>Create Serie</h2>` : html`<h2 class='create-title'>Create Movie</h2>`}
+<form id="${type}" class='create-form' @submit="${(e) => createHandler(e, ctx)}">
 
 <div class="create-form-group">
     <label for="create-title-field">Title:</label>
     <input type="text" id="create-title-field" name="create-title-field" class="create-form-control create-title-field" required>
-  </div>
-
-  <div class="create-form-group">
-    <label for="create-type">Type</label>
-    <select id="create-type" name="create-type" class="create-form-control create-type" required>
-      <option value="">Choose type</option>
-      <option value="movie">Movie</option>
-      <option value="tvshow">TV Show</option>
-    </select>
   </div>
   <div class="create-form-group">
     <label for="create-genre">Genre:</label>
@@ -36,14 +28,17 @@ const createTemplate = (ctx) => html`
     <label for="create-stars">Stars:</label>
     <input type="text" id="create-stars" name="create-stars" class="create-form-control create-stars" required>
   </div>
-  <div class="create-form-group create-tvshow-only">
+
+  ${type == 'series' ? html`<div class="create-form-group">
     <label for="create-seasons">Number of Seasons:</label>
     <input type="number" id="create-seasons" name="create-seasons" class="create-form-control create-seasons">
   </div>
-  <div class="create-form-group create-tvshow-only">
+  <div class="create-form-group">
     <label for="create-episodes">Number of Episodes:</label>
     <input type="number" id="create-episodes" name="create-episodes" class="create-form-control create-episodes">
-  </div>
+  </div>`
+   : ''}
+
   <div class="create-form-group">
     <label for="create-length">Length:</label>
     <input type="text" id="create-length" name="create-length" class="create-form-control create-length" required>
@@ -53,6 +48,11 @@ const createTemplate = (ctx) => html`
     <input type="number" id="create-year" name="create-year" class="create-form-control create-year" required>
   </div>
   <div class="create-form-group">
+    <label for="create-trailer">Trailer Url:</label>
+    <input type="text" id="create-trailer" name="create-trailer" class="create-form-control create-trailer" required>
+  </div>
+
+  <div class="create-form-group">
     <label for="create-description">Description:</label>
     <textarea id="create-description" name="create-description" class="create-form-control create-description" required></textarea>
   </div>
@@ -60,35 +60,49 @@ const createTemplate = (ctx) => html`
 </form>
 </section>`
 
-export function renderCreate(ctx) {
-  const create = createTemplate(ctx);
+export function renderCreateMovie(ctx) {
+  const type = 'movie';
+  const create = createTemplate(ctx, type);
   ctx.render(create);
 };
 
-async function onCreateHandler(ev, ctx) {
+export function renderCreateSeries(ctx) {
+  const type = 'series';
+  const create = createTemplate(ctx, type);
+  ctx.render(create);
+};
+
+async function createHandler(ev, ctx) {
   ev.preventDefault();
+  let type = ev.target.id;
 
   let form = new FormData(ev.target);
   let name = form.get('create-title-field');
-  let type = form.get('create-type');
-  let year = form.get('create-year');
+  let year = Number(form.get('create-year'));
   let rating;
   let image = form.get('create-imageUrl');
   let description = form.get('create-description');
   let director = form.get('create-director');
   let genres = form.get('create-genre');
   let stars = form.get('create-stars');
-  let movieLength = form.get('create-length');
+  let trailer = form.get('create-trailer');
+  let movieLength =  form.get('create-length');
 
-  year = Number(year);
-  let newItem = {name, type, year, rating, image, description, stars, director, movieLength, genres}
+
+  let newItem = { name, type, year, rating, image, description, stars, director, genres, trailer, movieLength }
 
   if (Object.values(newItem).some((x) => !x && x != rating)) {
     return alert('All fields must be filled!')
   };
 
-  await createNewMovie(newItem);
+  if(type == 'series'){
+    newItem['episodes'] = Number(form.get('create-episodes'));
+    newItem['seasons'] = Number(form.get('create-seasons'));
+    await createNewSeire(newItem);
+  } else{
+    await createNewMovie(newItem);
+  };
 
-  ctx.redirect('/movies');
+  ctx.redirect('/dashboard');
 
 };

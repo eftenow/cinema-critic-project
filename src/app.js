@@ -1,8 +1,8 @@
 import page from '../node_modules/page/page.mjs';
 import { setUpMiddleware } from './middlewares/renderMiddleware.js';
 import { logoutUser } from './services/authServices.js';
-import { renderCreate } from './views/create.js';
-import { renderDetails } from './views/details.js';
+import { renderCreateMovie, renderCreateSeries } from './views/create.js';
+import { renderMovieDetails, renderSeriesDetails } from './views/details.js';
 import { renderEdit } from './views/edit-profile.js';
 
 import { renderHome } from './views/home.js';
@@ -18,15 +18,17 @@ page(setUpMiddleware);
 
 page('/', renderHome);
 page('/index.html', renderHome);
-page('/movies', renderMovies);
-page('/create', renderCreate);
+page('/dashboard', renderMovies);
+page('/createMovie', renderCreateMovie);
+page('/createSerie', renderCreateSeries);
 page('/popular', renderPopular);
 page('/userReviews', renderUserReviews);
 page('/login', renderLogin);
 page('/register', renderRegister);
 page('/myProfile', renderProfile);
 page('/settings', renderEdit);
-page('/movies/:id', renderDetails);
+page('/movie/:id', renderMovieDetails);
+page('/series/:id', renderSeriesDetails);
 
 
 

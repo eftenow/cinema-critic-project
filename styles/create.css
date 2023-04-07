@@ -79,10 +79,6 @@
     margin-bottom: 8px;
 }
 
-.create-tvshow-only {
-    display: none;
-}
-
 #create-type option[value="tvshow"]:selected~.create-tvshow-only {
     display: flex;
     flex-direction: column;
