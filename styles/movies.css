@@ -19,14 +19,13 @@
 .movies-list {
     display: flex;
     flex-wrap: wrap;
-    justify-content: center;
-    gap: 30px;
-    margin: 180px 100px;
+    justify-content: space-between;
     position: relative;
 }
 
 .movie-card {
     flex: 0 1 22%;
+    margin-top: 20px;
     background-color: #fff;
     border-radius: 16px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
@@ -133,25 +132,6 @@ option:checked {
     background: #8e47f8;
 }
 
-
-.search-form:hover,
-.search-form:focus-within {
-    border-color: #8e47f8;
-}
-
-.search-form button i:hover {
-    font-size: 1.3rem;
-    font-weight: bold;
-    color: #8e47f8;
-}
-
-
-.fa-search {
-    font-size: 1rem;
-    margin-right: 0.5rem;
-
-}
-
 .search-category {
     border-radius: 24px;
     padding: 20px 14px;
@@ -166,9 +146,9 @@ option:checked {
 }
 
 .sort-section{
-    position: absolute;
+    /* position: absolute;
     left: 1.2%;
-    top: -13%;
+    top: -13%; */
     display: flex;
 }
 

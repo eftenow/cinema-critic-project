@@ -1,22 +1,23 @@
 import { html, render } from '../../node_modules/lit-html/lit-html.js';
 import { toggleMenu } from '../../utils/dropdowns.js';
+import { searchHandler } from '../../utils/searchbar.js';
 import { getUser } from '../services/authServices.js';
 
 const adminId = '9Hy9y4Zpzd';
-const navTemplate = (isAuthorized, user) => html`
+const navTemplate = (isAuthorized, user, ctx) => html`
 <a href="/" class="nav-logo-container"><img id="logo" src="../../images/logo.png" alt=""></a>
 
 <nav>
     <ul>
     <li>
-            <form class="search-form">
-                <input class="input-search" type="text" placeholder="Search...">
-                <button type="submit"><i class="fa fa-search"></i></button>
+            <form @submit="${(e) => searchHandler(e, ctx)}" class="search-form">
+                <input name='search-text' class="input-search" type="text" placeholder="Search...">
+                <button id='search-btn'type="submit"><i class="fa fa-search"></i></button>
             </form>
         </li>
         <li><a href="/dashboard">Movies and Shows</a></li>
         <li><a href="/createMovie">Create Movie</a></li>
-        <li><a href="/createSerie">Create Serie</a></li>
+        <li><a href="/createSerie">Create Series</a></li>
         <li><a href="/popular">Popular</a></li>
         ${isAuthorized ?
         html`
@@ -67,7 +68,7 @@ const navTemplate = (isAuthorized, user) => html`
 export function showNavigation(ctx) {
     const isAuthorized = getUser() !== null;
     const user = getUser();
-    const nav = navTemplate(isAuthorized, user);
+    const nav = navTemplate(isAuthorized, user, ctx);
 
     render(nav, document.querySelector('header'));
 }

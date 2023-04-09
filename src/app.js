@@ -1,4 +1,5 @@
 import page from '../node_modules/page/page.mjs';
+import { searchedMoviesPage } from '../utils/searchbar.js';
 import { setUpMiddleware } from './middlewares/renderMiddleware.js';
 import { logoutUser } from './services/authServices.js';
 import { renderCreateMovie, renderCreateSeries } from './views/create.js';
@@ -29,7 +30,7 @@ page('/myProfile', renderProfile);
 page('/settings', renderEdit);
 page('/movie/:id', renderMovieDetails);
 page('/series/:id', renderSeriesDetails);
-
+page('/dashboard/search', searchedMoviesPage);
 
 
 page('/logout', async (ctx)=> {

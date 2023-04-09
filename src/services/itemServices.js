@@ -52,23 +52,22 @@ export async function getSeriesDetails(id) {
 
 
 
+////SEARCH
 
+export async function getSearchedMovies(searchMovie) {
+    let queryStr = `?where={"name":{"$regex":"${searchMovie}", "$options":"i"}}`;
+    
+    const movieMatches = endpoints.allMovies + queryStr;
+    const seriesMatches = endpoints.allSeries + queryStr;
 
-export async function likeAlbum(albumId) {
-    return post(endpoints.like, {albumId});
-};
+    const promises = Promise.all([
+        get(movieMatches),
+        get(seriesMatches)
+    ]);
 
-export async function getLikesCount(id) {
-    return get(`/data/likes?where=albumId%3D%22${id}%22&distinct=_ownerId&count`);
-};
-
-export async function userAlreadyLiked(albumId, userId) {
-    if (!userId){
-        return;
-    }
-    return get(`/data/likes?where=albumId%3D%22${albumId}%22%20and%20_ownerId%3D%22${userId}%22&count`)
-}
-
-export async function getSearchResult(query) {
-    return get(`/data/shoes?where=brand%20LIKE%20%22${query}%22`);
+    const [moviesFound, seriesFound] = await promises;
+    
+    let allMatches = [...moviesFound.results, ...seriesFound.results].sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+    
+    return allMatches
 }

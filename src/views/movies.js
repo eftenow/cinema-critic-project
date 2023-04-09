@@ -16,8 +16,6 @@ export const moviesTemplate = (movies) => html`
         <section class="movies-section">
             <h2>Our suggestions</h2>
             
-                     
-            <div class="movies-list">
             <section class="sort-section"> 
             <div class="search-category">
                 <a href="#">
@@ -76,6 +74,7 @@ export const moviesTemplate = (movies) => html`
                 </div>
             </div>
         </section>
+            <div class="movies-list">
             ${movies.length == 0
         ? html`<h2 id='no-movies-msg'>There are no movies nor series added yet.</h2>`
             : html`${movies.map(m => movieTemplate(m))}`}
