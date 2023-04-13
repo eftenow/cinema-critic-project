@@ -16,7 +16,6 @@ export async function searchedMoviesPage(ctx) {
     console.log(searchText);
     const result = await getSearchedMovies(searchText);
 
-    console.log(result);
     const moviesFound = moviesTemplate(result);
 
     ctx.render(moviesFound);

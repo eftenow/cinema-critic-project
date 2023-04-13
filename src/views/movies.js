@@ -1,5 +1,5 @@
 import { html } from '../../node_modules/lit-html/lit-html.js';
-import { genreHandler } from '../../utils/filterButtons.js';
+import { filterHandler, sortHandler } from '../../utils/filterButtons.js';
 import { getAllMovies, getAllSeries } from '../services/itemServices.js';
 
 const movieTemplate = (movie) => html`
@@ -13,7 +13,7 @@ const movieTemplate = (movie) => html`
                 </div>
 `
 
-export const moviesTemplate = (movies) => html`
+export const moviesTemplate = (movies, ctx) => html`
         <section class="movies-section">
             <h2>Our suggestions</h2>
             
@@ -23,7 +23,7 @@ export const moviesTemplate = (movies) => html`
                     <span>Genre</span>
                     <i class="fa-solid fa-angle-down"></i>
                 </a>
-                <div class="category-menu" @click="${genreHandler}">
+                <div class="category-menu" @click="${filterHandler}">
                     <span class="subject">All Genres</span>
                     <a href="#" class="menu-item">Action</a>
                     <a href="#" class="menu-item">Adventure</a>
@@ -42,22 +42,22 @@ export const moviesTemplate = (movies) => html`
                     <span>Rating</span>
                     <i class="fa-solid fa-angle-down"></i>
                 </a>
-                <div class="category-menu">
+                <div class="category-menu" @click="${(e) => sortHandler(ctx, movies, e)}">
                     <span class="subject">Sort by rating</span>
-                    <a href="#" class="menu-item">Best rated </a>
-                    <a href="#" class="menu-item">Worst rated</a>
+                    <a href="#" data-id="asc" id='rating' class="menu-item">Best rated </a>
+                    <a href="#" data-id="desc" id='rating'class="menu-item">Worst rated</a>
                     
                 </div>
             </div>
-            <div class="search-category">
+            <div class="search-category"  @click="${(e) => sortHandler(ctx, movies, e)}">
                 <a href="#">
                     <span>Release year</span>
                     <i class="fa-solid fa-angle-down"></i>
                 </a>
                 <div class="category-menu">
                     <span class="subject">Sort by year</span>
-                    <a href="#" class="menu-item">Newest to oldest</a>
-                    <a href="#" class="menu-item">Oldest to newest</a>
+                    <a href="#" data-id="asc" id='year' class="menu-item">Newest to oldest</a>
+                    <a href="#" data-id="desc" id='year' class="menu-item">Oldest to newest</a>
                     
                 </div>
             </div>
@@ -96,7 +96,7 @@ export async function renderMovies(ctx) {
         .concat(listOfSeries.results)
         .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
 
-    const movies = moviesTemplate(seriensAndMovies);
+    const movies = moviesTemplate(seriensAndMovies, ctx);
 
     ctx.render(movies);
 }

@@ -1,4 +1,5 @@
 import page from '../node_modules/page/page.mjs';
+import { sortHandler } from '../utils/filterButtons.js';
 import { searchedMoviesPage } from '../utils/searchbar.js';
 import { setUpMiddleware } from './middlewares/renderMiddleware.js';
 import { logoutUser } from './services/authServices.js';
@@ -31,6 +32,7 @@ page('/settings', renderEdit);
 page('/movie/:id', renderMovieDetails);
 page('/series/:id', renderSeriesDetails);
 page('/dashboard/search', searchedMoviesPage);
+page('/sort/:sortBy', sortHandler);
 
 
 page('/logout', async (ctx)=> {
