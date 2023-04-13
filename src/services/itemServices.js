@@ -50,6 +50,20 @@ export async function getSeriesDetails(id) {
 };
 
 
+//ALL
+export async function getMoviesAndSeries() {
+    const promises = Promise.all([
+        getAllMovies(),
+        getAllSeries()
+    ]);
+
+    const [listOfMovies, listOfSeries] = await promises;
+    const result = listOfMovies.results
+    .concat(listOfSeries.results)
+    .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+
+    return result;
+}
 
 
 ////SEARCH

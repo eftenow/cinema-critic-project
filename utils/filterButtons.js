@@ -1,13 +1,13 @@
-import { getAllMovies, getAllSeries } from "../src/services/itemServices.js";
+import { getAllMovies, getAllSeries, getMoviesAndSeries } from "../src/services/itemServices.js";
 import { moviesTemplate } from "../src/views/movies.js";
 
 export function filterHandler(ev) {
     ev.preventDefault();
-    const selectedType = ev.target.textContent.toLowerCase();
+    const selectedCategory = ev.target.textContent;
     const movies = document.querySelectorAll('.movie-card');
     movies.forEach(movie => {
-        const currentMovieType = movie.dataset.type.toLowerCase();
-        if (currentMovieType === selectedType || selectedType === 'all') {
+        const currentMovieCategory = movie.dataset.category
+        if (currentMovieCategory.includes(selectedCategory) || selectedCategory === 'All Genres') {
             movie.style.display = 'flex';
         } else {
             movie.style.display = 'none';
@@ -29,4 +29,24 @@ export async function sortHandler(ctx, movies, e) {
 
   const sortedMoviesTemplate = moviesTemplate(sortedMovies, ctx);
   ctx.render(sortedMoviesTemplate);
+}
+
+export async function movieTypeFilter(ev, ctx) {
+    ev.preventDefault();
+    let moviesToShow;
+
+    const selectedType = ev.target.textContent;
+    if (selectedType == 'Movies'){
+        moviesToShow = await getAllMovies();
+    } else if (selectedType == 'Series') {
+        moviesToShow = await getAllSeries();
+    } else{
+        moviesToShow = await getMoviesAndSeries();
+        console.log(moviesToShow);
+        ctx.render(moviesTemplate(moviesToShow, ctx));
+        return;
+    }
+
+    let matches = moviesTemplate(moviesToShow.results, ctx);
+    ctx.render(matches);
 }

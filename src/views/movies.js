@@ -1,6 +1,6 @@
 import { html } from '../../node_modules/lit-html/lit-html.js';
-import { filterHandler, sortHandler } from '../../utils/filterButtons.js';
-import { getAllMovies, getAllSeries } from '../services/itemServices.js';
+import { filterHandler, movieTypeFilter, sortHandler } from '../../utils/filterButtons.js';
+import { getAllMovies, getAllSeries, getMoviesAndSeries } from '../services/itemServices.js';
 
 const movieTemplate = (movie) => html`
 <div class="movie-card" data-category="${movie.genres}">
@@ -61,7 +61,7 @@ export const moviesTemplate = (movies, ctx) => html`
                     
                 </div>
             </div>
-            <div class="search-category">
+            <div @click="${(e) => movieTypeFilter(e, ctx)}" class="search-category">
                 <a href="#">
                     <span>Type</span>
                     <i class="fa-solid fa-angle-down"></i>
@@ -86,16 +86,7 @@ export const moviesTemplate = (movies, ctx) => html`
 
 
 export async function renderMovies(ctx) {
-    const promises = Promise.all([
-        getAllMovies(),
-        getAllSeries()
-    ]);
-
-    const [listOfMovies, listOfSeries] = await promises;
-    const seriensAndMovies = listOfMovies.results
-        .concat(listOfSeries.results)
-        .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
-
+    const seriensAndMovies = await getMoviesAndSeries();
     const movies = moviesTemplate(seriensAndMovies, ctx);
 
     ctx.render(movies);
