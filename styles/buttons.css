@@ -1,91 +1,110 @@
 .button {
-    border: none;
-    background-color: #8e47f8;
-    color: #cac7ff;
-    font-size: 1.2rem;
-    padding: 1rem 2rem;
-    border-radius: 0.5rem;
-    text-decoration: none;
-    transition: all 0.3s ease;
-  }
-  
-  .button:hover {
-    background-color: #7126e0;
-    color: #fff;
-  }
+  border: none;
+  background-color: #8e47f8;
+  color: #cac7ff;
+  font-size: 1.2rem;
+  padding: 1rem 2rem;
+  border-radius: 0.5rem;
+  text-decoration: none;
+  transition: all 0.3s ease;
+}
+
+.button:hover {
+  background-color: #7126e0;
+  color: #fff;
+}
 
 
-  .search-form button i {
-    width: 12px;
-  }
+.search-form button i {
+  width: 12px;
+}
 
-  #search-btn {
-    border: 0;
-    border-radius: 50%;
-    background: none;
-    opacity: 0.7;
-    cursor: pointer;
-    padding: 0;
-  }
+#search-btn {
+  border: 0;
+  border-radius: 50%;
+  background: none;
+  opacity: 0.7;
+  cursor: pointer;
+  padding: 0;
+}
 
-  #search-btn:after {
-    content: none;
-  }
-  
-  
-  .search-form button[type="submit"]:hover {
-    cursor: pointer;
-  }
+#search-btn:after {
+  content: none;
+}
 
-  .search-form:hover,
+
+.search-form button[type="submit"]:hover {
+  cursor: pointer;
+}
+
+.search-form:hover,
 .search-form:focus-within {
-    border-color: #8e47f8;
+  border-color: #8e47f8;
 }
 
 #search-btn i:hover {
-    font-size: 1.1rem;
-    font-weight: bold;
-    color: #8e47f8;
+  font-size: 1.1rem;
+  font-weight: bold;
+  color: #8e47f8;
 }
 
 
 .fa-search {
-    font-size: 1rem;
-    margin-right: 0.5rem;
-}
-
-.pagination {
-  display: flex;
-  justify-content: center;
-  list-style: none;
-  margin: 3%;
-}
-
-.pagination li {
-  margin: 4px;
-  padding: 4px 0;
-  border: 2px solid rgb(85, 85, 85);
-  border-radius: 6px;
-}
-
-.pagination li a {
-  padding: 10px 35px;
-  color: rgb(62, 62, 63);
+  font-size: 1rem;
+  margin-right: 0.5rem;
 }
 
 .pagination li:hover {
   background-color: #8e47f8;
 }
 
-.pagination a:hover {
-  color: white;
+.page-item.action a:hover,
+.page-item.action a:hover #prev-page,
+.page-item.action a:hover #next-page{
+  color: #fff;
 }
 
-.active{
-  font-size: 1.1rem;
+.active {
   background-color: #8e47f8;
 }
 
 .page-item.action.active a {
-  color: white;
+  color: #fff;
+}
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  list-style: none;
+  margin: 3%;
+}
+
+.page-item {
+  border: 2px solid rgb(85, 85, 85);
+  border-radius: 50%;
+  margin: 0 4px;
+  
+}
+
+.page-link {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 44px;
+  height: 44px;
+  color: rgb(62, 62, 63);
+  text-decoration: none;
+}
+
+
+.fa-caret-left, .fa-caret-right {
+  font-size: 18px;
+  color: rgb(62, 62, 63);
+}
+
+#prev-page, #next-page {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }

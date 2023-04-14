@@ -84,12 +84,12 @@ export const moviesTemplate = (movies, ctx, currentPage, pagesCount) => html`
             </div>
             <ul class="pagination">
         ${currentPage > 1
-        ? html`<li class="page-item action"><a href="?page=${currentPage - 1}" class="page-link">Previous</a></li>`
+        ? html`<li class="page-item action"><a href="?page=${currentPage - 1}" class="page-link"><i id = 'prev-page' class="fa-solid fa-caret-left"></i></a></li>`
             : ''}
         ${displayPages(currentPage, pagesCount).map(pageNumber => html`
         <li class="page-item action ${pageNumber === currentPage ? 'active' : ''}"><a href="?page=${pageNumber}" class="page-link">${pageNumber}</a></li>`)}
         ${currentPage < pagesCount
-        ? html`<li class="page-item action"><a href="?page=${currentPage + 1}" class="page-link">Next</a></li>`
+        ? html`<li class="page-item action"><a href="?page=${currentPage + 1}" class="page-link"><i id='next-page' class="fa-solid fa-caret-right"></i></a></li>`
             : ''}
         
     </ul>
