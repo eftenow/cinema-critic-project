@@ -4,7 +4,7 @@
 }
 
 .movies-section {
-    padding: 30px 0;
+    padding: 8px 0;
     position: relative;
     background-color: #eceaff;
     width: 73%;
@@ -19,7 +19,7 @@
 .movies-list {
     display: flex;
     flex-wrap: wrap;
-    justify-content: space-between;
+    justify-content: left;
     position: relative;
     margin-top: 12px;
 }
@@ -35,6 +35,7 @@
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+    margin: 1%;
 }
 
 .movie-card:hover {
@@ -147,9 +148,7 @@ option:checked {
 }
 
 .sort-section{
-    /* position: absolute;
-    left: 1.2%;
-    top: -13%; */
+    margin: 1%;
     display: flex;
 }
 

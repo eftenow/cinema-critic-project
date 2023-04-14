@@ -1,4 +1,5 @@
-import {post, put, del, get} from './api.js';
+import { post, put, del, get } from './api.js';
+export let PAGE_SIZE = 12;
 
 const endpoints = {
     allMovies: '/classes/Movie',
@@ -6,14 +7,22 @@ const endpoints = {
     createMovie: '/classes/Movie',
     createSerie: '/classes/Show',
     create: '/data/shoes',
-    movieDetails : '/classes/Movie/',
-    seriesDetails : '/classes/Show/',
+    movieDetails: '/classes/Movie/',
+    seriesDetails: '/classes/Show/',
     like: '/data/likes',
 
 };
 
-export async function getAllMovies() {
-    return get(endpoints.allMovies);
+
+
+export async function getAllMovies(page = 1, pageSize = PAGE_SIZE) {
+    let querystring = `?skip=${(page - 1) * pageSize}&limit=${pageSize}`;
+    return get(endpoints.allMovies + querystring);
+};
+
+export async function getMoviesCount() {
+    let moviesCount = endpoints.allMovies;
+    return moviesCount.length;
 };
 
 export async function createNewMovie(newMovie) {
@@ -23,26 +32,32 @@ export async function createNewMovie(newMovie) {
 
 export async function editExistingMovie(id, editedItem) {
     return put(endpoints.movieDetails + id, editedItem);
-    
+
 }
 
 export async function getMovieDetails(id) {
     return get(endpoints.movieDetails + id);
-    
+
 };
 
 export async function deleteMovie(id) {
-  return del(endpoints.movieDetails + id);  
+    return del(endpoints.movieDetails + id);
 };
 
 
 ////SERIES
-export async function getAllSeries() {
-    return get(endpoints.allSeries);
+export async function getAllSeries(page = 1, pageSize = 12) {
+    let querystring = `?skip=${(page - 1) * pageSize}&limit=${pageSize}`;
+    return get(endpoints.allSeries + querystring);
 };
 
-export async function createNewSeire(newSerie) {
-    return post(endpoints.createSerie, newSerie);
+export async function getSeriesCount() {
+    let seriesCount = endpoints.allSeries;
+    return seriesCount.length;
+};
+
+export async function createNewSeire(newSeries) {
+    return post(endpoints.createSerie, newSeries);
 };
 
 export async function getSeriesDetails(id) {
@@ -51,26 +66,30 @@ export async function getSeriesDetails(id) {
 
 
 //ALL
-export async function getMoviesAndSeries() {
-    const promises = Promise.all([
-        getAllMovies(),
-        getAllSeries()
-    ]);
+export async function getMoviesAndSeries(page = 1, pageSize = PAGE_SIZE) {
+    const offset = (page - 1) * pageSize;
+    const promises = Promise.all([getAllMovies(), getAllSeries()]);
+    const [movies, series] = await promises;
+    const sortedMovies = movies.results;
+    const sortedSeries = series.results;
 
-    const [listOfMovies, listOfSeries] = await promises;
-    const result = listOfMovies.results
-    .concat(listOfSeries.results)
-    .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+    const results = sortedMovies.concat(sortedSeries);
+    return results.slice(offset, offset + pageSize);
+};
 
-    return result;
-}
-
+export async function getMoviesAndSeriesCount() {
+    const promises = Promise.all([getAllMovies(), getAllSeries()]);
+    const [movies, series] = await promises;
+    const moviesCount = movies.results.length;
+    const seriesCount = series.results.length;
+    return moviesCount + seriesCount;
+};
 
 ////SEARCH
 
 export async function getSearchedMovies(searchMovie) {
     let queryStr = `?where={"name":{"$regex":"${searchMovie}", "$options":"i"}}`;
-    
+
     const movieMatches = endpoints.allMovies + queryStr;
     const seriesMatches = endpoints.allSeries + queryStr;
 
@@ -79,9 +98,12 @@ export async function getSearchedMovies(searchMovie) {
         get(seriesMatches)
     ]);
 
+    
+
     const [moviesFound, seriesFound] = await promises;
-    
+
     let allMatches = [...moviesFound.results, ...seriesFound.results].sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
-    
+
     return allMatches
-}
+};
+

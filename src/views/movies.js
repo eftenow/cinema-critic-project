@@ -1,6 +1,7 @@
 import { html } from '../../node_modules/lit-html/lit-html.js';
 import { filterHandler, movieTypeFilter, sortHandler } from '../../utils/filterButtons.js';
-import { getAllMovies, getAllSeries, getMoviesAndSeries } from '../services/itemServices.js';
+import { PAGE_SIZE, getAllMovies, getAllSeries, getMoviesAndSeries, getMoviesAndSeriesCount, getMoviesCount } from '../services/itemServices.js';
+import { displayPages} from '../../utils/pagination.js';
 
 const movieTemplate = (movie) => html`
 <div class="movie-card" data-category="${movie.genres}">
@@ -13,7 +14,7 @@ const movieTemplate = (movie) => html`
                 </div>
 `
 
-export const moviesTemplate = (movies, ctx) => html`
+export const moviesTemplate = (movies, ctx, currentPage, pagesCount) => html`
         <section class="movies-section">
             <h2>Our suggestions</h2>
             
@@ -81,13 +82,30 @@ export const moviesTemplate = (movies, ctx) => html`
         : html`${movies.map(m => movieTemplate(m))}`}
             
             </div>
+            <ul class="pagination">
+        ${currentPage > 1
+        ? html`<li class="page-item action"><a href="?page=${currentPage - 1}" class="page-link">Previous</a></li>`
+            : ''}
+        ${displayPages(currentPage, pagesCount).map(pageNumber => html`
+        <li class="page-item action ${pageNumber === currentPage ? 'active' : ''}"><a href="?page=${pageNumber}" class="page-link">${pageNumber}</a></li>`)}
+        ${currentPage < pagesCount
+        ? html`<li class="page-item action"><a href="?page=${currentPage + 1}" class="page-link">Next</a></li>`
+            : ''}
+        
+    </ul>
         </section>`
 
 
 
 export async function renderMovies(ctx) {
-    const seriensAndMovies = await getMoviesAndSeries();
-    const movies = moviesTemplate(seriensAndMovies, ctx);
+    let searchParams = new URLSearchParams(ctx.querystring);
+    let currentPage = Number(searchParams.get('page') || 1);
+    const seriensAndMovies = await getMoviesAndSeries(currentPage);
+    const moviesCount = await getMoviesAndSeriesCount();
+    console.log(moviesCount);
+    let pagesCount = Math.ceil(moviesCount / PAGE_SIZE);
+
+    const movies = moviesTemplate(seriensAndMovies, ctx, currentPage, pagesCount);
 
     ctx.render(movies);
-}
+};
