@@ -21,7 +21,10 @@
     flex-wrap: wrap;
     justify-content: left;
     position: relative;
-    margin-top: 12px;
+    margin-top: 2%;
+    align-items: center;
+    justify-content: center;
+
 }
 
 .movie-card {

@@ -16,13 +16,17 @@ const endpoints = {
 
 
 export async function getAllMovies(page = 1, pageSize = PAGE_SIZE) {
-    let querystring = `?skip=${(page - 1) * pageSize}&limit=${pageSize}`;
-    return get(endpoints.allMovies + querystring);
+    const offset = (page - 1) * pageSize;
+    const movies = await getTotalMovies();
+    const moviesFound = movies.results;
+    return moviesFound.slice(offset, offset + pageSize);
+
 };
 
 export async function getMoviesCount() {
-    let moviesCount = endpoints.allMovies;
-    return moviesCount.length;
+    let movies = await getTotalMovies();
+    let moviesCount = movies.results.length;
+    return moviesCount;
 };
 
 export async function createNewMovie(newMovie) {
@@ -46,14 +50,17 @@ export async function deleteMovie(id) {
 
 
 ////SERIES
-export async function getAllSeries(page = 1, pageSize = 12) {
-    let querystring = `?skip=${(page - 1) * pageSize}&limit=${pageSize}`;
-    return get(endpoints.allSeries + querystring);
+export async function getAllSeries(page = 1, pageSize = PAGE_SIZE) {
+    const offset = (page - 1) * pageSize;
+    const series = await getTotalSeries();
+    const seriesFound = series.results;
+    return seriesFound.slice(offset, offset + pageSize);
 };
 
 export async function getSeriesCount() {
-    let seriesCount = endpoints.allSeries;
-    return seriesCount.length;
+    let series = await getTotalSeries();
+    let seriesCount = series.results.length;
+    return seriesCount;
 };
 
 export async function createNewSeire(newSeries) {
@@ -68,7 +75,7 @@ export async function getSeriesDetails(id) {
 //ALL
 export async function getMoviesAndSeries(page = 1, pageSize = PAGE_SIZE) {
     const offset = (page - 1) * pageSize;
-    const promises = Promise.all([getAllMovies(), getAllSeries()]);
+    const promises = Promise.all([get(endpoints.allMovies), get(endpoints.allSeries)]);
     const [movies, series] = await promises;
     const sortedMovies = movies.results;
     const sortedSeries = series.results;
@@ -78,10 +85,11 @@ export async function getMoviesAndSeries(page = 1, pageSize = PAGE_SIZE) {
 };
 
 export async function getMoviesAndSeriesCount() {
-    const promises = Promise.all([getAllMovies(), getAllSeries()]);
+    const promises = Promise.all([getTotalMovies(), getTotalSeries()]);
     const [movies, series] = await promises;
     const moviesCount = movies.results.length;
     const seriesCount = series.results.length;
+
     return moviesCount + seriesCount;
 };
 
@@ -98,8 +106,6 @@ export async function getSearchedMovies(searchMovie) {
         get(seriesMatches)
     ]);
 
-    
-
     const [moviesFound, seriesFound] = await promises;
 
     let allMatches = [...moviesFound.results, ...seriesFound.results].sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
@@ -107,3 +113,12 @@ export async function getSearchedMovies(searchMovie) {
     return allMatches
 };
 
+// additional
+
+export async function getTotalMovies() {
+    return get(endpoints.allMovies);
+};
+
+export async function getTotalSeries() {
+    return get(endpoints.allSeries);
+};

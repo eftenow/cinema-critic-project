@@ -1,5 +1,5 @@
 import { html } from '../../node_modules/lit-html/lit-html.js';
-import { filterHandler, movieTypeFilter, sortHandler } from '../../utils/filterButtons.js';
+import { filterHandler, sortHandler } from '../../utils/filterButtons.js';
 import { PAGE_SIZE, getAllMovies, getAllSeries, getMoviesAndSeries, getMoviesAndSeriesCount, getMoviesCount } from '../services/itemServices.js';
 import { displayPages} from '../../utils/pagination.js';
 
@@ -62,16 +62,16 @@ export const moviesTemplate = (movies, ctx, currentPage, pagesCount) => html`
                     
                 </div>
             </div>
-            <div @click="${(e) => movieTypeFilter(e, ctx)}" class="search-category">
+            <div  class="search-category">
                 <a href="#">
                     <span>Type</span>
                     <i class="fa-solid fa-angle-down"></i>
                 </a>
                 <div class="category-menu">
                     <span class="subject">Sort by type</span>
-                    <a href="#" class="menu-item">Movies</a>
-                    <a href="#" class="menu-item">Series</a>
-                    <a href="#" class="menu-item">All</a>
+                    <a href="/movies" class="menu-item">Movies</a>
+                    <a href="/series" class="menu-item">Series</a>
+                    <a href="/dashboard" class="menu-item">All</a>
                     
                 </div>
             </div>
@@ -102,7 +102,6 @@ export async function renderMovies(ctx) {
     let currentPage = Number(searchParams.get('page') || 1);
     const seriensAndMovies = await getMoviesAndSeries(currentPage);
     const moviesCount = await getMoviesAndSeriesCount();
-    console.log(moviesCount);
     let pagesCount = Math.ceil(moviesCount / PAGE_SIZE);
 
     const movies = moviesTemplate(seriensAndMovies, ctx, currentPage, pagesCount);

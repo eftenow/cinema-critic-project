@@ -1,4 +1,4 @@
-import { getAllMovies, getAllSeries, getMoviesAndSeries } from "../src/services/itemServices.js";
+import { PAGE_SIZE, getAllMovies, getAllSeries, getMoviesAndSeries, getMoviesCount, getSeriesCount } from "../src/services/itemServices.js";
 import { moviesTemplate } from "../src/views/movies.js";
 
 export function filterHandler(ev) {
@@ -31,22 +31,23 @@ export async function sortHandler(ctx, movies, e) {
   ctx.render(sortedMoviesTemplate);
 }
 
-export async function movieTypeFilter(ev, ctx) {
-    ev.preventDefault();
-    let moviesToShow;
 
-    const selectedType = ev.target.textContent;
-    if (selectedType == 'Movies'){
-        moviesToShow = await getAllMovies();
-    } else if (selectedType == 'Series') {
-        moviesToShow = await getAllSeries();
-    } else{
-        moviesToShow = await getMoviesAndSeries();
-        console.log(moviesToShow);
-        ctx.render(moviesTemplate(moviesToShow, ctx));
-        return;
-    }
-
-    let matches = moviesTemplate(moviesToShow.results, ctx);
+  export async function filterMovies(ctx) {
+    const searchParams = new URLSearchParams(ctx.querystring);
+    const currentPage = Number(searchParams.get('page') || 1);
+    let promises = Promise.all([getAllMovies(currentPage, PAGE_SIZE), getMoviesCount(currentPage, PAGE_SIZE)]);
+    let [moviesToShow, matchesFound] = await promises;
+    const pagesCount = Math.ceil(matchesFound / PAGE_SIZE);
+    const matches = moviesTemplate(moviesToShow, ctx, currentPage, pagesCount);
     ctx.render(matches);
-}
+  }
+
+  export async function filterSeries(ctx) {
+    const searchParams = new URLSearchParams(ctx.querystring);
+    const currentPage = Number(searchParams.get('page') || 1);
+    let promises = Promise.all([getAllSeries(currentPage, PAGE_SIZE), getSeriesCount(currentPage, PAGE_SIZE)]);
+    let [seriesToShow, matchesFound] = await promises;
+    const pagesCount = Math.ceil(matchesFound / PAGE_SIZE);
+    const matches = moviesTemplate(seriesToShow, ctx, currentPage, pagesCount);
+    ctx.render(matches);
+  }

@@ -1,5 +1,5 @@
 import page from '../node_modules/page/page.mjs';
-import { sortHandler } from '../utils/filterButtons.js';
+import { filterMovies, filterSeries, sortHandler } from '../utils/filterButtons.js';
 import { searchedMoviesPage } from '../utils/searchbar.js';
 import { setUpMiddleware } from './middlewares/renderMiddleware.js';
 import { logoutUser } from './services/authServices.js';
@@ -21,6 +21,8 @@ page(setUpMiddleware);
 page('/', renderHome);
 page('/index.html', renderHome);
 page('/dashboard', renderMovies);
+page('/movies', filterMovies);
+page('/series', filterSeries);
 page('/createMovie', renderCreateMovie);
 page('/createSerie', renderCreateSeries);
 page('/popular', renderPopular);
