@@ -1,5 +1,5 @@
 import { html } from '../../node_modules/lit-html/lit-html.js';
-import { filterHandler, sortHandler } from '../../utils/filterButtons.js';
+import { filterHandler, resetFilters, sortHandler } from '../../utils/filterButtons.js';
 import { PAGE_SIZE, getAllMovies, getAllSeries, getMoviesAndSeries, getMoviesAndSeriesCount, getMoviesCount } from '../services/itemServices.js';
 import { displayPages} from '../../utils/pagination.js';
 
@@ -24,7 +24,7 @@ export const moviesTemplate = (movies, ctx, currentPage, pagesCount) => html`
                     <span>Genre</span>
                     <i class="fa-solid fa-angle-down"></i>
                 </a>
-                <div class="category-menu" @click="${filterHandler}">
+                <div class="category-menu" @click="${(e) => filterHandler(e, ctx)}">
                     <span class="subject">All Genres</span>
                     <a href="#" class="menu-item">Action</a>
                     <a href="#" class="menu-item">Adventure</a>
@@ -75,6 +75,11 @@ export const moviesTemplate = (movies, ctx, currentPage, pagesCount) => html`
                     
                 </div>
             </div>
+            <div  class="search-category" @click="${(e) => resetFilters(e, ctx)}">
+                <a href="#">
+                    <span>Reset Filters</span>
+                </a>
+            </div>
         </section>
             <div class="movies-list">
             ${movies.length == 0
@@ -98,6 +103,7 @@ export const moviesTemplate = (movies, ctx, currentPage, pagesCount) => html`
 
 
 export async function renderMovies(ctx) {
+    console.log('reset');
     let searchParams = new URLSearchParams(ctx.querystring);
     let currentPage = Number(searchParams.get('page') || 1);
     const seriensAndMovies = await getMoviesAndSeries(currentPage);

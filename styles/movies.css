@@ -151,7 +151,7 @@ option:checked {
 }
 
 .sort-section{
-    margin: 1%;
+    margin-left: 3%;
     display: flex;
 }
 
@@ -168,7 +168,7 @@ option:checked {
     font-size: 14px;
     line-height: 1.2;
     color: #505257;
-    letter-spacing: .31px;
+    letter-spacing: .12px;
     text-transform: uppercase;
     font-weight: bold;
     margin: 0 auto;

@@ -3,6 +3,8 @@ import { moviesTemplate } from "../src/views/movies.js";
 
 export function filterHandler(ev) {
     ev.preventDefault();
+    let pagination = document.querySelector('.pagination');
+    pagination.style.display = 'none';
     const selectedCategory = ev.target.textContent;
     const movies = document.querySelectorAll('.movie-card');
     movies.forEach(movie => {
@@ -11,8 +13,9 @@ export function filterHandler(ev) {
             movie.style.display = 'flex';
         } else {
             movie.style.display = 'none';
-        }
-    })
+        };
+    });
+    
 }
 
 export async function sortHandler(ctx, movies, e) {
@@ -50,4 +53,13 @@ export async function sortHandler(ctx, movies, e) {
     const pagesCount = Math.ceil(matchesFound / PAGE_SIZE);
     const matches = moviesTemplate(seriesToShow, ctx, currentPage, pagesCount);
     ctx.render(matches);
-  }
+  };
+
+ export function resetFilters(ev, ctx) {
+    let pagination = document.querySelector('.pagination');
+    pagination.style.display = 'none';
+    const selectedCategory = ev.target.textContent;
+    document.querySelectorAll('.movie-card').forEach(x => x.style.display = 'flex');
+    document.querySelector('.pagination').style.display = 'flex';
+    ctx.redirect('/dashboard');
+ }
