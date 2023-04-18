@@ -26,19 +26,27 @@ export async function filterHandler(ev, ctx) {
     const currentPage = Number(searchParams.get('page') || 1);
 
     const menuItems = document.querySelectorAll('.menu-item');
-    menuItems.forEach(item => item.classList.remove('selected-category'));
+    const selectedCategory = document.querySelector('.selected-category');
+    const isSameCategory = selectedCategory && selectedCategory.textContent === category;
 
-    target.classList.add('selected-category');
-    await renderFilteredMovies(ctx, category, currentPage);
+    if (!isSameCategory) {
+      menuItems.forEach(item => item.classList.remove('selected-category'));
+      target.classList.add('selected-category');
+      await renderFilteredMovies(ctx, category, currentPage);
+    } else {
+      selectedCategory.classList.remove('selected-category');
+      await filterMovies(ctx);
+    }
   }
 };
 
 
 function setSortSelected(sortOptionId) {
-  const sortOptions = document.querySelectorAll('.sort-option');
+  const sortOptions = document.querySelectorAll('.menu-item');
   sortOptions.forEach(option => option.classList.remove('selected-category'));
 
-  const sortOptionElement = document.getElementById(sortOptionId);
+  const sortOptionElement = [...sortOptions].find(option => option.getAttribute('data-specific') === sortOptionId);
+  console.log(sortOptionElement);
   if (sortOptionElement) {
     sortOptionElement.classList.add('selected-category');
   }
@@ -49,6 +57,7 @@ export async function sortHandler(ctx, movies, e) {
   const searchParams = new URLSearchParams(ctx.querystring);
   const currentPage = Number(searchParams.get('page') || 1);
   const sortOrder = e.target.getAttribute('data-id');
+  const sortSpecific = e.target.getAttribute('data-specific');
   const sortParameter = e.target.id;
   let sortedMovies = [...movies];
   const pagesCount = Math.ceil(sortedMovies.length / PAGE_SIZE);
@@ -62,8 +71,8 @@ export async function sortHandler(ctx, movies, e) {
   const sortedMoviesTemplate = moviesTemplate(sortedMovies, ctx, currentPage, pagesCount);
   ctx.render(sortedMoviesTemplate);
 
-  console.log(sortParameter);
-  setSortSelected(sortParameter);
+  
+  setSortSelected(sortSpecific);
 }
 
 
@@ -99,4 +108,4 @@ export async function filterSeries(ctx) {
   ctx.render(matches);
 
   setCategorySelected('Series');
-}
+};

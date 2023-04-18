@@ -45,8 +45,8 @@ export const moviesTemplate = (movies, ctx, currentPage, pagesCount) => html`
                 </a>
                 <div class="category-menu" @click="${(e) => sortHandler(ctx, movies, e)}">
                     <span class="subject">Sort by rating</span>
-                    <a href="#" data-id="asc" id='rating-best' class="menu-item">Best rated </a>
-                    <a href="#" data-id="desc" id='rating-worst'class="menu-item">Worst rated</a>
+                    <a href="#" data-id="asc" data-specific='best' id='rating' class="menu-item">Best rated </a>
+                    <a href="#" data-id="desc" data-specific='worst' id='rating'class="menu-item">Worst rated</a>
                     
                 </div>
             </div>
@@ -57,8 +57,8 @@ export const moviesTemplate = (movies, ctx, currentPage, pagesCount) => html`
                 </a>
                 <div class="category-menu">
                     <span class="subject">Sort by year</span>
-                    <a href="#" data-id="asc" id='year-new' class="menu-item">Newest to oldest</a>
-                    <a href="#" data-id="desc" id='year-old' class="menu-item">Oldest to newest</a>
+                    <a href="#" data-id="asc" data-specific='newest' id='year' class="menu-item">Newest to oldest</a>
+                    <a href="#" data-id="desc" data-specific='oldest' id='year' class="menu-item">Oldest to newest</a>
                     
                 </div>
             </div>
@@ -77,7 +77,7 @@ export const moviesTemplate = (movies, ctx, currentPage, pagesCount) => html`
             </div>
             <div  class="search-category">
                 <a href="#" >
-                    <span  @click="${(e) => renderAllContent(ctx, e)}">Reset Filters</span>
+                    <span  @click="${(e) => resetAllFilters(ctx, e)}">Reset Filters</span>
                 </a>
             </div>
         </section>
@@ -115,3 +115,22 @@ export async function renderAllContent(ctx) {
     ctx.render(movies);
     setCategorySelected('All');
 };
+
+async function resetAllFilters(ctx) {
+    const searchInput = document.querySelector('.search-input');
+    if (searchInput) {
+      searchInput.value = '';
+    }
+  
+    const selectedCategory = document.querySelector('.selected-category');
+    if (selectedCategory) {
+      selectedCategory.classList.remove('selected-category');
+    }
+  
+    const selectedSortOption = document.querySelector('.selected-sort-option');
+    if (selectedSortOption) {
+      selectedSortOption.classList.remove('selected-sort-option');
+    }
+  
+    await renderAllContent(ctx);
+  };
