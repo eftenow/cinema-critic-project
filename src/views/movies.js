@@ -1,10 +1,10 @@
 import { html } from '../../node_modules/lit-html/lit-html.js';
-import { filterHandler, resetFilters, sortHandler } from '../../utils/filterButtons.js';
-import { PAGE_SIZE, getAllMovies, getAllSeries, getMoviesAndSeries, getMoviesAndSeriesCount, getMoviesCount } from '../services/itemServices.js';
-import { displayPages} from '../../utils/pagination.js';
+import { filterHandler, sortHandler, setCategorySelected } from '../../utils/filterButtons.js';
+import { PAGE_SIZE, getMoviesAndSeries, getMoviesAndSeriesCount, getMoviesCount } from '../services/itemServices.js';
+import { displayPages } from '../../utils/pagination.js';
 
 const movieTemplate = (movie) => html`
-<div class="movie-card" data-category="${movie.genres}">
+<div class="movie-card" data-category="${movie.genres}" id="${movie.objectId}" data-type="${movie.type}">
                     <div class="movie-image">
                         <img src="${movie.image}" alt="Movie Poster">
                         <div class="movie-rating">${movie.rating}</div>
@@ -20,7 +20,7 @@ export const moviesTemplate = (movies, ctx, currentPage, pagesCount) => html`
             
             <section class="sort-section"> 
             <div class="search-category">
-                <a href="#">
+            <a href="#">
                     <span>Genre</span>
                     <i class="fa-solid fa-angle-down"></i>
                 </a>
@@ -45,8 +45,8 @@ export const moviesTemplate = (movies, ctx, currentPage, pagesCount) => html`
                 </a>
                 <div class="category-menu" @click="${(e) => sortHandler(ctx, movies, e)}">
                     <span class="subject">Sort by rating</span>
-                    <a href="#" data-id="asc" id='rating' class="menu-item">Best rated </a>
-                    <a href="#" data-id="desc" id='rating'class="menu-item">Worst rated</a>
+                    <a href="#" data-id="asc" id='rating-best' class="menu-item">Best rated </a>
+                    <a href="#" data-id="desc" id='rating-worst'class="menu-item">Worst rated</a>
                     
                 </div>
             </div>
@@ -57,8 +57,8 @@ export const moviesTemplate = (movies, ctx, currentPage, pagesCount) => html`
                 </a>
                 <div class="category-menu">
                     <span class="subject">Sort by year</span>
-                    <a href="#" data-id="asc" id='year' class="menu-item">Newest to oldest</a>
-                    <a href="#" data-id="desc" id='year' class="menu-item">Oldest to newest</a>
+                    <a href="#" data-id="asc" id='year-new' class="menu-item">Newest to oldest</a>
+                    <a href="#" data-id="desc" id='year-old' class="menu-item">Oldest to newest</a>
                     
                 </div>
             </div>
@@ -75,34 +75,34 @@ export const moviesTemplate = (movies, ctx, currentPage, pagesCount) => html`
                     
                 </div>
             </div>
-            <div  class="search-category" @click="${(e) => resetFilters(e, ctx)}">
-                <a href="#">
-                    <span>Reset Filters</span>
+            <div  class="search-category">
+                <a href="#" >
+                    <span  @click="${(e) => renderAllContent(ctx, e)}">Reset Filters</span>
                 </a>
             </div>
         </section>
             <div class="movies-list">
             ${movies.length == 0
-        ? html`<h2 id='no-movies-msg'>There are no movies nor series added yet.</h2>`
+        ? html`<h2 id='no-movies-msg'>No matches found.</h2>`
         : html`${movies.map(m => movieTemplate(m))}`}
-            
+
             </div>
             <ul class="pagination">
         ${currentPage > 1
         ? html`<li class="page-item action"><a href="?page=${currentPage - 1}" class="page-link"><i id = 'prev-page' class="fa-solid fa-caret-left"></i></a></li>`
-            : ''}
+        : ''}
         ${displayPages(currentPage, pagesCount).map(pageNumber => html`
         <li class="page-item action ${pageNumber === currentPage ? 'active' : ''}"><a href="?page=${pageNumber}" class="page-link">${pageNumber}</a></li>`)}
         ${currentPage < pagesCount
         ? html`<li class="page-item action"><a href="?page=${currentPage + 1}" class="page-link"><i id='next-page' class="fa-solid fa-caret-right"></i></a></li>`
-            : ''}
+        : ''}
         
     </ul>
         </section>`
 
 
 
-export async function renderMovies(ctx) {
+export async function renderAllContent(ctx) {
     console.log('reset');
     let searchParams = new URLSearchParams(ctx.querystring);
     let currentPage = Number(searchParams.get('page') || 1);
@@ -113,4 +113,5 @@ export async function renderMovies(ctx) {
     const movies = moviesTemplate(seriensAndMovies, ctx, currentPage, pagesCount);
 
     ctx.render(movies);
+    setCategorySelected('All');
 };

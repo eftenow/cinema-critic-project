@@ -9,7 +9,7 @@ import { renderEdit } from './views/edit-profile.js';
 
 import { renderHome } from './views/home.js';
 import { renderLogin } from './views/login.js';
-import { renderMovies } from './views/movies.js';
+import { renderAllContent } from './views/movies.js';
 import { renderPopular } from './views/popular.js';
 import { renderProfile } from './views/profile.js';
 import { renderRegister } from './views/register.js';
@@ -20,7 +20,7 @@ page(setUpMiddleware);
 
 page('/', renderHome);
 page('/index.html', renderHome);
-page('/dashboard', renderMovies);
+page('/dashboard', renderAllContent);
 page('/movies', filterMovies);
 page('/series', filterSeries);
 page('/createMovie', renderCreateMovie);

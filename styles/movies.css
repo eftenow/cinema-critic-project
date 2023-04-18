@@ -11,9 +11,11 @@
     margin: 0 auto;
 }
 
-#no-movies-msg{
+#no-movies-msg, #no-matches{
+    display: none;
     color: #7126e0;
     width: 55%;
+    margin: 6% auto;
 }
 
 .movies-list {
@@ -236,7 +238,8 @@ option:checked {
     transition: all 0.18s;
 }
 
-.category-menu .menu-item:hover {
+.category-menu .menu-item:hover,
+.selected-category {
     /* color: #fbbc05; */
     color: #8e47f8;
     font-weight: bold;
