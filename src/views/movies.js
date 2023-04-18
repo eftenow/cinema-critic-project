@@ -2,6 +2,7 @@ import { html } from '../../node_modules/lit-html/lit-html.js';
 import { filterHandler, sortHandler, setCategorySelected } from '../../utils/filterButtons.js';
 import { PAGE_SIZE, getMoviesAndSeries, getMoviesAndSeriesCount, getMoviesCount } from '../services/itemServices.js';
 import { displayPages } from '../../utils/pagination.js';
+import { backToTopHandler } from '../../utils/backToTopBtn.js';
 
 const movieTemplate = (movie) => html`
 <div class="movie-card" data-category="${movie.genres}" id="${movie.objectId}" data-type="${movie.type}">
@@ -75,8 +76,8 @@ export const moviesTemplate = (movies, ctx, currentPage, pagesCount) => html`
                     
                 </div>
             </div>
-            <div  class="search-category">
-                <a href="#" >
+            <div  class="search-category" id='reset-all-btn'>
+                <a>
                     <span  @click="${(e) => resetAllFilters(ctx, e)}">Reset Filters</span>
                 </a>
             </div>
@@ -98,6 +99,9 @@ export const moviesTemplate = (movies, ctx, currentPage, pagesCount) => html`
         : ''}
         
     </ul>
+    <button id="back-to-top-btn" @click='${backToTopHandler}'>
+    <i id='arrows-up' class="fa-solid fa-angles-up"></i>
+        </button>
         </section>`
 
 
@@ -119,18 +123,22 @@ export async function renderAllContent(ctx) {
 async function resetAllFilters(ctx) {
     const searchInput = document.querySelector('.search-input');
     if (searchInput) {
-      searchInput.value = '';
+        searchInput.value = '';
     }
-  
+
     const selectedCategory = document.querySelector('.selected-category');
     if (selectedCategory) {
-      selectedCategory.classList.remove('selected-category');
+        selectedCategory.classList.remove('selected-category');
     }
-  
+
     const selectedSortOption = document.querySelector('.selected-sort-option');
     if (selectedSortOption) {
-      selectedSortOption.classList.remove('selected-sort-option');
+        selectedSortOption.classList.remove('selected-sort-option');
     }
-  
+
     await renderAllContent(ctx);
-  };
+};
+
+
+
+

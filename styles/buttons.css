@@ -1,3 +1,42 @@
+#back-to-top-btn {
+  display: inline-block;
+  background-color: #8e47f8;
+  width: 48px;
+  height: 48px;
+  text-align: center;
+  border-radius: 24px;
+  position: fixed;
+  bottom: 10%;
+  right: 5%;
+  border: none;
+  transition: background-color .9s, opacity .9s, visibility .9s;
+  opacity: 0;
+}
+
+#back-to-top-btn i {
+  font-size: 20px;
+  color: white;
+  opacity: 0.8;
+  padding: 12px;
+}
+
+#back-to-top-btn:hover {
+  cursor: pointer;
+  background-color: #7126e0;
+  ;
+}
+
+#back-to-top-btn.show {
+  opacity: 1;
+}
+
+#arrows-up:hover {
+  transition: 0.3s ease-in-out;
+  transform: translateY(-6px);
+}
+
+;
+
 .button {
   border: none;
   background-color: #8e47f8;
@@ -60,7 +99,7 @@
 
 .page-item.action a:hover,
 .page-item.action a:hover #prev-page,
-.page-item.action a:hover #next-page{
+.page-item.action a:hover #next-page {
   color: #fff;
 }
 
@@ -84,7 +123,7 @@
   border: 2px solid rgb(85, 85, 85);
   border-radius: 50%;
   margin: 0 4px;
-  
+
 }
 
 .page-link {
@@ -98,13 +137,23 @@
 }
 
 
-.fa-caret-left, .fa-caret-right {
+.fa-caret-left,
+.fa-caret-right {
   font-size: 18px;
   color: rgb(62, 62, 63);
 }
 
-#prev-page, #next-page {
+#prev-page,
+#next-page {
   display: flex;
   justify-content: center;
   align-items: center;
 }
+
+#reset-all-btn:hover,
+#reset-all-btn:hover span {
+  background-color: #8e47f8;
+  color: #fff
+}
+
+;

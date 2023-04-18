@@ -39,8 +39,8 @@
     overflow: hidden;
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
     margin: 1%;
+    position: relative;
 }
 
 .movie-card:hover {
@@ -90,7 +90,6 @@
     display: block;
     width: 100%;
     padding: 12px 0;
-    border: none;
     border-radius: 0 0 8px 8px;
     border: none;
     background-color: #8e47f8;
@@ -99,6 +98,7 @@
     transition: background-color 0.2s ease-in-out;
     text-align: center;
     text-decoration: none;
+    
 }
 
 .movie-details-button:hover {
@@ -167,8 +167,8 @@ option:checked {
 }
 
 .search-category span{
-    font-size: 14px;
-    line-height: 1.2;
+    font-size: 13px;
+    line-height: 1.1;
     color: #505257;
     letter-spacing: .12px;
     text-transform: uppercase;
