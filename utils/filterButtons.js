@@ -109,13 +109,3 @@ export async function filterSeries(ctx) {
 
   setCategorySelected('Series');
 };
-
-window.addEventListener("scroll", (ev) => {
-  const topBtn = document.querySelector('#back-to-top-btn');
-  console.log('asd');
-  if (ev.target.documentElement.scrollTop > 350) {
-    topBtn.classList.add('show');
-  } else {
-    topBtn.classList.remove('show');
-  }
-});
