@@ -15,7 +15,7 @@ const movieTemplate = (movie) => html`
                 </div>
 `
 
-export const moviesTemplate = (movies, ctx, currentPage, pagesCount) => html`
+export const moviesTemplate = (movies, ctx, currentPage=1, pagesCount=1) => html`
         <section class="movies-section">
             <h2>Our suggestions</h2>
             

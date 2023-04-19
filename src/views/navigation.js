@@ -1,9 +1,9 @@
 import { html, render } from '../../node_modules/lit-html/lit-html.js';
 import { toggleMenu } from '../../utils/dropdowns.js';
-import { searchHandler } from '../../utils/searchbar.js';
+import { searchHandler, searchSuggestionsHandler } from '../../utils/searchbar.js';
 import { getUser } from '../services/authServices.js';
+import { adminId } from '../../secrets.js';
 
-const adminId = '9Hy9y4Zpzd';
 const navTemplate = (isAuthorized, user, ctx) => html`
 <a href="/" class="nav-logo-container"><img id="logo" src="../../images/logo.png" alt=""></a>
 
@@ -13,9 +13,9 @@ const navTemplate = (isAuthorized, user, ctx) => html`
             <form @submit="${(e) => searchHandler(e, ctx)}" class="search-form">
       <div class="search-input">
         <a href="" target="_blank" hidden></a>
-        <input type="text" placeholder="Type to search..">
+        <input @keyup="${searchSuggestionsHandler}" name='search-text' type="text" placeholder="Type to search..">
         <div class="autocom-box">
-          <!-- here list are inserted from javascript -->
+         
         </div>
         <div class="icon"><i class="fas fa-search"></i></div>
 
