@@ -11,8 +11,16 @@ const navTemplate = (isAuthorized, user, ctx) => html`
     <ul>
     <li>
             <form @submit="${(e) => searchHandler(e, ctx)}" class="search-form">
-                <input name='search-text' class="input-search" type="text" placeholder="Search...">
-                <button id='search-btn'type="submit"><i class="fa fa-search"></i></button>
+      <div class="search-input">
+        <a href="" target="_blank" hidden></a>
+        <input type="text" placeholder="Type to search..">
+        <div class="autocom-box">
+          <!-- here list are inserted from javascript -->
+        </div>
+        <div class="icon"><i class="fas fa-search"></i></div>
+
+    </div>
+
             </form>
         </li>
         <li><a href="/dashboard">Movies and Shows</a></li>

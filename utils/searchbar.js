@@ -21,7 +21,7 @@ export async function searchedMoviesPage(ctx) {
     ctx.render(moviesFound);
     // const teamsThatMeetCriteria = await getSpecificTeam(searchText);
     // showTeams(teamsThatMeetCriteria, ctx);
-
-
 };
+
+
 
