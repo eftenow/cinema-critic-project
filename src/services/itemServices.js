@@ -128,35 +128,34 @@ export async function getTotalSeries() {
 };
 
 export async function getSearchMatches(searchText) {
-    // Create Movie subclass
     const Movie = Parse.Object.extend("Movie");
     const movieQuery = new Parse.Query(Movie);
-    movieQuery.select("name", "objectId", "image");
-    movieQuery.matches("name", searchText, "i"); // Case insensitive search
+    movieQuery.select("name", "objectId", "image", "type");
+    movieQuery.startsWith("name", searchText, 'i');
+    movieQuery.limit(6);
 
-    // Create Series subclass
     const Series = Parse.Object.extend("Show");
     const seriesQuery = new Parse.Query(Series);
-    seriesQuery.select("name", "objectId", "image");
-    seriesQuery.matches("name", searchText, "i"); // Case insensitive search
+    seriesQuery.select("name", "objectId", "image", "type");
+    seriesQuery.startsWith("name", searchText, 'i');
+    seriesQuery.limit(6);
 
-    // Fetch data from the server
     const [movieData, seriesData] = await Promise.all([
         movieQuery.find(),
-        seriesQuery.find()
+        seriesQuery.find(),
     ]);
 
-    // Combine the movie and series data
     const data = [...movieData, ...seriesData];
-
-    // Extract the desired properties
-    const results = data.map(item => {
-        return {
-            name: item.get("name"),
-            objectId: item.id,
-            image: item.get("image"),
-        };
-    });
+    const results = data
+        .slice(0, 6)
+        .map((item) => {
+            return {
+                name: item.get("name"),
+                objectId: item.id,
+                image: item.get("image"),
+                type: item.get("type")
+            };
+        });
 
     return results;
 };

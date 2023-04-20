@@ -1,6 +1,6 @@
 import { html, render } from '../../node_modules/lit-html/lit-html.js';
 import { toggleMenu } from '../../utils/dropdowns.js';
-import { searchHandler, searchSuggestionsHandler } from '../../utils/searchbar.js';
+import { searchHandler, searchSuggestionsHandler, suggestionClickHandler } from '../../utils/searchbar.js';
 import { getUser } from '../services/authServices.js';
 import { adminId } from '../../secrets.js';
 
@@ -13,8 +13,8 @@ const navTemplate = (isAuthorized, user, ctx) => html`
             <form @submit="${(e) => searchHandler(e, ctx)}" class="search-form">
       <div class="search-input">
         <a href="" target="_blank" hidden></a>
-        <input @keyup="${searchSuggestionsHandler}" autocomplete="off" name='search-text' type="text" placeholder="Type to search..">
-        <div class="autocom-box">
+        <input @keyup="${searchSuggestionsHandler}" autocomplete="off" name='search-text' type="text" placeholder="Search...">
+        <div class="autocom-box" @click='${suggestionClickHandler}'>
          
         </div>
         <div class="icon"><i class="fas fa-search"></i></div>
@@ -23,10 +23,10 @@ const navTemplate = (isAuthorized, user, ctx) => html`
 
             </form>
         </li>
-        <li><a href="/dashboard">Movies and Shows</a></li>
-        <li><a href="/createMovie">Create Movie</a></li>
-        <li><a href="/createSerie">Create Series</a></li>
-        <li><a href="/popular">Popular</a></li>
+        <li><a class='nav-btns' href="/dashboard">Movies and Shows</a></li>
+        <li><a class='nav-btns' href="/createMovie">Create Movie</a></li>
+        <li><a class='nav-btns' href="/createSerie">Create Series</a></li>
+        <li><a class='nav-btns' href="/popular">Popular</a></li>
         ${isAuthorized ?
         html`
         <li @click="${toggleMenu}" ><img class="user-pic" src="${user.profileImg}" onerror="this.onerror=null;this.src='../../images/default-user.png';"></li>

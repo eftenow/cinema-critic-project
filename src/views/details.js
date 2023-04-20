@@ -128,6 +128,8 @@ export async function renderSeriesDetails(ctx) {
   const seriesId = ctx.params.id;
   const currentSeries = await getSeriesDetails(seriesId);
   const details = detailsTemplate(currentSeries, ctx, type);
+  const autocomBox = document.querySelector('.autocom-box');
+  autocomBox.style.display = 'none';
 
   ctx.render(details);
 };

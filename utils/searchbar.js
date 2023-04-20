@@ -36,19 +36,28 @@ export async function searchSuggestionsHandler(e) {
       const suggestionsHTML = results
         .map(
           (item) => `
-        <div class="suggestion">
+        <a href="/${item.type}/${item.objectId}" class="suggestion">
           <div id="s-image"><img src="${item.image}" alt="${item.name}" /></div>
           <span id="s-name">${item.name}</span>
-        </div>`
+        </a>`
         )
         .join('');
-      autocomBox.innerHTML = suggestionsHTML;
+      autocomBox.innerHTML = suggestionsHTML ? suggestionsHTML : `<span id="no-matches-text-span">${searchText}</span>`;
       autocomBox.style.display = 'block';
     } else {
       autocomBox.style.display = 'none';
     }
   };
 
+
+  export function suggestionClickHandler(ev) {
+    const movieTitle = ev.target.textContent;
+    const autoCompleteBox = ev.target.closest('.autocom-box');
+    const searchField = document.querySelector('input[name=search-text]');
+    searchField.value = movieTitle;
+    autoCompleteBox.style.display = 'none';
+
+  }
 
 
 // const searchWrapper = document.querySelector(".search-input");
