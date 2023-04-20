@@ -13,7 +13,7 @@ const navTemplate = (isAuthorized, user, ctx) => html`
             <form @submit="${(e) => searchHandler(e, ctx)}" class="search-form">
       <div class="search-input">
         <a href="" target="_blank" hidden></a>
-        <input @keyup="${searchSuggestionsHandler}" name='search-text' type="text" placeholder="Type to search..">
+        <input @keyup="${searchSuggestionsHandler}" autocomplete="off" name='search-text' type="text" placeholder="Type to search..">
         <div class="autocom-box">
          
         </div>

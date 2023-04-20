@@ -34,7 +34,14 @@
   }
   
   .start-btn{
-    font-size: 20px;
+    border: none;
+    background-color: #7c38e2;
+    color: #cac7ff;
+    font-size: 1.2rem;
+    padding: 1rem 2rem;
+    border-radius: 0.5rem;
+    text-decoration: none;
+    transition: all 0.3s ease;
   }
   
   img{

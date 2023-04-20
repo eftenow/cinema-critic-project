@@ -37,7 +37,7 @@ export async function searchSuggestionsHandler(e) {
         .map(
           (item) => `
         <div class="suggestion">
-          <img id="s-image" src="${item.image}" alt="${item.name}" />
+          <div id="s-image"><img src="${item.image}" alt="${item.name}" /></div>
           <span id="s-name">${item.name}</span>
         </div>`
         )
