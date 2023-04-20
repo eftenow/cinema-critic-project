@@ -65,8 +65,8 @@ const navTemplate = (isAuthorized, user, ctx) => html`
         `
         
         : html`
-        <li><a href="/login">Login</a></li>
-        <li><a href="/register">Register</a></li>
+        <li><a class='nav-btns' href="/login">Login</a></li>
+        <li><a class='nav-btns' href="/register">Register</a></li>
         `}
     </ul>
 

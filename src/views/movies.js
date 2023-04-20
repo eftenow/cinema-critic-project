@@ -1,8 +1,7 @@
 import { html } from '../../node_modules/lit-html/lit-html.js';
 import { filterHandler, sortHandler, setCategorySelected } from '../../utils/filterButtons.js';
-import { PAGE_SIZE, getMoviesAndSeries, getMoviesAndSeriesCount, getMoviesCount } from '../services/itemServices.js';
+import { PAGE_SIZE, getMoviesAndSeries, getMoviesAndSeriesCount } from '../services/itemServices.js';
 import { displayPages } from '../../utils/pagination.js';
-import { backToTopHandler } from '../../utils/backToTopBtn.js';
 
 const movieTemplate = (movie) => html`
 <div class="movie-card" data-category="${movie.genres}" id="${movie.objectId}" data-type="${movie.type}">
@@ -99,9 +98,6 @@ export const moviesTemplate = (movies, ctx, currentPage=1, pagesCount=1) => html
         : ''}
         
     </ul>
-    <button id="back-to-top-btn" @click='${backToTopHandler}'>
-    <i id='arrows-up' class="fa-solid fa-angles-up"></i>
-        </button>
         </section>`
 
 
