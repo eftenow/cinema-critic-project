@@ -1,4 +1,5 @@
 import { html } from '../../node_modules/lit-html/lit-html.js';
+import { backToTopHandler } from '../../utils/backToTopBtn.js';
 import { selectOption, showHideOptions } from '../../utils/dropdowns.js';
 import { getMovieDetails, getSeriesDetails } from '../services/itemServices.js';
 

@@ -107,7 +107,6 @@ export const moviesTemplate = (movies, ctx, currentPage=1, pagesCount=1) => html
 
 
 export async function renderAllContent(ctx) {
-    console.log('reset');
     let searchParams = new URLSearchParams(ctx.querystring);
     let currentPage = Number(searchParams.get('page') || 1);
     const seriensAndMovies = await getMoviesAndSeries(currentPage);

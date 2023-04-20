@@ -2,11 +2,16 @@ export function backToTopHandler() {
   window.scrollTo({top: 0});
 };
 
-window.addEventListener("scroll", (ev) => {
+window.addEventListener("scroll", () => {
   const topBtn = document.querySelector('#back-to-top-btn');
-  console.log('asd');
-  if (ev.target.documentElement.scrollTop > 300) {
+  const scrollHeight = document.documentElement.scrollHeight;
+  const scrollTop = document.documentElement.scrollTop;
+
+  const thirtyPercentHeight = scrollHeight * 0.3;
+
+  if (scrollTop > thirtyPercentHeight) { 
     topBtn.classList.add('show');
+    topBtn.addEventListener('click', backToTopHandler);
   } else {
     topBtn.classList.remove('show');
   }
