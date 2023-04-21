@@ -37,29 +37,7 @@ main{
   min-height: 90.2vh;
 }
 
-/* footer {
-  display: flex;
-  background-image: linear-gradient(rgba(42, 8, 94, 0.6), rgba(8, 1, 20, 0.8));
-  background-position: top;
-  opacity: 0.9;
-  background-size: cover;
-  padding: 1.4rem;
-  position: relative;
-  width: 100%;
-  bottom: 0;
-  justify-content: center;
-}
-footer::after {
-  content: "";
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-image: url("../images/header-img.png"); 
-  opacity: 0.6;
-  z-index: -1;
-} */
+
 
 footer {
   display: flex;
@@ -87,4 +65,15 @@ footer::after {
 footer p {
   font-size: 17px;
   color: #cac7ff;
+}
+
+::-webkit-scrollbar {
+  width: 0.6rem;
+  height: 0.6rem; /* this doesnt work for some reason */
+  background: rgba(0,0,0,.1);
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #8e47f8;
+  border-radius: 4px;
 }

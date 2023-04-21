@@ -3,7 +3,8 @@ body {
   font-family: Arial, sans-serif;
 }
 
-.login-title {
+.login-title,
+.register-title  {
   margin-top: 0;
   margin-bottom: 60px;
   padding-top: 44px;
@@ -11,7 +12,8 @@ body {
   text-align: center;
 }
 
-.login-form {
+.login-form,
+.register-form {
   background-color: #fff;
   border-radius: 5px;
   box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
@@ -20,7 +22,8 @@ body {
   padding: 36px 48px;
 }
 
-.login-label {
+.login-label,
+.register-label {
   display: block;
   font-size: 16px;
   font-weight: bold;
@@ -28,7 +31,8 @@ body {
   color: #333;
 }
 
-.login-input {
+.login-input,
+.register-input {
   border: 2px solid #ddd;
   border-radius: 5px;
   font-size: 16px;
@@ -38,12 +42,14 @@ body {
 }
 
 .login-input:focus,
-.login-input:hover {
+.login-input:hover,
+.register-input:focus,
+.register-input:hover {
   border: 2px solid #8e47f8;
   outline: none;
 }
 
-.login-button {
+.login-button, .register-button {
   background-color: #8e47f8;
   border: none;
   border-radius: 5px;
@@ -55,11 +61,12 @@ body {
   width: 100%;
 }
 
-.login-button:hover {
+.login-button:hover, .register-button:hover {
   background-color: #6a2cde;
 }
 
-.login-register-text {
+.login-register-text,
+.register-register-text {
   font-size: 14px;
   margin-top: 30px;
   text-align: center;
@@ -76,11 +83,11 @@ body {
 }
 
 .invalid {
-  border-color: #ff0000;
+  border-color: #fc2b2b;
 }
 
 .login-error {
-  color: #ff0000;
+  color: #fc2b2b;
     margin-top: 26px;
     font-weight: bold;
     text-align: center;
