@@ -8,10 +8,10 @@ const loginTemplate = (ctx) => html`
     <form class="login-form" @submit="${(ev) => onLoginHandler(ev, ctx)}">
         
         <label for="username" class="login-label">Username:</label>
-        <input type="text" id="login-username" name="username" class="login-input"><br><br>
+        <input type="text" id="login-username" name="username" class="login-input">
       
         <label for="password" class="login-label">Password:</label>
-        <input type="password" id="password" name="password" class="login-input"><br><br>
+        <input type="password" id="password" name="password" class="login-input">
       
         <input type="submit" value="Login" class="login-button">
         <p id="login-error" class="login-error"></p>

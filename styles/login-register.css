@@ -39,6 +39,7 @@ body {
   padding: 10px;
   width: 100%;
   color: rgb(78, 76, 76);
+  margin-bottom: 16px;
 }
 
 .login-input:focus,
@@ -83,7 +84,11 @@ body {
 }
 
 .invalid {
-  border-color: #fc2b2b;
+  border-color: #fc2b2b !important;
+}
+
+.valid {
+  border-color: rgb(39, 248, 39) !important;
 }
 
 .login-error {
@@ -93,4 +98,11 @@ body {
     text-align: center;
     margin-bottom: -16px;
 
+}
+
+.incorrect-register-data{
+  color: #fc2b2b;
+  font-size: 13px;
+  font-weight: bold;
+  margin: -12px 0 10px 1px;
 }

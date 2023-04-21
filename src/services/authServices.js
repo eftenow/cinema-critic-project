@@ -4,7 +4,8 @@ const endpoints = {
     'login': '/login',
     'logout': '/logout',
     'register': '/users',
-    'edit': (userId) => `/users/${userId}`
+    'edit': (userId) => `/users/${userId}`,
+    'users': '/users'
 }
 
 export async function loginUser(username, password) {
@@ -50,5 +51,11 @@ function updateLocalStorage(updatedData) {
     let user = JSON.parse(localStorage.getItem('user'));
     Object.entries(updatedData).map(([key, value]) => user[key] = value);
     localStorage.setItem('user', JSON.stringify(user));
+};
 
-}
+export async function getAllUsersData() {
+    const users = await get(endpoints.users);
+
+    const data = await response.json();
+    return data.map(user => ({ name: user.name, email: user.email }));
+  }
