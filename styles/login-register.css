@@ -73,6 +73,10 @@ body {
   text-align: center;
 }
 
+.form-input-field{
+  position: relative;
+}
+
 .login-register-link,
 .register-login-link {
   color: #8e47f8;
@@ -85,16 +89,17 @@ body {
   text-decoration: underline;
   color: #6a2cde;
 }
+.valid {
+  border: 2px solid rgb(4 135 4 / 36%) !important;
+  background: #0080000f;
+  position: relative;
+}
 
 .invalid {
-  border: 2px solid red !important;
+  border: 2px solid #ed191999 !important;
   background: #ff00000d;
-}
-
-.valid {
-  border: 2px solid rgb(2, 126, 2) !important;
-  background: #0080000f;
-}
+  position: relative;
+};
 
 .login-error {
   color: #fc2b2b;
@@ -106,10 +111,34 @@ body {
 }
 
 .incorrect-username-msg,
-.incorrect-email-msg{
+.incorrect-email-msg,
+.incorrect-password-msg,
+.incorrect-repeat-msg{
   color: #fc2b2b;
   font-size: 13px;
   font-weight: bold;
   margin: -12px 0 10px 1px;
 }
+.icon-container{
+    position: absolute;
+    right: 3%;
+    top: 60%;
+    transform: translateY(-50%);
+}
+
+.register-input.invalid ~ .icon-container .fa-triangle-exclamation {
+  display: inline-block;
+  color: #fc2b2b; 
+}
+
+.register-input.valid ~ .icon-container .fa-circle-check {
+  display: inline-block;
+  color: rgb(13 173 13 / 76%);
+}
+
+.icon-container i {
+  display: none;
+  font-size: 1.3em;
+};
+
 
