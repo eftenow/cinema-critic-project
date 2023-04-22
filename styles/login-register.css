@@ -73,22 +73,27 @@ body {
   text-align: center;
 }
 
-.login-register-link {
+.login-register-link,
+.register-login-link {
   color: #8e47f8;
   font-weight: bold;
   text-decoration: none;
 }
 
-.login-register-link:hover {
+.login-register-link:hover,
+.register-login-link:hover {
   text-decoration: underline;
+  color: #6a2cde;
 }
 
 .invalid {
-  border-color: #fc2b2b !important;
+  border: 2px solid red !important;
+  background: #ff00000d;
 }
 
 .valid {
-  border-color: rgb(39, 248, 39) !important;
+  border: 2px solid rgb(2, 126, 2) !important;
+  background: #0080000f;
 }
 
 .login-error {
@@ -100,9 +105,11 @@ body {
 
 }
 
-.incorrect-register-data{
+.incorrect-username-msg,
+.incorrect-email-msg{
   color: #fc2b2b;
   font-size: 13px;
   font-weight: bold;
   margin: -12px 0 10px 1px;
 }
+

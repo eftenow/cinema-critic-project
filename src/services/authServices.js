@@ -53,9 +53,14 @@ function updateLocalStorage(updatedData) {
     localStorage.setItem('user', JSON.stringify(user));
 };
 
-export async function getAllUsersData() {
-    const users = await get(endpoints.users);
+export async function usernameIsTaken(username) {
+        const response = await get('/classes/_User?keys=username');
+        const existingUsernames = response.results.map(x => x.username);
+        return existingUsernames.includes(username);
+  };
 
-    const data = await response.json();
-    return data.map(user => ({ name: user.name, email: user.email }));
-  }
+  export async function emailIsTaken(email) {
+    const response = await get('/classes/_User?keys=email');
+    const existingEmails = response.results.map(x => x.email);
+    return existingEmails.includes(email);
+}

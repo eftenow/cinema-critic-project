@@ -156,4 +156,8 @@
   color: #fff
 }
 
-;
+button[disabled] {
+  background-color: #ccc !important;
+  color: #6e6e6e;
+  cursor: not-allowed;
+  };
