@@ -99,9 +99,9 @@ body {
   border: 2px solid #ed191999 !important;
   background: #ff00000d;
   position: relative;
-};
+}
 
-.login-error {
+#login-error {
   color: #fc2b2b;
     margin-top: 26px;
     font-weight: bold;
@@ -139,6 +139,6 @@ body {
 .icon-container i {
   display: none;
   font-size: 1.3em;
-};
+}
 
 

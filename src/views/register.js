@@ -1,14 +1,14 @@
 import { html } from '../../node_modules/lit-html/lit-html.js';
-import { registerUser, usernameIsTaken } from '../services/authServices.js';
+import { getAllEmails, getAllUsernames, registerUser } from '../services/authServices.js';
 
 
-const registerTemplate = (ctx) => html`
+const registerTemplate = (ctx, usernames, emails) => html`
 <section class="register-section">
 <h2 class="register-title">Register</h2>
     <form class="register-form" @submit="${(ev) => onRegisterHandler(ev, ctx)}">
       <label for="username" class="register-label">Username:</label>
       <span class="form-input-field">
-      <input @input=${usernameInputHandler} type="text" id="username" name="username" class="register-input">
+      <input @input=${(e) => usernameInputHandler(e, usernames)} type="text" id="username" name="username" class="register-input">
       <span class="icon-container">
     <i class="fa-solid fa-triangle-exclamation"></i>
     <i class="fa-solid fa-circle-check"></i>
@@ -18,7 +18,7 @@ const registerTemplate = (ctx) => html`
 
       <label for="email" class="register-label">Email:</label>  
       <span class="form-input-field">
-      <input @input=${emailInputHandler} type="email" id="email" name="email" class="register-input">
+      <input @input=${(e)=> emailInputHandler(e, emails)} type="email" id="email" name="email" class="register-input">
       <span class="icon-container">
     <i class="fa-solid fa-triangle-exclamation"></i>
     <i class="fa-solid fa-circle-check"></i>
@@ -53,43 +53,36 @@ const registerTemplate = (ctx) => html`
 </section>
 `
 
-export function renderRegister(ctx) {
-    const register = registerTemplate(ctx);
+export async function renderRegister(ctx) {
+    const usernames = await getAllUsernames();
+    const emails = await getAllEmails();
+
+    const register = registerTemplate(ctx, usernames, emails);
     ctx.render(register);
 };
 
 async function onRegisterHandler(ev, ctx) {
     ev.preventDefault();
     let form = new FormData(ev.target);
-
     let username = form.get('username');
-    let email = form.get('email');
+    let emailAddress = form.get('emailAddress');
     let password = form.get('password');
-    let rePassword = form.get('rePassword');
 
-    if (password !== rePassword) {
-        alert('Passwords do not match!');
-        throw new Error();
-    } else if (!email || !password || !rePassword) {
-        alert('All fields must be filled!')
-        throw new Error();
-    }
-    await registerUser(password, username, email);
-
+    await registerUser(password, username, emailAddress);
     ctx.redirect('/');
 }
 
-async function usernameInputHandler(ev) {
+async function usernameInputHandler(ev, existingUsernames) {
     const inputField = ev.target;
     const usename = ev.target.value;
     const errorField = document.querySelector('.incorrect-username-msg'); //paragraph
-    const usernameIsTaken = false;
-    //await usernameIsTaken(usename);
+    const takenUsername = existingUsernames.includes(usename);
+    
     if (usename.length < 3 || usename.length > 12) {
         errorField.textContent = 'Username must be between 3 and 12 characters long.'
         inputField.classList.add('invalid');
         inputField.classList.remove('valid');
-    } else if (usernameIsTaken) {
+    } else if (takenUsername) {
         errorField.textContent = 'This username is already taken.'
         inputField.classList.add('invalid');
         inputField.classList.remove('valid');
@@ -101,14 +94,13 @@ async function usernameInputHandler(ev) {
     enableRegisterButton();
 };
 
-async function emailInputHandler(ev) {
+async function emailInputHandler(ev, existingEmails) {
     const inputField = ev.target;
     const email = inputField.value;
     const errorField = document.querySelector('.incorrect-email-msg');
-    const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-    const emailIsTaken = false;
-    //await usernameIsTaken(email);
-    console.log(email);
+    const emailRegex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+    const takenEmail = existingEmails.includes(email);
+    
     if (!email) {
         errorField.textContent = 'Email is required.'
         inputField.classList.add('invalid');
@@ -117,7 +109,7 @@ async function emailInputHandler(ev) {
         errorField.textContent = 'Invalid email format.'
         inputField.classList.add('invalid');
         inputField.classList.remove('valid');
-    } else if (emailIsTaken) {
+    } else if (takenEmail) {
         errorField.textContent = 'This email is already taken.'
         inputField.classList.add('invalid');
         inputField.classList.remove('valid');

@@ -1,4 +1,4 @@
-import {get, post, put} from './api.js';
+import { get, post, put } from './api.js';
 
 const endpoints = {
     'login': '/login',
@@ -13,8 +13,8 @@ export async function loginUser(username, password) {
     localStorage.setItem('user', JSON.stringify(user));
 };
 
-export async function registerUser(password, username, email) {
-    const user = await post(endpoints.register, { password, username, email });
+export async function registerUser(password, username, emailAddress) {
+    const user = await post(endpoints.register, { password, username, emailAddress });
     localStorage.setItem('user', JSON.stringify(user));
 };
 
@@ -53,14 +53,18 @@ function updateLocalStorage(updatedData) {
     localStorage.setItem('user', JSON.stringify(user));
 };
 
-export async function usernameIsTaken(username) {
-        const response = await get('/classes/_User?keys=username');
-        const existingUsernames = response.results.map(x => x.username);
-        return existingUsernames.includes(username);
-  };
+export async function getAllUsernames() {
+    const response = await get('/classes/_User', {keys: 'username'});
+    const results = response.results;
+    const username = results.map(result => result.username);
+    
+    return username;
+};
 
-  export async function emailIsTaken(email) {
-    const response = await get('/classes/_User?keys=email');
-    const existingEmails = response.results.map(x => x.email);
-    return existingEmails.includes(email);
-}
+export async function getAllEmails() {
+    const response = await get('/classes/_User', {keys: 'emailAddress'});
+    const results = response.results;
+    const emailAddresses = results.map(result => result.emailAddress);
+    
+    return emailAddresses;
+  }

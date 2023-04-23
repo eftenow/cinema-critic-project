@@ -47,7 +47,43 @@ async function request(method, url, bodyData) {
     }
 }
 
-const get = request.bind(null, 'get')
+const get = async (url, queryParams) => {
+    let options = {
+        headers: {
+            "X-Parse-Application-Id": APP_ID,
+            "X-Parse-REST-API-Key": KEY_REST_API,
+            "X-Parse-Revocable-Session": 1
+        }
+    };
+    
+    if (queryParams) {
+        url += '?' + new URLSearchParams(queryParams);
+    }
+    
+    try {
+        let response = await fetch(HOST + url, options);
+        
+        if (response.ok != true){
+            if (response.status == 403){
+                localStorage.removeItem('user');
+            }
+            let error = await response.json();
+            
+            throw new Error(error.message);
+        }
+
+        if (response.status == 204){
+            return response;
+        } else {
+            return response.json();
+        }
+
+
+    } catch (error) {
+        throw error;
+    }
+};
+
 const post = request.bind(null, 'post')
 const put = request.bind(null, 'put')
 const del = request.bind(null, 'delete')

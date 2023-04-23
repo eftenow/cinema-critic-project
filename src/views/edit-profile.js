@@ -22,7 +22,7 @@ export const profileTemplate = (ctx, user) => html`
 
             <div class="input-group">
                 <label for="email">Email:</label>
-                <input type="email" id="email" name="email" value="${user.email}">
+                <input type="email" id="email" name="email" value="${user.emailAddress}">
             </div>
 
             <div class="input-group">
@@ -64,13 +64,13 @@ async function saveChangesHandler(ev, ctx) {
     ev.preventDefault();
     const form = new FormData(ev.target);
     const username = form.get('username');
-    const email = form.get('email');
+    const emailAddress = form.get('emailAddress');
     const country = form.get('country');
     const city = form.get('city');
     const description = form.get('description');
     const userId = getUserId();
 
-    const editedUserData = { username, email, country, city, description };
+    const editedUserData = { username, emailAddress, country, city, description };
     await editUserInfo(userId, editedUserData);
 
     ctx.redirect('/myProfile');
