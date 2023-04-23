@@ -16,3 +16,11 @@ window.addEventListener("scroll", () => {
     topBtn.classList.remove('show');
   }
 });
+
+export function scrollToBottom() {
+  window.scrollTo({ top: document.body.scrollHeight, behavior: 'auto' });
+};
+
+export function scrollToTop() {
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}

@@ -126,12 +126,14 @@ body {
     transform: translateY(-50%);
 }
 
-.register-input.invalid ~ .icon-container .fa-triangle-exclamation {
+.register-input.invalid ~ .icon-container .fa-triangle-exclamation,
+.login-input.invalid ~ .icon-container .fa-triangle-exclamation {
   display: inline-block;
   color: #fc2b2b; 
 }
 
-.register-input.valid ~ .icon-container .fa-circle-check {
+.register-input.valid ~ .icon-container .fa-circle-check,
+.login-input.valid ~ .icon-container .fa-circle-check {
   display: inline-block;
   color: rgb(13 173 13 / 76%);
 }

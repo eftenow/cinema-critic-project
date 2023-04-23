@@ -63,7 +63,7 @@ const detailsTemplate = (movie, ctx, type) => html`
     </div>
   </div>
 
-  <div class="review">
+  <div class="review" id='review-section'>
   <h3 class="review-title-details">Very good</h3>
     <div class="review-header">
       <img src="https://via.placeholder.com/50x50" alt="Avatar" >

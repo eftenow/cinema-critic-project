@@ -25,6 +25,19 @@ export async function getAllMovies(page = 1, pageSize = PAGE_SIZE) {
     return moviesFound.slice(offset, offset + pageSize);
 };
 
+export async function getTopMovies() {
+    try {
+        const movies = await get(endpoints.allMovies, {
+            keys: "name,movieLength,genres,rating,director,stars,description,objectId,type,image",
+            limit: 5,
+            order: "-views",
+        });
+        return movies.results;
+    } catch (err) {
+        console.error(err);
+    }
+}
+
 export async function getMoviesCount() {
     const response = await get(endpoints.allMovies, { count: 1 });
     return response.count;
@@ -58,10 +71,18 @@ export async function getAllSeries(page = 1, pageSize = PAGE_SIZE) {
     return seriesFound.slice(offset, offset + pageSize);
 };
 
+export async function getTopSeries() {
+    const series = await get(`${endpoints.allSeries}?limit=5&sort=-views`, {
+        keys: "genres,objectId,image,rating,name",
+    });
+    const topSeries = series.results;
+    return topSeries;
+}
+
 export async function getSeriesCount() {
     const response = await get(endpoints.allSeries, { count: 1 });
     return response.count;
-  }
+}
 
 export async function createNewSeire(newSeries) {
     return post(endpoints.createSerie, newSeries);
@@ -89,12 +110,12 @@ export async function getMoviesAndSeries(page = 1, pageSize = PAGE_SIZE) {
 
 export async function getMoviesAndSeriesCount() {
     const [moviesCount, seriesCount] = await Promise.all([
-      getMoviesCount(),
-      getSeriesCount()
+        getMoviesCount(),
+        getSeriesCount()
     ]);
-  
+
     return moviesCount + seriesCount;
-  };
+};
 
 ////SEARCH
 
