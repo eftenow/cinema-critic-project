@@ -1,9 +1,9 @@
 import { html } from '../../node_modules/lit-html/lit-html.js';
 import { scrollToBottom, scrollToTop } from '../../utils/backToTopBtn.js';
-import { addUserBookmark, getUser } from '../services/authServices.js';
+import { addUserBookmark, removeUserBookmark, getUser, getUserBookmarks } from '../services/authServices.js';
 import { getTopMovies } from '../services/itemServices.js';
 
-const movieContainerTemplate = (movie, rank, currentUser) => html`
+const movieContainerTemplate = (ctx, movie, rank, currentUser, userBookmarks) => html`
     <div class="movie-container">
       <div class="movie-info">
         <div class="movie-details">
@@ -26,14 +26,14 @@ const movieContainerTemplate = (movie, rank, currentUser) => html`
         ${currentUser
           ? html`
             <div class="movie-watchlist">
-              <button class="add-to-watchlist" @click=${() => toggleBookmark(movie)}>
-                ${movie.isBookmarked ? html`
-                  <span class="fa-stack fa-2x">
+              <button class="add-to-watchlist">
+                ${userBookmarks && userBookmarks.includes(movie.objectId) ? html`
+                  <span id='to-add' class="fa-stack fa-2x" @click=${() => removeUserBookmark(ctx, movie.objectId , '/popular')}>
                     <i id="bookmark-checked" class="fa-solid fa-bookmark fa-stack-2x"></i>
-                    <i class="fa-solid fa-check fa-stack-1x"></i>
+                    <i id='check' class="fa-solid fa-check fa-stack-1x"></i>
                   </span>
                 ` : html`
-                  <span class="fa-stack fa-2x">
+                  <span id='to-remove' class="fa-stack fa-2x" @click=${() => addUserBookmark(ctx, movie.objectId, '/popular')}>
                     <i id="bookmark" class="fa-solid fa-bookmark fa-stack-2x"></i>
                     <i id="plus" class="fa-solid fa-plus fa-stack-1x"></i>
                   </span>
@@ -46,11 +46,11 @@ const movieContainerTemplate = (movie, rank, currentUser) => html`
     </div>
   `;
 
-const popularMoviesTemplate = (ctx, popularMovies) => html`
+const popularMoviesTemplate = (ctx, popularMovies, currentUser, userBookmarks) => html`
   <section class="popular-movies">
     <h2 class="popular-heading">Popular this week</h2>
     <div class="leaderboard">
-      ${popularMovies.map(movie => movieContainerTemplate(movie, popularMovies.indexOf(movie)))}
+      ${popularMovies.map(movie => movieContainerTemplate(ctx, movie, popularMovies.indexOf(movie), currentUser, userBookmarks))}
     </div>
   </section>
 `;
@@ -58,9 +58,9 @@ const popularMoviesTemplate = (ctx, popularMovies) => html`
 export async function renderPopular(ctx) {
     const popularMovies = await getTopMovies();
     const currentUser = getUser();
-    console.log(currentUser);
-    const popular = popularMoviesTemplate(ctx, popularMovies, currentUser);
-    addUserBookmark('paDCzdE1gy')
+    const userBookmarks = await getUserBookmarks();
+
+    const popular = popularMoviesTemplate(ctx, popularMovies, currentUser, userBookmarks);
     ctx.render(popular);
 };
 

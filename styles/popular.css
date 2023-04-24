@@ -143,17 +143,23 @@
 
 #bookmark{
     color: rgb(54, 52, 52);
-    background: floralwhite;
+    background-color: #fff;
 }
 
+#bookmark-checked{
+    background-color: #fff;
+    color: rgb(10 151 27 / 67%);
+}
 
-
-#plus{
+#plus, #check{
     color: rgb(221, 217, 217);
     line-height: 1.5;
 }
 
-#plus:hover{
+
+
+#plus:hover,
+#check:hover{
     color: white;
     cursor: pointer;
 }

@@ -26,7 +26,6 @@ export async function request(method, url, bodyData) {
     }
 
     try {
-        console.log(options);
         let response = await fetch(HOST + url, options);
         
         if (response.ok != true){

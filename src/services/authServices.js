@@ -36,6 +36,20 @@ export async function registerUser(password, username, emailAddress) {
     }
   }
 
+  export function getUserBookmarks() {
+    const currentUser = Parse.User.current();
+    if (currentUser) {
+      const query = new Parse.Query(Parse.User);
+      query.include('userBookmarks');
+      return query.get(currentUser.id)
+        .then(user => {
+          return user.get('userBookmarks');
+        })
+        .catch(error => console.error(error));
+    }
+    return null;
+  }
+
 export async function logoutUser() {
     await post(endpoints.logout)
     localStorage.removeItem('user');
@@ -90,11 +104,27 @@ export async function getAllEmails() {
     return emailAddresses;
   };
 
-  export async function addUserBookmark(movieId) {
+  export async function addUserBookmark(ctx, movieId, toSection) {
+    console.log('add');
     const currentUser = getUser();
     const User = Parse.Object.extend('User');
     const query = new Parse.Query(User);
     const user = await query.get(currentUser.objectId);
-    user.addUnique('userBookmarks', movieId);
+    const userBookmarks = user.get('userBookmarks') || [];
+    userBookmarks.push(movieId);
+    user.set('userBookmarks', userBookmarks);
+
     await user.save();
-  }
+    ctx.redirect(toSection);
+  };
+
+  export async function removeUserBookmark(ctx, movieId, toSection) {
+    console.log(`remove`);
+    const currentUser = getUser();
+    const User = Parse.Object.extend('User');
+    const query = new Parse.Query(User);
+    const user = await query.get(currentUser.objectId);
+    user.remove('userBookmarks', movieId);
+    await user.save();
+    ctx.redirect(toSection);
+};
