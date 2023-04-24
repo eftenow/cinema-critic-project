@@ -1,22 +1,34 @@
 import { html } from '../../node_modules/lit-html/lit-html.js';
 import { backToTopHandler } from '../../utils/backToTopBtn.js';
 import { selectOption, showHideOptions } from '../../utils/dropdowns.js';
+import { addUserBookmark, getUser, getUserBookmarks, removeUserBookmark } from '../services/authServices.js';
 import { getMovieDetails, getSeriesDetails } from '../services/itemServices.js';
 
 
-const detailsTemplate = (movie, ctx, type) => html`
+const detailsTemplate = (movie, ctx, type, currentUser, userBookmarks) => html`
 <section class="specific-movie-details">
   <div class='details-header'>
   <div class="movie-poster">
     <img src="${movie.image}" alt="Movie Poster">
-    <div class="movie-watchlist">
-                <button class="add-to-watchlist details-watchlist">
-                <span class="fa-stack fa-2x">
-                        <i id="details-bookmark" class="fa-solid fa-bookmark fa-stack-2x"></i>
-                        <i id="plus" class="fa-solid fa-plus fa-stack-1x"></i>
-                    </span>
-                </button>
+    ${currentUser
+    ? html`
+            <div class="movie-watchlist">
+              <button class="add-to-watchlist-details">
+                ${userBookmarks && userBookmarks.includes(movie.objectId) ? html`
+                <span id='to-add' class="fa-stack fa-2x" @click=${() => removeUserBookmark(ctx, movie.objectId, `/${movie.type}/${movie.objectId}`)}>
+                    <i id="details-bookmark-checked" class="fa-solid fa-bookmark fa-stack-2x"></i>
+                    <i id='check' class="fa-solid fa-check fa-stack-1x"></i>
+                  </span>
+                ` : html`
+                <span id='to-remove' class="fa-stack fa-2x" @click=${() => addUserBookmark(ctx, movie.objectId, `/${movie.type}/${movie.objectId}`)}>
+                    <i id="details-bookmark-unchecked" class="fa-solid fa-bookmark fa-stack-2x"></i>
+                    <i id="plus" class="fa-solid fa-plus fa-stack-1x"></i>
+                  </span>
+                `}
+              </button>
             </div>
+          `
+    : html``}
   </div>
   <div class="specific-movie-info">
     <h2 class="specific-movie-title details-movie-specifics">${movie.name}</h2>
@@ -24,9 +36,6 @@ const detailsTemplate = (movie, ctx, type) => html`
     <p class="specific-movie-genre"><span class="details-movie-specifics">Genre: </span>${movie.genres}</p>
     <p class="specific-movie-cast"> <span class="details-movie-specifics">Director: </span>${movie.director}</p>
     <p class="specific-movie-cast"> <span class="details-movie-specifics">Stars: </span>${movie.stars}</p>
-    ${console.log(type)}
-    ${console.log(ctx)}
-    ${console.log(movie)}
     ${type == 'series'
     ? html`<p class="specific-movie-runtime"> <span class="details-movie-specifics">Seasons: </span>${movie.seasons}</p>
     <p class="specific-movie-runtime"> <span class="details-movie-specifics">Total Episodes: </span>${movie.episodes}</p>
@@ -118,8 +127,12 @@ const detailsTemplate = (movie, ctx, type) => html`
 export async function renderMovieDetails(ctx) {
   const type = 'movie';
   const movieId = ctx.params.id;
-  const currentMovie = await getMovieDetails(movieId);
-  const details = detailsTemplate(currentMovie, ctx, type);
+  const [currentMovie, currentUser, userBookmarks] = await Promise.all([
+    getMovieDetails(movieId),
+    getUser(),
+    getUserBookmarks(),
+  ]);
+  const details = detailsTemplate(currentMovie, ctx, type, currentUser, userBookmarks);
 
   ctx.render(details);
 };
@@ -127,8 +140,14 @@ export async function renderMovieDetails(ctx) {
 export async function renderSeriesDetails(ctx) {
   const type = 'series';
   const seriesId = ctx.params.id;
-  const currentSeries = await getSeriesDetails(seriesId);
-  const details = detailsTemplate(currentSeries, ctx, type);
+  const [currentSeries, currentUser, userBookmarks] = await Promise.all([
+    getSeriesDetails(seriesId),
+    getUser(),
+    getUserBookmarks(),
+  ]);
+
+
+  const details = detailsTemplate(currentSeries, ctx, type, currentUser, userBookmarks);
   const autocomBox = document.querySelector('.autocom-box');
   autocomBox.style.display = 'none';
 
@@ -149,4 +168,3 @@ export async function renderSeriesDetails(ctx) {
 //     return;
 //   }
 // };
-

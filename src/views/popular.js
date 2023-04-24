@@ -56,9 +56,11 @@ const popularMoviesTemplate = (ctx, popularMovies, currentUser, userBookmarks) =
 `;
 
 export async function renderPopular(ctx) {
-    const popularMovies = await getTopMovies();
-    const currentUser = getUser();
-    const userBookmarks = await getUserBookmarks();
+    const [popularMovies, currentUser, userBookmarks] = await Promise.all([
+      getTopMovies(),
+      getUser(),
+      getUserBookmarks(),
+    ]);
 
     const popular = popularMoviesTemplate(ctx, popularMovies, currentUser, userBookmarks);
     ctx.render(popular);

@@ -105,7 +105,6 @@ export async function getAllEmails() {
   };
 
   export async function addUserBookmark(ctx, movieId, toSection) {
-    console.log('add');
     const currentUser = getUser();
     const User = Parse.Object.extend('User');
     const query = new Parse.Query(User);
@@ -119,12 +118,12 @@ export async function getAllEmails() {
   };
 
   export async function removeUserBookmark(ctx, movieId, toSection) {
-    console.log(`remove`);
     const currentUser = getUser();
     const User = Parse.Object.extend('User');
     const query = new Parse.Query(User);
     const user = await query.get(currentUser.objectId);
     user.remove('userBookmarks', movieId);
     await user.save();
+
     ctx.redirect(toSection);
 };
