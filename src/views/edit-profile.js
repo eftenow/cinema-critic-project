@@ -62,15 +62,16 @@ export async function renderEdit(ctx) {
 
 async function saveChangesHandler(ev, ctx) {
     ev.preventDefault();
+    const profileImg = document.getElementById('new-avatar-url').value;
     const form = new FormData(ev.target);
     const username = form.get('username');
-    const emailAddress = form.get('emailAddress');
+    const emailAddress = form.get('email');
     const country = form.get('country');
     const city = form.get('city');
     const description = form.get('description');
     const userId = getUserId();
 
-    const editedUserData = { username, emailAddress, country, city, description };
+    const editedUserData = { username, emailAddress, country, city, description, profileImg };
     await editUserInfo(userId, editedUserData);
 
     ctx.redirect('/myProfile');

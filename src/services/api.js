@@ -1,8 +1,10 @@
 import { getCurrentSessionToken } from "./authServices.js";
-import {HOST, APP_ID, KEY_REST_API} from "../../secrets.js";
+import {HOST, APP_ID, JS_KEY, KEY_REST_API} from "../../secrets.js";
 
+Parse.initialize(APP_ID, JS_KEY);
+Parse.serverURL = 'https://parseapi.back4app.com/';
 
-async function request(method, url, bodyData) {
+export async function request(method, url, bodyData) {
     let options = {
         method,
         headers : {
@@ -24,6 +26,7 @@ async function request(method, url, bodyData) {
     }
 
     try {
+        console.log(options);
         let response = await fetch(HOST + url, options);
         
         if (response.ok != true){

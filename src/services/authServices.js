@@ -1,4 +1,8 @@
-import { get, post, put } from './api.js';
+import { get, post, put, request } from './api.js';
+import { APP_ID, JS_KEY } from "../../secrets.js";
+
+Parse.initialize(APP_ID, JS_KEY);
+Parse.serverURL = 'https://parseapi.back4app.com/';
 
 const endpoints = {
     'login': '/login',
@@ -9,14 +13,28 @@ const endpoints = {
 }
 
 export async function loginUser(username, password) {
-    const user = await post(endpoints.login, { username, password });
-    localStorage.setItem('user', JSON.stringify(user));
+    const data = await post(endpoints.login, { username, password });
+      const sessionToken = data.sessionToken;
+      Parse.User.become(sessionToken);
+      localStorage.setItem('user', JSON.stringify(data));
 };
 
 export async function registerUser(password, username, emailAddress) {
-    const user = await post(endpoints.register, { password, username, emailAddress });
-    localStorage.setItem('user', JSON.stringify(user));
-};
+    const parseUser = new Parse.User();
+    parseUser.setUsername(username);
+    parseUser.setPassword(password);
+    parseUser.setEmail(emailAddress);
+    parseUser.set('emailAddress', emailAddress);
+
+  
+    try {
+      await parseUser.signUp();
+      console.log(`email:${emailAddress}, username: ${username}, password: ${password}`);
+      localStorage.setItem('user', JSON.stringify(parseUser.toJSON()));
+    } catch (error) {
+      throw error;
+    }
+  }
 
 export async function logoutUser() {
     await post(endpoints.logout)
@@ -27,6 +45,7 @@ export async function logoutUser() {
 export function getUser() {
     return JSON.parse(localStorage.getItem('user'));
 };
+
 
 export function getCurrentSessionToken() {
     let user = getUser();
@@ -43,9 +62,11 @@ export function getUserId() {
 };
 
 export async function editUserInfo(userId, editedUserData) {
-    const user = await put(endpoints.edit(userId), editedUserData);
+    console.log(editedUserData);
+    const user = await put(endpoints.edit(userId.toString()), editedUserData);
+    console.log(user);
     updateLocalStorage(editedUserData);
-}
+  };
 
 function updateLocalStorage(updatedData) {
     let user = JSON.parse(localStorage.getItem('user'));
@@ -67,4 +88,13 @@ export async function getAllEmails() {
     const emailAddresses = results.map(result => result.emailAddress);
     
     return emailAddresses;
+  };
+
+  export async function addUserBookmark(movieId) {
+    const currentUser = getUser();
+    const User = Parse.Object.extend('User');
+    const query = new Parse.Query(User);
+    const user = await query.get(currentUser.objectId);
+    user.addUnique('userBookmarks', movieId);
+    await user.save();
   }

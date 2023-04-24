@@ -56,7 +56,7 @@ const registerTemplate = (ctx, usernames, emails) => html`
 export async function renderRegister(ctx) {
     const usernames = await getAllUsernames();
     const emails = await getAllEmails();
-
+    console.log(emails);
     const register = registerTemplate(ctx, usernames, emails);
     ctx.render(register);
 };
@@ -65,7 +65,7 @@ async function onRegisterHandler(ev, ctx) {
     ev.preventDefault();
     let form = new FormData(ev.target);
     let username = form.get('username');
-    let emailAddress = form.get('emailAddress');
+    let emailAddress = form.get('email');
     let password = form.get('password');
 
     await registerUser(password, username, emailAddress);
