@@ -239,7 +239,8 @@ option:checked {
 }
 
 .category-menu .menu-item:hover,
-.selected-category {
+.selected-category,
+.selected-type {
     /* color: #fbbc05; */
     color: #8e47f8;
     font-weight: bold;

@@ -18,11 +18,10 @@ const endpoints = {
 };
 
 
-export async function getAllMovies(page = 1, pageSize = PAGE_SIZE) {
-    const offset = (page - 1) * pageSize;
+export async function getAllMovies() {
     const movies = await get(endpoints.allMovies, { keys: 'genres,objectId,type,image,rating,name' });
     const moviesFound = movies.results;
-    return moviesFound.slice(offset, offset + pageSize);
+    return moviesFound;
 };
 
 export async function getTopMovies() {
@@ -64,11 +63,10 @@ export async function deleteMovie(id) {
 
 
 ////SERIES
-export async function getAllSeries(page = 1, pageSize = PAGE_SIZE) {
-    const offset = (page - 1) * pageSize;
+export async function getAllSeries() {
     const series = await get(endpoints.allSeries, { keys: 'genres,objectId,type,image,rating,name' });
     const seriesFound = series.results;
-    return seriesFound.slice(offset, offset + pageSize);
+    return seriesFound;
 };
 
 export async function getTopSeries() {
@@ -107,6 +105,18 @@ export async function getMoviesAndSeries(page = 1, pageSize = PAGE_SIZE) {
     const results = sortedMovies.concat(sortedSeries);
     return results.slice(offset, offset + pageSize);
 };
+
+export async function getAllContentData() {
+    const promises = Promise.all([
+        get(`${endpoints.allMovies}?keys=genres,objectId,type,image,rating,name`),
+        get(`${endpoints.allSeries}?keys=genres,objectId,type,image,rating,name`)
+    ]);
+    const [movies, series] = await promises;
+    const sortedMovies = movies.results;
+    const sortedSeries = series.results;
+    const results = sortedMovies.concat(sortedSeries);
+    return results;
+}
 
 export async function getMoviesAndSeriesCount() {
     const [moviesCount, seriesCount] = await Promise.all([

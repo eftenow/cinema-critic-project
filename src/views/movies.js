@@ -1,5 +1,5 @@
 import { html } from '../../node_modules/lit-html/lit-html.js';
-import { filterHandler, sortHandler, setCategorySelected } from '../../utils/filterButtons.js';
+import { filterHandler, sortHandler, setCategorySelected, setTypeSelected } from '../../utils/filterButtons.js';
 import { PAGE_SIZE, getMoviesAndSeries, getMoviesAndSeriesCount } from '../services/itemServices.js';
 import { displayPages } from '../../utils/pagination.js';
 
@@ -14,7 +14,7 @@ const movieTemplate = (movie) => html`
                 </div>
 `
 
-export const moviesTemplate = (movies, ctx, currentPage=1, pagesCount=1) => html`
+export const moviesTemplate = (movies, ctx, currentPage = 1, pagesCount = 1) => html`
         <section class="movies-section">
             <h2>Our suggestions</h2>
             
@@ -26,16 +26,16 @@ export const moviesTemplate = (movies, ctx, currentPage=1, pagesCount=1) => html
                 </a>
                 <div class="category-menu" @click="${(e) => filterHandler(e, ctx)}">
                     <span class="subject">All Genres</span>
-                    <a href="#" class="menu-item">Action</a>
-                    <a href="#" class="menu-item">Adventure</a>
-                    <a href="#" class="menu-item">Comedy</a>
-                    <a href="#" class="menu-item">Crime</a>
-                    <a href="#" class="menu-item">Drama</a>
-                    <a href="#" class="menu-item">Romance</a>
-                    <a href="#" class="menu-item">Sci-Fi</a>
-                    <a href="#" class="menu-item">Thriller</a>
-                    <a href="#" class="menu-item">Horror</a>
-                    <a href="#" class="menu-item">Fantasy</a>
+                    <a href="#" data-genre="action" class="menu-item menu-item-genre">Action</a>
+                    <a href="#" data-genre="adventure" class="menu-item menu-item-genre">Adventure</a>
+                    <a href="#" data-genre="comedy" class="menu-item menu-item-genre">Comedy</a>
+                    <a href="#" data-genre="crime" class="menu-item menu-item-genre">Crime</a>
+                    <a href="#" data-genre="drama" class="menu-item menu-item-genre">Drama</a>
+                    <a href="#" data-genre="romance" class="menu-item menu-item-genre">Romance</a>
+                    <a href="#" data-genre="sci-fi" class="menu-item menu-item-genre">Sci-Fi</a>
+                    <a href="#" data-genre="thriller" class="menu-item menu-item-genre">Thriller</a>
+                    <a href="#" data-genre="horror" class="menu-item menu-item-genre">Horror</a>
+                    <a href="#" data-genre="fantasy" class="menu-item menu-item-genre">Fantasy</a>
                 </div>
             </div>
             <div class="search-category">
@@ -62,16 +62,16 @@ export const moviesTemplate = (movies, ctx, currentPage=1, pagesCount=1) => html
                     
                 </div>
             </div>
-            <div  class="search-category">
+            <div  class="search-category" >
                 <a href="#">
                     <span>Type</span>
                     <i class="fa-solid fa-angle-down"></i>
                 </a>
-                <div class="category-menu">
+                <div class="category-menu" @click="${(e) => filterHandler(e, ctx)}">
                     <span class="subject">Sort by type</span>
-                    <a href="/movies" class="menu-item">Movies</a>
-                    <a href="/series" class="menu-item">Series</a>
-                    <a href="/dashboard" class="menu-item">All</a>
+                    <a href="#" data-type="movie" class="menu-item menu-item-type">Movies</a>
+                    <a href="#" data-type="series" class="menu-item menu-item-type">Series</a>
+                    <a href="/dashboard" data-type="all" class="menu-item menu-item-type">All</a>
                     
                 </div>
             </div>
@@ -112,7 +112,7 @@ export async function renderAllContent(ctx) {
     const movies = moviesTemplate(seriensAndMovies, ctx, currentPage, pagesCount);
 
     ctx.render(movies);
-    setCategorySelected('All');
+    setTypeSelected();
 };
 
 async function resetAllFilters(ctx) {
@@ -129,8 +129,11 @@ async function resetAllFilters(ctx) {
     const selectedSortOption = document.querySelector('.selected-sort-option');
     if (selectedSortOption) {
         selectedSortOption.classList.remove('selected-sort-option');
-    }
+    };
 
+    const categoryItems = document.querySelectorAll('.menu-item-type');
+    categoryItems.forEach(item => item.classList.remove('selected-type'));
+    window.history.replaceState({}, '', `${window.location.pathname}`);
     await renderAllContent(ctx);
 };
 
