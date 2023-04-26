@@ -232,7 +232,7 @@ option:checked {
 .category-menu .menu-item {
     position: relative;
     padding: 6px 0 6px 36px;
-    font-size: 16px;
+    font-size: 1.02rem;
     line-height: 22px;
     text-transform: capitalize;
     transition: all 0.18s;
@@ -244,6 +244,7 @@ option:checked {
     /* color: #fbbc05; */
     color: #8e47f8;
     font-weight: bold;
+    font-size: 1.05rem;
 }
 
 .search-category:hover .category-menu {
@@ -251,3 +252,25 @@ option:checked {
     opacity: 1;
     pointer-events: all;
 }
+
+.genre-item input[type="checkbox"]:checked {
+    accent-color: #8e47f8;
+  }
+
+  .genre-list label {
+    font-size: 1.02rem;
+    position: relative;
+    line-height: 22px;
+    text-transform: capitalize;
+    transition: all 0.18s;
+  }
+
+  input[type="checkbox"]:checked + label {
+    color: #8e47f8;
+    font-weight: bold;
+    font-size: 1.05rem;
+  }
+
+  .genre-item label:hover{
+    cursor: pointer;
+  }

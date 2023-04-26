@@ -1,5 +1,5 @@
 import { PAGE_SIZE, getAllContentData, getAllMovies, getAllSeries, getMovieDetails, getMoviesAndSeries, getMoviesCount, getSeriesCount, getSeriesDetails } from "../src/services/itemServices.js";
-import { moviesTemplate } from "../src/views/movies.js";
+import { moviesTemplate, renderAllContent } from "../src/views/movies.js";
 
 async function renderFilteredMovies(ctx, selectedCategory, currentPage) {
   const allMovies = await getMoviesAndSeries(currentPage);
@@ -11,36 +11,35 @@ async function renderFilteredMovies(ctx, selectedCategory, currentPage) {
   ctx.render(matches);
 }
 
+export function getSelectedGenres() {
+  const genreCheckboxes = Array.from(document.querySelectorAll('.genre-list input[type="checkbox"]'));
+  const selectedGenres = genreCheckboxes.filter(cb => cb.checked).map(cb => cb.value);
+  return selectedGenres;
+}
+
 export async function filterHandler(ev, ctx) {
   ev.preventDefault();
-
   const target = ev.target;
-  let validFilter;
-  debugger;
-  if (target.tagName.toLowerCase() === 'a' && target.classList.contains('menu-item')) {
-    validFilter = target.textContent;
-    if (ev.target.classList.contains('menu-item-type')){
-      const categoryItems = document.querySelectorAll('.menu-item-type');
-      categoryItems.forEach(item => item.classList.remove('selected-type'));
-      ev.target.classList.add('selected-type');
-      const type = ev.target.getAttribute('data-type');
-      const searchParams = new URLSearchParams(window.location.search);
-      searchParams.set('type', type);
-      window.history.replaceState({}, '', `${window.location.pathname}?${searchParams}`);
-    } else{
-      const categoryItems = document.querySelectorAll('.menu-item-genre');
-      categoryItems.forEach(item => item.classList.remove('selected-category'));
-      ev.target.classList.add('selected-category');
-      const genre = ev.target.getAttribute('data-genre');
-      const searchParams = new URLSearchParams(window.location.search);
-      searchParams.set('genre', genre);
-      window.history.replaceState({}, '', `${window.location.pathname}?${searchParams}`);
-    }
-  };
+  let validFilter = false, totalItems;
+  
+  if (target.tagName.toLowerCase() === 'label' || target.tagName.toLowerCase() === 'input') {
+    const genreCheckbox = target.tagName.toLowerCase() === 'input' ? target : target.previousElementSibling;
+    genreCheckbox.checked = !genreCheckbox.checked;
+    target.closest('.genre-item').classList.toggle('selected-genre');
+    validFilter = true;
+  } else {
+    const categoryItems = document.querySelectorAll('.menu-item-type');
+    categoryItems.forEach(item => item.classList.remove('selected-type'));
+    ev.target.classList.add('selected-type');
+    const type = ev.target.getAttribute('data-type');
+    const searchParams = new URLSearchParams(window.location.search);
+    searchParams.set('type', type);
+    window.history.replaceState({}, '', `${window.location.pathname}?${searchParams}`);
+    validFilter = true;
+  }
 
-  let genreElement = document.querySelector('.selected-category');
-  let genre = genreElement ? genreElement.textContent : null;
-  let type = document.querySelector('.selected-type').getAttribute('data-type');
+  const type = document.querySelector('.selected-type').getAttribute('data-type');
+  const selectedGenres = getSelectedGenres();
 
   if (validFilter) {
     const searchParams = new URLSearchParams(ctx.querystring);
@@ -49,47 +48,55 @@ export async function filterHandler(ev, ctx) {
     let filteredItems = [];
 
     if (type === "movie") {
-      filteredItems = await filterMoviesByGenre(genre);
+      const {movies, totalMovies} = await filterMoviesByGenre(selectedGenres, currentPage);
+      filteredItems = movies;
+      totalItems = totalMovies;
     } else if (type === "series") {
-      filteredItems = await filterSeriesByGenre(genre);
+      const {series, totalSeries} = await filterSeriesByGenre(selectedGenres, currentPage);
+      filteredItems = series;
+      totalItems = totalSeries;
     } else {
-      filteredItems = await filterSeriesAndMoviesByGenre(genre);
+      const {content, totalContent} = await filterSeriesAndMoviesByGenre(selectedGenres, currentPage);
+      filteredItems = content;
+      totalItems = totalContent;
     }
-
-    const pagesCount = Math.ceil(filteredItems.length / PAGE_SIZE);
+    const pagesCount = Math.ceil(totalItems / PAGE_SIZE);
     const matches = moviesTemplate(filteredItems, ctx, currentPage, pagesCount);
-
     ctx.render(matches);
+    const searchParams2 = new URLSearchParams(window.location.search);
+    searchParams2.set('genre', selectedGenres.join(','));
+    searchParams2.set('type', type);
+    window.history.replaceState({}, '', `${window.location.pathname}?${searchParams2}`);
   }
-};
+}
 
-async function filterMoviesByGenre(genre, currentPage) {
+async function filterMoviesByGenre(genre, currentPage, totalMovies) {
   let allMovies = await getAllMovies(currentPage);
   if (genre) {
-    const selectedGenres = genre.split(',');
-    allMovies = allMovies.filter(movie => selectedGenres.some(genre => movie.genres.toLowerCase().includes(genre.trim().toLowerCase())));
+
+    allMovies = allMovies.filter(movie => genre.every(genre => movie.genres.toLowerCase().includes(genre.trim().toLowerCase())));
   }
-  return allMovies;
+  totalMovies = allMovies.length;
+  return { movies: allMovies, totalMovies };
 }
 
-async function filterSeriesByGenre(genre, currentPage) {
+async function filterSeriesByGenre(genre, currentPage, totalSeries) {
   let allSeries = await getAllSeries(currentPage);
   if (genre) {
-    const selectedGenres = genre.split(',');
-    allSeries = allSeries.filter(series => selectedGenres.some(genre => series.genres.toLowerCase().includes(genre.trim().toLowerCase())));
+    allSeries = allSeries.filter(series => genre.every(genre => series.genres.toLowerCase().includes(genre.trim().toLowerCase())));
   }
-  return allSeries;
+  totalSeries = allSeries.length;
+  return { series: allSeries, totalSeries };
 };
 
-async function filterSeriesAndMoviesByGenre(genre, currentPage) {
+async function filterSeriesAndMoviesByGenre(genre, currentPage, totalContent) {
   let content = await getAllContentData();
   if (genre) {
-    const selectedGenres = genre.split(',');
-    content = content.filter(item => selectedGenres.some(genre => item.genres.toLowerCase().includes(genre.trim().toLowerCase())));
+    content = content.filter(item => genre.every(genre => item.genres.toLowerCase().includes(genre.trim().toLowerCase())));
   }
-  return content;
+  totalContent = content.length;
+  return { content, totalContent };
 }
-
 
 function setSortSelected(sortOptionId) {
   const sortOptions = document.querySelectorAll('.menu-item');
@@ -121,7 +128,7 @@ export async function sortHandler(ctx, movies, e) {
   const sortedMoviesTemplate = moviesTemplate(sortedMovies, ctx, currentPage, pagesCount);
   ctx.render(sortedMoviesTemplate);
 
-  
+
   setSortSelected(sortSpecific);
 }
 
@@ -136,7 +143,7 @@ export function setCategorySelected(category) {
   }
 };
 
-export function setTypeSelected(type='All') {
+export function setTypeSelected(type = 'All') {
   const menuItems = document.querySelectorAll('.menu-item-type');
   menuItems.forEach(item => item.classList.remove('selected-category'));
 
@@ -168,4 +175,9 @@ export async function filterSeries(ctx) {
   ctx.render(matches);
 
   setCategorySelected('Series');
+};
+
+export async function resetAllFilters(ctx) {
+  window.history.replaceState({}, '', `${window.location.pathname}`);
+  window.location.reload();
 };

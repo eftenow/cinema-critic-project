@@ -95,16 +95,16 @@ export async function getSeriesDetails(id) {
 export async function getMoviesAndSeries(page = 1, pageSize = PAGE_SIZE) {
     const offset = (page - 1) * pageSize;
     const promises = Promise.all([
-        get(`${endpoints.allMovies}?keys=genres,objectId,type,image,rating,name`),
-        get(`${endpoints.allSeries}?keys=genres,objectId,type,image,rating,name`)
+      get(`${endpoints.allMovies}?keys=genres,objectId,type,image,rating,name,createdAt&order=-createdAt`),
+      get(`${endpoints.allSeries}?keys=genres,objectId,type,image,rating,name,createdAt&order=-createdAt`),
     ]);
     const [movies, series] = await promises;
     const sortedMovies = movies.results;
     const sortedSeries = series.results;
-
+  
     const results = sortedMovies.concat(sortedSeries);
     return results.slice(offset, offset + pageSize);
-};
+  };
 
 export async function getAllContentData() {
     const promises = Promise.all([

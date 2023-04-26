@@ -1,5 +1,5 @@
 import { html } from '../../node_modules/lit-html/lit-html.js';
-import { filterHandler, sortHandler, setCategorySelected, setTypeSelected } from '../../utils/filterButtons.js';
+import { filterHandler, sortHandler, setCategorySelected, setTypeSelected, resetAllFilters } from '../../utils/filterButtons.js';
 import { PAGE_SIZE, getMoviesAndSeries, getMoviesAndSeriesCount } from '../services/itemServices.js';
 import { displayPages } from '../../utils/pagination.js';
 
@@ -25,18 +25,50 @@ export const moviesTemplate = (movies, ctx, currentPage = 1, pagesCount = 1) => 
                     <i class="fa-solid fa-angle-down"></i>
                 </a>
                 <div class="category-menu" @click="${(e) => filterHandler(e, ctx)}">
-                    <span class="subject">All Genres</span>
-                    <a href="#" data-genre="action" class="menu-item menu-item-genre">Action</a>
-                    <a href="#" data-genre="adventure" class="menu-item menu-item-genre">Adventure</a>
-                    <a href="#" data-genre="comedy" class="menu-item menu-item-genre">Comedy</a>
-                    <a href="#" data-genre="crime" class="menu-item menu-item-genre">Crime</a>
-                    <a href="#" data-genre="drama" class="menu-item menu-item-genre">Drama</a>
-                    <a href="#" data-genre="romance" class="menu-item menu-item-genre">Romance</a>
-                    <a href="#" data-genre="sci-fi" class="menu-item menu-item-genre">Sci-Fi</a>
-                    <a href="#" data-genre="thriller" class="menu-item menu-item-genre">Thriller</a>
-                    <a href="#" data-genre="horror" class="menu-item menu-item-genre">Horror</a>
-                    <a href="#" data-genre="fantasy" class="menu-item menu-item-genre">Fantasy</a>
-                </div>
+  <span class="subject">All Genres</span>
+  <div class="genre-list">
+    <div class="genre-item">
+      <input class ='genre' type="checkbox" id="action" name="genre" value="action">
+      <label class ='genre' for="action">Action</label>
+    </div>
+    <div class="genre-item">
+      <input class ='genre' type="checkbox" id="adventure" name="genre" value="adventure">
+      <label class ='genre' for="adventure">Adventure</label>
+    </div>
+    <div class="genre-item">
+      <input class ='genre' type="checkbox" id="comedy" name="genre" value="comedy">
+      <label class ='genre' for="comedy">Comedy</label>
+    </div>
+    <div class="genre-item">
+      <input class ='genre' type="checkbox" id="crime" name="genre" value="crime">
+      <label class ='genre' for="crime">Crime</label>
+    </div>
+    <div class="genre-item">
+      <input class ='genre' type="checkbox" id="drama" name="genre" value="drama">
+      <label class ='genre' for="drama">Drama</label>
+    </div>
+    <div class="genre-item">
+      <input class ='genre' type="checkbox" id="romance" name="genre" value="romance">
+      <label class ='genre' for="romance">Romance</label>
+    </div>
+    <div class="genre-item">
+      <input class ='genre' type="checkbox" id="sci-fi" name="genre" value="sci-fi">
+      <label class ='genre' for="sci-fi">Sci-Fi</label>
+    </div>
+    <div class="genre-item">
+      <input class ='genre' type="checkbox" id="thriller" name="genre" value="thriller">
+      <label class ='genre' for="thriller">Thriller</label>
+    </div>
+    <div class="genre-item">
+      <input class ='genre' type="checkbox" id="horror" name="genre" value="horror">
+      <label class ='genre' for="horror">Horror</label>
+    </div>
+    <div class="genre-item">
+      <input class ='genre' type="checkbox" id="fantasy" name="genre" value="fantasy">
+      <label class ='genre' for="fantasy">Fantasy</label>
+    </div>
+  </div>
+</div>
             </div>
             <div class="search-category">
                 <a href="#">
@@ -115,27 +147,7 @@ export async function renderAllContent(ctx) {
     setTypeSelected();
 };
 
-async function resetAllFilters(ctx) {
-    const searchInput = document.querySelector('.search-input');
-    if (searchInput) {
-        searchInput.value = '';
-    }
 
-    const selectedCategory = document.querySelector('.selected-category');
-    if (selectedCategory) {
-        selectedCategory.classList.remove('selected-category');
-    }
-
-    const selectedSortOption = document.querySelector('.selected-sort-option');
-    if (selectedSortOption) {
-        selectedSortOption.classList.remove('selected-sort-option');
-    };
-
-    const categoryItems = document.querySelectorAll('.menu-item-type');
-    categoryItems.forEach(item => item.classList.remove('selected-type'));
-    window.history.replaceState({}, '', `${window.location.pathname}`);
-    await renderAllContent(ctx);
-};
 
 
 
