@@ -1,7 +1,8 @@
 import { html } from '../../node_modules/lit-html/lit-html.js';
 import { backToTopHandler } from '../../utils/backToTopBtn.js';
+import { addUserBookmark, removeUserBookmark } from '../../utils/bookmarkBtns.js';
 import { selectOption, showHideOptions } from '../../utils/dropdowns.js';
-import { addUserBookmark, getUser, getUserBookmarks, removeUserBookmark } from '../services/authServices.js';
+import {getUser, getUserBookmarks } from '../services/authServices.js';
 import { getMovieDetails, getSeriesDetails } from '../services/itemServices.js';
 
 

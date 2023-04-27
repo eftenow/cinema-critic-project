@@ -184,17 +184,21 @@ export async function getSearchMatches(searchText) {
 };
 
 
-export async function getUserWatchlist(userId) {
+export const getUserWatchlist = async (userId) => {
     const userQuery = new Parse.Query("User");
     userQuery.equalTo("objectId", userId);
     userQuery.include("userBookmarks");
     const user = await userQuery.first();
-
-    const bookmarkedMoviesIds = user.get("userBookmarks"); //array
-
+  
+    const bookmarkedMoviesIds = user.get("userBookmarks");
+  
     const movieQuery = new Parse.Query('Movie');
-
     movieQuery.containedIn('objectId', bookmarkedMoviesIds);
     const movies = await movieQuery.find();
-    return movies.map(m => m.attributes);
-}
+    
+    return movies.map(movie => {
+      const movieData = movie.toJSON();
+      movieData.objectId = movie.id;
+      return movieData;
+    });
+  };

@@ -21,11 +21,11 @@ export const profileTemplate = (user) => html`
                 <li><i class="fa-solid fa-location-dot"></i> ${user.city}, ${user.country}</li>
             </ul>
             <div class="links">
-                <a @click="${(e) => renderUserReviews(e, user)}" href="#" id='show-reviews' class="button">Show Reviews</a>
-                <a @click="${hideUserReviews}" href="#" class="hidden button" id='hide-reviews'>Hide Reviews</a>
+                <a @click="${(e) => renderUserReviews(e, user)}" href="?reviews" id='show-reviews' class="button">Show Reviews</a>
+                <a @click="${hideUserReviews}" href="/myProfile" class="hidden button" id='hide-reviews'>Hide Reviews</a>
                 <a href="#" class="msg-btn hidden">Message User</a>
-                <a @click="${(e) => renderUserWatchlist(e, user)}" href="#" id='show-watchlist' class="watchlist button">Watchlist</a>
-                <a @click="${hideUserWatchlist}" href="#" class="hidden button" id='hide-watchlist'>Hide Watchlist</a>
+                <a @click="${(e) => renderUserWatchlist(e, user)}" href="?watchlist" id='show-watchlist' class="watchlist button">Watchlist</a>
+                <a @click="${hideUserWatchlist}" href="/myProfile" class="hidden button" id='hide-watchlist'>Hide Watchlist</a>
             </div>
         </div>
         <section class="review-section hidden">

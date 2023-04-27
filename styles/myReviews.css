@@ -1,13 +1,16 @@
-.review-section {
+.review-section,
+.watchlist-section {
     padding: 30px 0;
     flex-wrap: wrap;
     flex-direction: column;
     align-items: center;
     display: flex;
+    width: 100%;
 }
 
 
-.review-section * {
+.review-section *,
+.watchlist-section * {
     color: rgb(55, 55, 56);
 
 }
@@ -20,10 +23,22 @@
     position: relative;
     box-shadow: 2px -1px 6px 1px;
     border-radius: 4px;
-    margin: 20px 0;
+    margin: 3% 0;
 
 }
 
+#watchlist-details{
+    border: none;
+    color: white;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin-right: 10px;
+    cursor: pointer;
+    border-radius: 8px;
+}
 
 .review-movie {
     margin-right: 35px;
@@ -41,17 +56,23 @@
 
 
 .movie-title {
-    font-size: 24px;
-    margin-top: 10px;
+    font-size: 1.2rem;
+    padding: 8px 0;
+    width: 100%;
+    background: black;
+    opacity: 0.9;
+    text-align: center;
+    color: white;
 }
 
 
 .review-content {
     width: 100%;
+    margin-bottom: 6%;
 }
 
 .review-title {
-    font-size: 32px;
+    font-size:  1.6rem;
     margin-bottom: 10px;
 }
 
@@ -61,9 +82,15 @@
 }
 
 .review-text {
-    font-size: 16px;
-    line-height: 1.5;
-    margin-bottom: 10px;
+    font-size: 14px;
+    line-height: 1.4;
+    margin-bottom: 8px;
+    margin-right: 3%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 7;
+    -webkit-box-orient: vertical;
 }
 
 .review-buttons {
@@ -115,4 +142,9 @@
 .review-delete:hover {
     background-color: #e41111;
 
+}
+
+#no-watchlist-msg{
+    margin: 0;
+    color: #8e47f8;
 }

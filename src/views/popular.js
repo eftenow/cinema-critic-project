@@ -1,6 +1,7 @@
 import { html } from '../../node_modules/lit-html/lit-html.js';
 import { scrollToBottom, scrollToTop } from '../../utils/backToTopBtn.js';
-import { addUserBookmark, removeUserBookmark, getUser, getUserBookmarks } from '../services/authServices.js';
+import { addUserBookmark, removeUserBookmark } from '../../utils/bookmarkBtns.js';
+import { getUser, getUserBookmarks } from '../services/authServices.js';
 import { getTopMovies } from '../services/itemServices.js';
 
 const movieContainerTemplate = (ctx, movie, rank, currentUser, userBookmarks) => html`
