@@ -2,7 +2,7 @@ import { html, render } from '../../node_modules/lit-html/lit-html.js';
 
 export const userReviews = (user, reviews, isOwner) => html`
 
-  <h2 class="myReviews-heading">${user}'s reviews</h2>
+  <h2 class="myReviews-heading">${user.username}'s reviews</h2>
   <div class="review-container">
     <div class="review-movie">
       <img class="movie-img" src="../../images/king-of-tulsa.jpg" alt="Movie Image">
@@ -44,23 +44,34 @@ export const userReviews = (user, reviews, isOwner) => html`
 
 
 export async function renderUserReviews(ev, user, reviews, isOwner) {
-  const myReviews = userReviews(user);
-
   const reviewSection = document.querySelector(".review-section");
-  const showBtn = document.getElementById('show');
-  const hideBtn = document.getElementById('hide');
-  render(myReviews, reviewSection)
-  reviewSection.classList.toggle('hidden');
-  showBtn.classList.add('hidden');
-  hideBtn.classList.remove('hidden');
+  const myReviews = userReviews(user);
+  const action = 'show';
+  
+  render(myReviews, reviewSection);
+  toggleReviewButtons(action);
 }
 
 export function hideUserReviews(ev) {
-  const reviewSection = document.querySelector(".review-section");
-  const showBtn = document.getElementById('show');
-  const hideBtn = document.getElementById('hide');
+  const action = 'hide';
+  toggleReviewButtons(action);
+}
 
-  reviewSection.classList.toggle('hidden');
-  showBtn.classList.remove('hidden');
-  hideBtn.classList.add('hidden');
+function toggleReviewButtons(action) {
+  const reviewSection = document.querySelector(".review-section");
+  const showReviewsBtn = document.getElementById('show-reviews');
+  const hideReviewsBtn = document.getElementById('hide-reviews');
+  const showWatchlistBtn = document.getElementById('show-watchlist');
+
+  if (action == 'show') {
+    reviewSection.classList.toggle('hidden');
+    showReviewsBtn.classList.add('hidden');
+    showWatchlistBtn.classList.add('hidden');
+    hideReviewsBtn.classList.remove('hidden');
+  } else if (action == 'hide') {
+    reviewSection.classList.toggle('hidden');
+    showReviewsBtn.classList.remove('hidden');
+    showWatchlistBtn.classList.remove('hidden');
+    hideReviewsBtn.classList.add('hidden');
+  }
 }

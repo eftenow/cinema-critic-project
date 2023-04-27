@@ -1,5 +1,6 @@
 import { post, put, del, get } from './api.js';
 import { APP_ID, JS_KEY } from "../../secrets.js";
+import { getUser } from './authServices.js';
 
 Parse.initialize(APP_ID, JS_KEY);
 Parse.serverURL = 'https://parseapi.back4app.com/';
@@ -181,3 +182,19 @@ export async function getSearchMatches(searchText) {
 
     return results;
 };
+
+
+export async function getUserWatchlist(userId) {
+    const userQuery = new Parse.Query("User");
+    userQuery.equalTo("objectId", userId);
+    userQuery.include("userBookmarks");
+    const user = await userQuery.first();
+
+    const bookmarkedMoviesIds = user.get("userBookmarks"); //array
+
+    const movieQuery = new Parse.Query('Movie');
+
+    movieQuery.containedIn('objectId', bookmarkedMoviesIds);
+    const movies = await movieQuery.find();
+    return movies.map(m => m.attributes);
+}
