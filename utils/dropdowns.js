@@ -11,16 +11,23 @@ export const showHideOptions = () => {
     select.querySelector(".fa-angle-down").classList.toggle("fa-angle-up");
 };
 
-
-
-export const selectOption = (ev) => {
-    const select = document.querySelector(".select");
-    const options_list = document.querySelector(".options-list");
-    const option = ev.target;
-    select.querySelector("span").innerHTML = option.innerHTML;
-    option.classList.add("selected");
-    options_list.classList.toggle("active");
-    select.querySelector(".fa-angle-down").classList.toggle("fa-angle-up");
-    option.classList.remove("selected");
-};
-
+export const selectOption = (event) => {
+    const option = event.target;
+    const ratingValue = option.textContent.trim();
+  
+    const ratingInput = document.querySelector('#review-rating-input');
+    ratingInput.value = ratingValue;
+  
+    const select = document.querySelector('.select');
+    select.querySelector('span').innerHTML = option.innerHTML;
+  
+    const ratingOptions = document.querySelectorAll('.options-list .option');
+    [...ratingOptions].map(option => option.classList.remove('selected'));  
+    option.classList.add('selected');
+  
+    const optionsList = document.querySelector('.options-list');
+    optionsList.classList.toggle('active');
+  
+    const angleIcon = select.querySelector('.fa-angle-down');
+    angleIcon.classList.toggle('fa-angle-up');
+  };

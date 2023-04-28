@@ -1,12 +1,27 @@
 import { html } from '../../node_modules/lit-html/lit-html.js';
-import { backToTopHandler } from '../../utils/backToTopBtn.js';
 import { addUserBookmark, removeUserBookmark } from '../../utils/bookmarkBtns.js';
 import { selectOption, showHideOptions } from '../../utils/dropdowns.js';
-import {getUser, getUserBookmarks } from '../services/authServices.js';
+import { getUser, getUserBookmarks } from '../services/authServices.js';
 import { getMovieDetails, getSeriesDetails } from '../services/itemServices.js';
+import { getReviewsForMovie, sendReviewRequest, userAlreadyReviewed } from '../services/reviewServices.js';
 
+const reviewTemplate = (review)=> html`
+<div class="review">
+    <button><i class="fa-regular fa-pen-to-square"></i></button>
+    <h3 class="review-title-details">${review.reviewTitle}</h3>
+    <div class="review-header">
+    <img src="${review.profileImg}" alt="Avatar" onerror="this.onerror=null; this.src='../../images/default-user.png';">
+      <div class="review-info">
+        <p class="reviewer-name">${review.username}</p>
+        <p class="movie-score reviewer-rating">Rating: ${review.reviewRating} <i id="star" class="fa-solid fa-star"></i></p>
+      </div>
+    </div>
+    <div class="review-body">
+      <p>${review.reviewDescription}</p>
+    </div>
+  </div>`
 
-const detailsTemplate = (movie, ctx, type, currentUser, userBookmarks) => html`
+const detailsTemplate = (movie, ctx, type, currentUser, userBookmarks, reviews, alreadyReviewed) => html`
 <section class="specific-movie-details">
   <div class='details-header'>
   <div class="movie-poster">
@@ -57,57 +72,31 @@ const detailsTemplate = (movie, ctx, type, currentUser, userBookmarks) => html`
 
 <section class="specific-movie-reviews"> 
   <h2 class="reviews-title">Reviews:</h2>
-
-  
-  <div class="review">
-    <h3 class="review-title-details">Best series for the year!!</h3>
-    <div class="review-header">
-      <img src="https://via.placeholder.com/50x50" alt="Avatar" >
-      <div class="review-info">
-        <p class="reviewer-name">Peter</p>
-        <p class="movie-score reviewer-rating">Rating: 10 <i id="star" class="fa-solid fa-star"></i></p>
-      </div>
-    </div>
-    <div class="review-body">
-      <p>I really enjoyed Tulsa King, this is hands down one of the best series that came out in 2023.</p>
-    </div>
-  </div>
-
-  <div class="review" id='review-section'>
-  <h3 class="review-title-details">Very good</h3>
-    <div class="review-header">
-      <img src="https://via.placeholder.com/50x50" alt="Avatar" >
-      <div class="review-info">
-        <p class="reviewer-name">George</p>
-        <p class="movie-score reviewer-rating">Rating: 9 <i id="star" class="fa-solid fa-star"></i></p>
-      </div>
-    </div>
-    <div class="review-body">
-      <p>Awesome series!</p>
-    </div>
-  </div>
-
-  <form class="add-review-form">
+  ${reviews.length == 0
+        ? html`<h2 id='no-movies-msg'>No reviews yet.</h2>`
+        : html`${reviews.map(rev => reviewTemplate(rev))}`}
+  <form class="add-review-form" @submit='${(e) => addNewReview(ctx, e, movie.type, movie.objectId, currentUser.objectId)}'>
     <h3>Add a Review:</h3>
-<div class="select-menu specific-form-group">
+    <div class="select-menu specific-form-group">
   <label for="select-rating">Rating: </label>
-    <div id='select-rating' class="select" @click="${showHideOptions}">
-      <span>Select rating</span>
-      <i class="fas fa-angle-down"></i>
-    </div>
-    <div class="options-list" @click="${selectOption}">
-      <div class="option">1 <i class="fa-solid fa-star"></i></div>
-      <div class="option">2 <i class="fa-solid fa-star"></i></div>
-      <div class="option">3 <i class="fa-solid fa-star"></i></div>
-      <div class="option">4 <i class="fa-solid fa-star"></i></div>
-      <div class="option">5 <i class="fa-solid fa-star"></i></div>
-      <div class="option">6 <i class="fa-solid fa-star"></i></div>
-      <div class="option">7 <i class="fa-solid fa-star"></i></div>
-      <div class="option">8 <i class="fa-solid fa-star"></i></div>
-      <div class="option">9 <i class="fa-solid fa-star"></i></div>
-      <div class="option">10 <i class="fa-solid fa-star"></i></div>
-    </div>
+  <div id='select-rating' class="select" @click="${showHideOptions}">
+    <span>Select rating</span>
+    <i class="fas fa-angle-down"></i>
   </div>
+  <input type="hidden" id="review-rating-input" name="review-rating">
+  <div class="options-list" @click="${selectOption}" name='review-rating'>
+    <div class="option">1 <i class="fa-solid fa-star"></i></div>
+    <div class="option">2 <i class="fa-solid fa-star"></i></div>
+    <div class="option">3 <i class="fa-solid fa-star"></i></div>
+    <div class="option">4 <i class="fa-solid fa-star"></i></div>
+    <div class="option">5 <i class="fa-solid fa-star"></i></div>
+    <div class="option">6 <i class="fa-solid fa-star"></i></div>
+    <div class="option">7 <i class="fa-solid fa-star"></i></div>
+    <div class="option">8 <i class="fa-solid fa-star"></i></div>
+    <div class="option">9 <i class="fa-solid fa-star"></i></div>
+    <div class="option">10 <i class="fa-solid fa-star"></i></div>
+  </div>
+</div>
   <div class="specific-form-group">
       <label for="reviewer-review-text">Review Title:</label>
       <input id="reviewer-review-text" name="reviewer-review-text" required>
@@ -124,48 +113,56 @@ const detailsTemplate = (movie, ctx, type, currentUser, userBookmarks) => html`
 </section>
 `
 
-
 export async function renderMovieDetails(ctx) {
   const type = 'movie';
   const movieId = ctx.params.id;
-  const [currentMovie, currentUser, userBookmarks] = await Promise.all([
-    getMovieDetails(movieId),
-    getUser(),
-    getUserBookmarks(),
-  ]);
-  const details = detailsTemplate(currentMovie, ctx, type, currentUser, userBookmarks);
 
-  ctx.render(details);
-};
+  await renderDetails(ctx, type, movieId);
+}
 
 export async function renderSeriesDetails(ctx) {
   const type = 'series';
   const seriesId = ctx.params.id;
-  const [currentSeries, currentUser, userBookmarks] = await Promise.all([
-    getSeriesDetails(seriesId),
-    getUser(),
-    getUserBookmarks(),
-  ]);
+
+  await renderDetails(ctx, type, seriesId);
+}
 
 
-  const details = detailsTemplate(currentSeries, ctx, type, currentUser, userBookmarks);
-  const autocomBox = document.querySelector('.autocom-box');
-  autocomBox.style.display = 'none';
 
-  ctx.render(details);
+function addNewReview(ctx, ev, type, movieId, userId) {
+  ev.preventDefault();
+  const form = new FormData(ev.target);
+
+  const rating = form.get('review-rating');
+  const title = form.get('reviewer-review-text');
+  const description = form.get('reviewer-review');
+  
+  sendReviewRequest(rating, title, description, type, movieId, userId);
+  ev.target.reset();
 };
 
 
 
+export async function renderDetails(ctx, type, movieId) {
+  let currentObj, userBookmarks, alreadyReviewed, reviews;
+  const currentUser = getUser();
+  if (type === 'movie') {
+    [currentObj, userBookmarks, reviews, alreadyReviewed] = await Promise.all([
+      getMovieDetails(movieId),
+      getUserBookmarks(),
+      getReviewsForMovie(movieId, 'Movie'),
+      userAlreadyReviewed(currentUser.objectId, movieId, 'Movie')
+    ]);
+  } else if (type === 'series') {
+    [currentObj, userBookmarks, reviews, alreadyReviewed] = await Promise.all([
+      getSeriesDetails(movieId),
+      getUserBookmarks(),
+      getReviewsForMovie(movieId, 'Show'),
+      userAlreadyReviewed(currentUser.objectId, movieId, 'Show')
+    ]);
+  };
 
-// async function onDeleteHandler(ev, ctx) {
-//   ev.preventDefault();
-//   const confirmation = confirm("Are you sure you want to delete this item?");
-
-//   if (confirmation == true) {
-//     await deleteItem(ctx.params.id);
-//     ctx.redirect('/dashboard');
-//   } else {
-//     return;
-//   }
-// };
+  const details = detailsTemplate(currentObj, ctx, type, currentUser, userBookmarks, reviews, alreadyReviewed);
+console.log(reviews);
+  ctx.render(details);
+}

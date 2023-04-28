@@ -1,6 +1,5 @@
 import { post, put, del, get } from './api.js';
 import { APP_ID, JS_KEY } from "../../secrets.js";
-import { getUser } from './authServices.js';
 
 Parse.initialize(APP_ID, JS_KEY);
 Parse.serverURL = 'https://parseapi.back4app.com/';
