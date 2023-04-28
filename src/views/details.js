@@ -1,13 +1,16 @@
 import { html } from '../../node_modules/lit-html/lit-html.js';
 import { addUserBookmark, removeUserBookmark } from '../../utils/bookmarkBtns.js';
 import { selectOption, showHideOptions } from '../../utils/dropdowns.js';
+import { editReviewHandler } from '../../utils/editReview.js';
 import { getUser, getUserBookmarks } from '../services/authServices.js';
 import { getMovieDetails, getSeriesDetails } from '../services/itemServices.js';
 import { getReviewsForMovie, sendReviewRequest, userAlreadyReviewed } from '../services/reviewServices.js';
 
-const reviewTemplate = (review)=> html`
+const reviewTemplate = (ctx, review, currentUser)=> html`
 <div class="review">
-    <button><i class="fa-regular fa-pen-to-square"></i></button>
+    ${currentUser.username == review.username 
+    ? html`<button @click="${(e) => editReviewHandler(ctx, e, review)}" class='edit-review-btn' data-review-id="${review.reviewId}"><i class="fa-regular fa-pen-to-square"></i></button>`
+     : ''}
     <h3 class="review-title-details">${review.reviewTitle}</h3>
     <div class="review-header">
     <img src="${review.profileImg}" alt="Avatar" onerror="this.onerror=null; this.src='../../images/default-user.png';">
@@ -74,8 +77,8 @@ const detailsTemplate = (movie, ctx, type, currentUser, userBookmarks, reviews, 
   <h2 class="reviews-title">Reviews:</h2>
   ${reviews.length == 0
         ? html`<h2 id='no-movies-msg'>No reviews yet.</h2>`
-        : html`${reviews.map(rev => reviewTemplate(rev))}`}
-  <form class="add-review-form" @submit='${(e) => addNewReview(ctx, e, movie.type, movie.objectId, currentUser.objectId)}'>
+        : html`${reviews.map(rev => reviewTemplate(ctx, rev, currentUser))}`}
+  <form class="add-review-form ${alreadyReviewed ? 'hidden' : ''}" @submit='${(e) => addNewReview(ctx, e, movie.type, movie.objectId, currentUser.objectId)}'>
     <h3>Add a Review:</h3>
     <div class="select-menu specific-form-group">
   <label for="select-rating">Rating: </label>
@@ -114,6 +117,7 @@ const detailsTemplate = (movie, ctx, type, currentUser, userBookmarks, reviews, 
 `
 
 export async function renderMovieDetails(ctx) {
+  console.log('asd');
   const type = 'movie';
   const movieId = ctx.params.id;
 

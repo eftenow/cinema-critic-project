@@ -159,15 +159,20 @@
 
 .review {
   position: relative;
-  margin-bottom: 30px;
+  margin-bottom: 2.5rem;
   border: 1px solid #ddd;
   padding: 20px;
   border-radius: 8px;
 }
 
+.review:last-of-type {
+  margin-bottom: 4rem;
+}
+
 .review * {
   color: rgb(106 109 114);
 }
+
 
 .review-header {
   display: flex;
@@ -209,6 +214,10 @@
   padding: 20px;
   border-radius: 10px;
   margin-top: 20px;
+}
+
+.edit-review-form{
+  background-color: #fefefe;
 }
 
 .add-review-form h3 {

@@ -180,3 +180,19 @@ a.more-info-btn{
   text-align: center;
   text-decoration: none;
 }
+
+.edit-review-btn {
+  border: none;
+  position: absolute;
+  right: 2%;
+  top: 7%;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: font-size 0.5s ease-in;
+}
+
+.edit-review-btn:hover,
+.edit-review-btn:hover i{
+  font-size: 1.06rem;
+  color: #8e47f8d2;
+}

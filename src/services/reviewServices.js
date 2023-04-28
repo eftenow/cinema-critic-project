@@ -5,17 +5,6 @@ Parse.initialize(APP_ID, JS_KEY);
 Parse.serverURL = 'https://parseapi.back4app.com/';
 let REVIEW_PAGE_SIZE = 6;
 
-const endpoints = {
-    allMovies: '/classes/Movie',
-    allSeries: '/classes/Show',
-    createMovie: '/classes/Movie',
-    createSerie: '/classes/Show',
-    create: '/data/shoes',
-    movieDetails: '/classes/Movie/',
-    seriesDetails: '/classes/Show/',
-    like: '/data/likes',
-
-};
 
 export function sendReviewRequest(rating, title, description, type, movieId, userId) {
     const Review = Parse.Object.extend("Review");
@@ -58,6 +47,7 @@ export function sendReviewRequest(rating, title, description, type, movieId, use
     const reviews = results.map((review) => {
       const user = review.get("user");
       return {
+        reviewId: review.id,
         reviewRating: review.get("reviewRating"),
         reviewTitle: review.get("reviewTitle"),
         reviewDescription: review.get("reviewDescription"),
@@ -66,4 +56,28 @@ export function sendReviewRequest(rating, title, description, type, movieId, use
       };
     });
     return reviews;
+  };
+
+
+  export async function editExistingReview(ev, review, ctx) {
+    ev.preventDefault();
+    const form = new FormData(ev.target);
+    const rating = form.get('review-rating');
+    const title = form.get('reviewer-review-text');
+    const description = form.get('reviewer-review');
+    
+    const Review = Parse.Object.extend("Review");
+    const query = new Parse.Query(Review);
+    query.equalTo("objectId", review.reviewId);
+    const result = await query.first();
+    
+    result.set("reviewRating", rating);
+    result.set("reviewTitle", title);
+    result.set("reviewDescription", description);
+    
+    result.save();
+    
+    const modal = document.querySelector('.modal');
+    modal.style.display = 'none';
+  
   }
