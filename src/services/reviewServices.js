@@ -79,5 +79,4 @@ export function sendReviewRequest(rating, title, description, type, movieId, use
     
     const modal = document.querySelector('.modal');
     modal.style.display = 'none';
-  
-  }
+  };
