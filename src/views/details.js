@@ -1,16 +1,21 @@
 import { html } from '../../node_modules/lit-html/lit-html.js';
 import { addUserBookmark, removeUserBookmark } from '../../utils/bookmarkBtns.js';
 import { selectOption, showHideOptions } from '../../utils/dropdowns.js';
-import { editReviewHandler } from '../../utils/editReview.js';
+import { editReviewHandler, deleteReviewHandler } from '../../utils/reviewOperations.js';
+
 import { getUser, getUserBookmarks } from '../services/authServices.js';
 import { getMovieDetails, getSeriesDetails } from '../services/itemServices.js';
 import { getReviewsForMovie, sendReviewRequest, userAlreadyReviewed } from '../services/reviewServices.js';
 
-const reviewTemplate = (ctx, review, currentUser)=> html`
+const reviewTemplate = (ctx, review, currentUser) => html`
 <div class="review">
-    ${currentUser.username == review.username 
-    ? html`<button @click="${(e) => editReviewHandler(ctx, e, review)}" class='edit-review-btn' data-review-id="${review.reviewId}"><i class="fa-regular fa-pen-to-square"></i></button>`
-     : ''}
+${currentUser.username == review.username
+    ? html`
+  <section class='user-review-btns'>
+  <button @click="${(e) => editReviewHandler(ctx, e, review)}" class='edit-review-btn' data-review-id="${review.reviewId}"><i class="fa-regular fa-pen-to-square"></i></button>
+  <button @click="${(e) => deleteReviewHandler(ctx, e, review)}" class='delete-review-btn' data-review-id="${review.reviewId}"><i class="fa-solid fa-trash-can"></i></button>
+  </section>`
+    : ''}
     <h3 class="review-title-details">${review.reviewTitle}</h3>
     <div class="review-header">
     <img src="${review.profileImg}" alt="Avatar" onerror="this.onerror=null; this.src='../../images/default-user.png';">
@@ -76,30 +81,30 @@ const detailsTemplate = (movie, ctx, type, currentUser, userBookmarks, reviews, 
 <section class="specific-movie-reviews"> 
   <h2 class="reviews-title">Reviews:</h2>
   ${reviews.length == 0
-        ? html`<h2 id='no-movies-msg'>No reviews yet.</h2>`
-        : html`${reviews.map(rev => reviewTemplate(ctx, rev, currentUser))}`}
+    ? html`<h2 id='no-movies-msg'>No reviews yet.</h2>`
+    : html`${reviews.map(rev => reviewTemplate(ctx, rev, currentUser))}`}
   <form class="add-review-form ${alreadyReviewed ? 'hidden' : ''}" @submit='${(e) => addNewReview(ctx, e, movie.type, movie.objectId, currentUser.objectId)}'>
     <h3>Add a Review:</h3>
     <div class="select-menu specific-form-group">
   <label for="select-rating">Rating: </label>
-  <div id='select-rating' class="select" @click="${showHideOptions}">
-    <span>Select rating</span>
-    <i class="fas fa-angle-down"></i>
-  </div>
-  <input type="hidden" id="review-rating-input" name="review-rating">
-  <div class="options-list" @click="${selectOption}" name='review-rating'>
-    <div class="option">1 <i class="fa-solid fa-star"></i></div>
-    <div class="option">2 <i class="fa-solid fa-star"></i></div>
-    <div class="option">3 <i class="fa-solid fa-star"></i></div>
-    <div class="option">4 <i class="fa-solid fa-star"></i></div>
-    <div class="option">5 <i class="fa-solid fa-star"></i></div>
-    <div class="option">6 <i class="fa-solid fa-star"></i></div>
-    <div class="option">7 <i class="fa-solid fa-star"></i></div>
-    <div class="option">8 <i class="fa-solid fa-star"></i></div>
-    <div class="option">9 <i class="fa-solid fa-star"></i></div>
-    <div class="option">10 <i class="fa-solid fa-star"></i></div>
-  </div>
-</div>
+<div id='select-rating' class="select" @click="${showHideOptions}">
+            <span>Select Rating</span>  
+            <i class="fas fa-angle-down"></i>
+          </div>
+          <input type='hidden' id="review-rating-input" name="review-rating">
+          <div class="options-list" @click="${selectOption}" name='review-rating'>
+            <div class="option">1 <i class="fa-solid fa-star"></i></div>
+            <div class="option">2 <i class="fa-solid fa-star"></i></div>
+            <div class="option">3 <i class="fa-solid fa-star"></i></div>
+            <div class="option">4 <i class="fa-solid fa-star"></i></div>
+            <div class="option">5 <i class="fa-solid fa-star"></i></div>
+            <div class="option">6 <i class="fa-solid fa-star"></i></div>
+            <div class="option">7 <i class="fa-solid fa-star"></i></div>
+            <div class="option">8 <i class="fa-solid fa-star"></i></div>
+            <div class="option">9 <i class="fa-solid fa-star"></i></div>
+            <div class="option">10 <i class="fa-solid fa-star"></i></div>
+          </div>
+        </div>
   <div class="specific-form-group">
       <label for="reviewer-review-text">Review Title:</label>
       <input id="reviewer-review-text" name="reviewer-review-text" required>
@@ -140,7 +145,7 @@ function addNewReview(ctx, ev, type, movieId, userId) {
   const rating = form.get('review-rating');
   const title = form.get('reviewer-review-text');
   const description = form.get('reviewer-review');
-  
+
   sendReviewRequest(rating, title, description, type, movieId, userId);
   ev.target.reset();
 };
@@ -167,6 +172,6 @@ export async function renderDetails(ctx, type, movieId) {
   };
 
   const details = detailsTemplate(currentObj, ctx, type, currentUser, userBookmarks, reviews, alreadyReviewed);
-console.log(reviews);
+  console.log(reviews);
   ctx.render(details);
 }

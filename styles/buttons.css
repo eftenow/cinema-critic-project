@@ -181,16 +181,23 @@ a.more-info-btn{
   text-decoration: none;
 }
 
-.edit-review-btn {
+.edit-review-btn,
+.delete-review-btn {
   border: none;
   position: absolute;
   right: 2%;
   top: 7%;
   cursor: pointer;
   font-size: 1rem;
-  transition: font-size 0.5s ease-in;
+  transition: font-size 0.8s ease-in;
 }
 
+.edit-review-btn{
+  right: 4%;
+}
+
+.delete-review-btn:hover,
+.delete-review-btn:hover i,
 .edit-review-btn:hover,
 .edit-review-btn:hover i{
   font-size: 1.06rem;

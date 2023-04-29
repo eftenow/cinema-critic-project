@@ -1,42 +1,92 @@
 .modal {
-    display: none; 
-    position: fixed; 
-    z-index: 1; 
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    overflow: auto; 
-    background-color: rgba(0,0,0,0.4); 
-  }
-  
+  display: none;
+  position: fixed;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0, 0, 0, 0.4);
+}
 
-  .modal-content {
-    background-color: #fefefe;
-    margin: 10% auto;
-    padding: 20px;
-    border: 1px solid #888;
-    width: 70%;
-    height: 65vh;
-    border-radius: 16px;
-  }
-  
-  .close {
-    color: #a1a1a1;
+
+.modal-content {
+  background-color: #fefefe;
+  margin: 11% auto;
+  padding: 1%;
+  border: 1px solid #888;
+  width: 69%;
+  height: 55vh;
+  border-radius: 16px;
+}
+
+.close {
+  color: #a1a1a1;
     float: right;
     font-size: 1.7rem;
     font-weight: bold;
     position: absolute;
-    right: 18%;
-  }
-  
-  .close:hover,
-  .close:focus {
-    color: black;
-    font-size: 1.8rem;
-    cursor: pointer;
-  }
+    right: 2%;
+    top: -1%;
+}
 
-  #review-edit-title{
-    width: 100%;
-  }
+.close:hover,
+.close:focus {
+  color: black;
+  font-size: 1.8rem;
+  cursor: pointer;
+}
+
+#review-edit-title {
+  width: 100%;
+}
+
+.small-modal {
+  width: 35%;
+  height: 22vh;
+}
+
+.delete-review-form{
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  align-items: center;
+  padding: 3%;
+}
+
+.delete-review-form *{
+  color: rgb(106 109 114);
+}
+
+.delete-review-form h3 {
+  margin-bottom: 2rem;
+}
+
+.delete-review-form p {
+  margin-bottom: 1.7rem;
+  font-size: 1.1rem;
+}
+
+.delete-form-group *{
+  padding: 8px 12px;
+    border-radius: 6px;
+    border: none;
+    background-color: #8e47f8;
+    color: #e2dfdf;
+    transition: background-color 0.2s ease-in-out;
+    margin-right: 10%;
+    font-size: 1rem;
+}
+
+.cancel-delete-review-btn:hover,
+.confirm-delete-review-btn:hover{
+  background-color: #7126e0;
+  color: #fff;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.delete-form-group{
+  display: flex;
+}

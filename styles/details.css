@@ -218,6 +218,15 @@
 
 .edit-review-form{
   background-color: #fefefe;
+  margin: 1% 0;
+  padding: 20px;
+  position: relative;
+}
+
+.edit-review-form h3{
+  text-align: center;
+  font-size: 1.5rem;
+  color: rgb(55, 55, 56);
 }
 
 .add-review-form h3 {
