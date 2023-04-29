@@ -19,12 +19,17 @@ export function sendReviewRequest(rating, title, description, type, movieId, use
   review.set("reviewTitle", title);
   review.set("reviewDescription", description);
 
-  const targetClass = (type === "movie") ? Parse.Object.extend("Movie") : Parse.Object.extend("Show");
-
-  const targetObj = new targetClass();
-  targetObj.id = movieId;
-
-  review.set("target", targetObj);
+  if (type === "series") {
+    const seriesClass = Parse.Object.extend("Show");
+    const seriesObj = new seriesClass();
+    seriesObj.id = movieId;
+    review.set("seriesTarget", seriesObj);
+  } else{
+    const movieClass = Parse.Object.extend("Movie");
+    const movieObj = new movieClass();
+    movieObj.id = movieId;
+    review.set("target", movieObj);
+  }
 
   const user = Parse.Object.extend("User");
   const userObj = new user();
@@ -55,15 +60,29 @@ export async function userAlreadyReviewed(userId, movieId, type) {
   const Review = Parse.Object.extend("Review");
   const query = new Parse.Query(Review);
   query.equalTo("user", { __type: "Pointer", className: "_User", objectId: userId });
-  query.equalTo("target", { __type: "Pointer", className: type, objectId: movieId });
+  console.log(type);
+  if (type === "Movie") {
+    query.equalTo("target", { __type: "Pointer", className: "Movie", objectId: movieId });
+  } else if (type === "Show") {
+    query.equalTo("seriesTarget", { __type: "Pointer", className: "Show", objectId: movieId });
+  }
+
   const results = await query.find();
+  console.log(results);
   return results.length > 0;
-};
+}
 
 export async function getReviewsForMovie(movieId, type) {
   const Review = Parse.Object.extend("Review");
   const query = new Parse.Query(Review);
-  query.equalTo("target", { __type: "Pointer", className: type, objectId: movieId });
+
+  if (type === "Movie") {
+    query.equalTo("target", { __type: "Pointer", className: "Movie", objectId: movieId });
+  } else if (type === "Show") {
+    query.equalTo("seriesTarget", { __type: "Pointer", className: "Show", objectId: movieId });
+  }
+  
+
   query.include("user");
   const results = await query.find();
   const reviews = results.map((review) => {
@@ -79,6 +98,7 @@ export async function getReviewsForMovie(movieId, type) {
   });
   return reviews;
 };
+
 
 
 export async function editExistingReview(ev, review, ctx) {
@@ -111,18 +131,25 @@ export async function deleteReview(ev, reviewId, ctx) {
   ctx.redirect(ctx.path);
 };
 
-export const getUserReviews = async (userId) => {
-  const queryParams = {
-    where: JSON.stringify({
-      user: {
-        __type: 'Pointer',
-        className: '_User',
-        objectId: userId,
-      },
-    }),
-    include: 'target.objectId',
-  };
+export async function getUserReviews(userId) {
+  const Review = Parse.Object.extend('Review');
+  const query = new Parse.Query(Review);
+  query.equalTo('user', { __type: 'Pointer', className: '_User', objectId: userId });
+  query.include('target');
+  query.include('seriesTarget');
+  const results = await query.find();
 
-  const response = await get(endpoints.allReviews, queryParams);
-  return response.results;
-};
+  const reviews = results.map((review) => {
+    const target = review.get('target') || review.get('seriesTarget');
+    return {
+      reviewId: review.id,
+      reviewRating: review.get('reviewRating'),
+      reviewTitle: review.get('reviewTitle'),
+      reviewDescription: review.get('reviewDescription'),
+      targetId: target.id,
+      targetType: target.className == 'movie' ? 'movie' : 'series',
+    };
+  });
+
+  return reviews;
+}

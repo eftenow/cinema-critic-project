@@ -21,7 +21,7 @@ export async function renderUserReviews(ctx, ev, user, reviews) {
   
   render(myReviews, reviewSection);
   toggleReviewButtons(action);
-}
+};
 
 export function hideUserReviews(ev) {
   const action = 'hide';
