@@ -22,8 +22,8 @@ export function editReviewHandler(ctx, ev, review) {
     render(deleteReviewFormTemplate(review.reviewId, ctx), deleteReviewForm);
   }
   
-  const deleteReviewFormTemplate = (reviewId) => html`
-    <form class="delete-review-form" @submit="${() => deleteReview(reviewId)}">
+  const deleteReviewFormTemplate = (reviewId, ctx) => html`
+    <form class="delete-review-form" @submit="${(e) => deleteReview(e, reviewId, ctx)}">
       <h3>Delete Review</h3>
       <p>Are you sure you want to delete this review?</p>
       <div class="delete-form-group">

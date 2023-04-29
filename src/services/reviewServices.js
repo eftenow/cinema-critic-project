@@ -33,6 +33,19 @@ export function sendReviewRequest(rating, title, description, type, movieId, use
   review.save();
 };
 
+export function addNewReview(ctx, ev, type, movieId, userId) {
+  ev.preventDefault();
+  const form = new FormData(ev.target);
+
+  const rating = form.get('review-rating');
+  const title = form.get('reviewer-review-text');
+  const description = form.get('reviewer-review');
+
+  sendReviewRequest(rating, title, description, type, movieId, userId);
+  ev.target.reset();
+  ctx.redirect(ctx.path);
+};
+
 export async function userAlreadyReviewed(userId, movieId, type) {
   const Review = Parse.Object.extend("Review");
   const query = new Parse.Query(Review);
@@ -70,6 +83,7 @@ export async function editExistingReview(ev, review, ctx) {
   const title = form.get('reviewer-review-text');
   const description = form.get('reviewer-review');
 
+  console.log(rating, title, description);
   const Review = Parse.Object.extend("Review");
   const query = new Parse.Query(Review);
   query.equalTo("objectId", review.reviewId);
@@ -83,11 +97,11 @@ export async function editExistingReview(ev, review, ctx) {
 
   const modal = document.querySelector('.modal');
   modal.style.display = 'none';
-  location.reload();
+  ctx.redirect(ctx.path);
 };
 
-export async function deleteReview(reviewId) {
+export async function deleteReview(ev, reviewId, ctx) {
   ev.preventDefault();
-  const response = await del(endpoints.delReview(reviewId));
-  location.reload();
+  await del(endpoints.delReview(reviewId));
+  ctx.redirect(ctx.path);
 }

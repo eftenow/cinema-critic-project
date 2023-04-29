@@ -5,7 +5,7 @@ import { editReviewHandler, deleteReviewHandler } from '../../utils/reviewOperat
 
 import { getUser, getUserBookmarks } from '../services/authServices.js';
 import { getMovieDetails, getSeriesDetails } from '../services/itemServices.js';
-import { getReviewsForMovie, sendReviewRequest, userAlreadyReviewed } from '../services/reviewServices.js';
+import { addNewReview, getReviewsForMovie, sendReviewRequest, userAlreadyReviewed } from '../services/reviewServices.js';
 
 const reviewTemplate = (ctx, review, currentUser) => html`
 <div class="review">
@@ -135,21 +135,6 @@ export async function renderSeriesDetails(ctx) {
 
   await renderDetails(ctx, type, seriesId);
 }
-
-
-
-function addNewReview(ctx, ev, type, movieId, userId) {
-  ev.preventDefault();
-  const form = new FormData(ev.target);
-
-  const rating = form.get('review-rating');
-  const title = form.get('reviewer-review-text');
-  const description = form.get('reviewer-review');
-
-  sendReviewRequest(rating, title, description, type, movieId, userId);
-  ev.target.reset();
-};
-
 
 
 export async function renderDetails(ctx, type, movieId) {
