@@ -1,51 +1,22 @@
 import { html, render } from '../../node_modules/lit-html/lit-html.js';
+import { reviewTemplate } from './details.js';
 
-export const userReviews = (user, reviews, isOwner) => html`
+export const userReviews = (ctx, user, reviews) => html`
 
   <h2 class="myReviews-heading">${user.username}'s reviews</h2>
-  <div class="review-container">
-    <div class="review-movie">
-      <img class="movie-img" src="../../images/king-of-tulsa.jpg" alt="Movie Image">
-      <h3 class="movie-title">Tulsa King</h3>
-    </div>
-    <div class="review-content">
-      <h3 class="review-title">Good movie</h3>
-      <p class="review-rating">Rating: 8/10 <i class="fa-solid fa-star"></i></p>
-      <p class="review-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed malesuada eros sed mauris
-        suscipit aliquam. Integer eu sapien vel nulla lobortis malesuada. Vestibulum id lacinia metus. Praesent vel
-        volutpat tellus. Vestibulum non aliquam lectus. Donec euismod elit elit, sit amet hendrerit enim interdum eget.
-        Vestibulum hendrerit nisi vitae neque tincidunt rhoncus.</p>
-      <div class="review-buttons">
-        <button class="review-edit">Edit Review</button>
-        <button class="review-delete">Delete Review</button>
-      </div>
-    </div>
-  </div>
-  
-  <div class="review-container">
-    <div class="review-movie">
-      <img class="movie-img" src="../../images/wednesday.jpg" alt="Movie Image">
-      <h3 class="movie-title">Wednesday</h3>
-    </div>
-    <div class="review-content">
-      <h3 class="review-title">Decent</h3>
-      <p class="review-rating">Rating: 7.5/10 <i class="fa-solid fa-star"></i></p>
-      <p class="review-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed malesuada eros sed mauris
-        suscipit aliquam. Integer eu.</p>
-      <div class="review-buttons">
-        <button class="review-edit">Edit Review</button>
-        <button class="review-delete">Delete Review</button>
-        
-      </div>
-    </div>
+  <div class="user-reviews">
+  ${reviews.length == 0
+        ? html`<h2 id='no-movies-msg'>You don't have any reviews yet.</h2>`
+        : html`${reviews.map(rev => reviewTemplate(ctx, rev, user))}`}
   </div>
 `
 
 
 
-export async function renderUserReviews(ev, user, reviews, isOwner) {
+export async function renderUserReviews(ctx, ev, user, reviews) {
+  ev.preventDefault();
   const reviewSection = document.querySelector(".review-section");
-  const myReviews = userReviews(user);
+  const myReviews = userReviews(ctx, user, reviews);
   const action = 'show';
   
   render(myReviews, reviewSection);

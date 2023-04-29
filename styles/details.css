@@ -280,6 +280,7 @@
 }
 
 .review-title-details {
+  padding: 0 20%;
   font-size: 18px;
   text-align: center;
   color: rgb(55, 55, 56);
@@ -371,4 +372,10 @@
   height: 180px;
   border: 2px solid;
   border-radius: 8px;
+}
+
+.invalid-rating{
+  font-weight: bold;
+  text-align: center;
+  color: #e10808;
 }

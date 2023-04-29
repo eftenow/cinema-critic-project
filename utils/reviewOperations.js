@@ -19,7 +19,7 @@ export function editReviewHandler(ctx, ev, review) {
 
     deleteReviewForm.classList.add('small-modal');
     console.log(review);
-    render(deleteReviewFormTemplate(review.reviewId, ctx), deleteReviewForm);
+    render(deleteReviewFormTemplate(review.reviewId || review.objectId, ctx), deleteReviewForm);
   }
   
   const deleteReviewFormTemplate = (reviewId, ctx) => html`

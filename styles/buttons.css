@@ -182,7 +182,8 @@ a.more-info-btn{
 }
 
 .edit-review-btn,
-.delete-review-btn {
+.delete-review-btn,
+.redirect-review-btn {
   border: none;
   position: absolute;
   right: 2%;
@@ -192,8 +193,19 @@ a.more-info-btn{
   transition: font-size 0.8s ease-in;
 }
 
+.redirect-review-btn{
+  right: 6.9%;
+  font-size: 0.9rem;
+}
+
 .edit-review-btn{
-  right: 4%;
+  right: 4.3%;
+}
+
+.redirect-review-btn:hover,
+.redirect-review-btn:hover i{
+  font-size: 1rem;
+  color: #8e47f8d2;
 }
 
 .delete-review-btn:hover,

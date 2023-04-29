@@ -17,10 +17,13 @@ window.addEventListener("scroll", () => {
   }
 });
 
-export function scrollToBottom() {
-  window.scrollTo({ top: document.body.scrollHeight, behavior: 'auto' });
+export function scrollToBottom(delay=800) {
+  setTimeout(() => {
+    window.scrollTo({ top: document.body.scrollHeight, behavior: 'auto' });
+  }, delay);
 };
 
 export function scrollToTop() {
   window.scrollTo({ top: 0, behavior: 'smooth' });
-}
+};
+

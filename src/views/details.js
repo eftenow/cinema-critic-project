@@ -1,4 +1,5 @@
 import { html } from '../../node_modules/lit-html/lit-html.js';
+import { scrollToBottom } from '../../utils/backToTopBtn.js';
 import { addUserBookmark, removeUserBookmark } from '../../utils/bookmarkBtns.js';
 import { selectOption, showHideOptions } from '../../utils/dropdowns.js';
 import { editReviewHandler, deleteReviewHandler } from '../../utils/reviewOperations.js';
@@ -7,13 +8,15 @@ import { getUser, getUserBookmarks } from '../services/authServices.js';
 import { getMovieDetails, getSeriesDetails } from '../services/itemServices.js';
 import { addNewReview, getReviewsForMovie, sendReviewRequest, userAlreadyReviewed } from '../services/reviewServices.js';
 
-const reviewTemplate = (ctx, review, currentUser) => html`
+export const reviewTemplate = (ctx, review, currentUser) => html`
 <div class="review">
 ${currentUser.username == review.username
     ? html`
   <section class='user-review-btns'>
   <button @click="${(e) => editReviewHandler(ctx, e, review)}" class='edit-review-btn' data-review-id="${review.reviewId}"><i class="fa-regular fa-pen-to-square"></i></button>
   <button @click="${(e) => deleteReviewHandler(ctx, e, review)}" class='delete-review-btn' data-review-id="${review.reviewId}"><i class="fa-solid fa-trash-can"></i></button>
+  ${review.objectId ? html`<a href='${review.target.type}/${review.target.objectId}' @click="${(e) => scrollToBottom()}" class='redirect-review-btn' data-review-id="${review.reviewId}"><i class="fa-solid fa-share-from-square"></i></a>` : ''}
+  
   </section>`
     : ''}
     <h3 class="review-title-details">${review.reviewTitle}</h3>
@@ -107,13 +110,14 @@ const detailsTemplate = (movie, ctx, type, currentUser, userBookmarks, reviews, 
         </div>
   <div class="specific-form-group">
       <label for="reviewer-review-text">Review Title:</label>
-      <input id="reviewer-review-text" name="reviewer-review-text" required>
+      <input id="reviewer-review-text" name="reviewer-review-text">
     </div>
 
     <div class="specific-form-group">
       <label for="reviewer-review">Review Description:</label>
-      <textarea id="reviewer-review" name="reviewer-review" required></textarea>
+      <textarea id="reviewer-review" name="reviewer-review"></textarea>
     </div>
+    <p class='invalid-rating'></p>
     <div class="specific-form-group submit-review-btn-wrapper">
       <button class="submit-review-btn" type="submit">Submit Review</button>
     </div>
@@ -122,7 +126,6 @@ const detailsTemplate = (movie, ctx, type, currentUser, userBookmarks, reviews, 
 `
 
 export async function renderMovieDetails(ctx) {
-  console.log('asd');
   const type = 'movie';
   const movieId = ctx.params.id;
 

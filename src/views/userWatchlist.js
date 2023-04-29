@@ -49,6 +49,7 @@ export const userWatchlist = (user, watchlist) => html`
 
 
 export async function renderUserWatchlist(ev, user) {
+  ev.preventDefault();
   const watchlistSection = document.querySelector(".watchlist-section");
   const userWatchlistedMovies = await getUserWatchlist(user.objectId);
 

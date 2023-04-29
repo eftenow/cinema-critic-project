@@ -7,6 +7,7 @@ let REVIEW_PAGE_SIZE = 6;
 
 const endpoints = {
   delReview: (reviewId) => `/classes/Review/${reviewId}`,
+  allReviews: '/classes/Review'
 
 };
 
@@ -41,6 +42,10 @@ export function addNewReview(ctx, ev, type, movieId, userId) {
   const title = form.get('reviewer-review-text');
   const description = form.get('reviewer-review');
 
+  if(!rating){
+    document.querySelector('.invalid-rating').textContent = 'You must select review rating.'
+    return;
+  }
   sendReviewRequest(rating, title, description, type, movieId, userId);
   ev.target.reset();
   ctx.redirect(ctx.path);
@@ -86,7 +91,7 @@ export async function editExistingReview(ev, review, ctx) {
   console.log(rating, title, description);
   const Review = Parse.Object.extend("Review");
   const query = new Parse.Query(Review);
-  query.equalTo("objectId", review.reviewId);
+  query.equalTo("objectId", review.reviewId || review.objectId);
   const result = await query.first();
 
   result.set("reviewRating", rating);
@@ -104,4 +109,20 @@ export async function deleteReview(ev, reviewId, ctx) {
   ev.preventDefault();
   await del(endpoints.delReview(reviewId));
   ctx.redirect(ctx.path);
-}
+};
+
+export const getUserReviews = async (userId) => {
+  const queryParams = {
+    where: JSON.stringify({
+      user: {
+        __type: 'Pointer',
+        className: '_User',
+        objectId: userId,
+      },
+    }),
+    include: 'target.objectId',
+  };
+
+  const response = await get(endpoints.allReviews, queryParams);
+  return response.results;
+};
