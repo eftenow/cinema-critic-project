@@ -52,7 +52,7 @@ export async function renderUserWatchlist(ev, user) {
   ev.preventDefault();
   const watchlistSection = document.querySelector(".watchlist-section");
   const userWatchlistedMovies = await getUserWatchlist(user.objectId);
-
+  console.log(userWatchlistedMovies);
   const myWatchlist = userWatchlist(user, userWatchlistedMovies);
   render(myWatchlist, watchlistSection)
 

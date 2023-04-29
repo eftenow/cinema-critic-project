@@ -42,8 +42,6 @@ export const profileTemplate = (ctx, user, userReviews) => html`
 
 `
 
-
-
 export async function renderProfile(ctx) {
     const user = getUser();
     const userReviews = await getUserReviews(user.objectId);

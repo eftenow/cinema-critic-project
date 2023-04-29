@@ -193,11 +193,26 @@ export const getUserWatchlist = async (userId) => {
   
     const movieQuery = new Parse.Query('Movie');
     movieQuery.containedIn('objectId', bookmarkedMoviesIds);
-    const movies = await movieQuery.find();
-    
-    return movies.map(movie => {
+  
+    const showQuery = new Parse.Query('Show');
+    showQuery.containedIn('objectId', bookmarkedMoviesIds);
+  
+    const movieResults = await movieQuery.find();
+    const showResults = await showQuery.find();
+  
+    const movies = movieResults.map(movie => {
       const movieData = movie.toJSON();
       movieData.objectId = movie.id;
+      movieData.type = 'movie';
       return movieData;
     });
+  
+    const shows = showResults.map(show => {
+      const showData = show.toJSON();
+      showData.objectId = show.id;
+      showData.type = 'show';
+      return showData;
+    });
+  
+    return [...movies, ...shows];
   };
