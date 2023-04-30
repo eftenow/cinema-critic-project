@@ -1,3 +1,8 @@
+button:hover,
+a:hover {
+  cursor: pointer;
+}
+
 #back-to-top-btn {
   display: inline-block;
   background-color: #8e47f8;
@@ -206,6 +211,7 @@ a.more-info-btn{
 .redirect-review-btn:hover i{
   font-size: 1rem;
   color: #8e47f8d2;
+  cursor: pointer;
 }
 
 .delete-review-btn:hover,
@@ -214,4 +220,5 @@ a.more-info-btn{
 .edit-review-btn:hover i{
   font-size: 1.06rem;
   color: #8e47f8d2;
+  cursor: pointer;
 }

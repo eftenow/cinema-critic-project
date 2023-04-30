@@ -1,0 +1,23 @@
+#notification {
+    position: fixed;
+    top: 45%;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 1.1% 2.3%;
+    background-color: #05ab05;
+    color: #fff;
+    font-size: 1rem;
+    font-weight: 600;
+    border-radius: 8px;
+    opacity: 0;
+    transition: opacity 0.8s ease-in-out;
+    z-index: 1;
+  }
+
+  #notification.show {
+    opacity: 1;
+  }
+  
+  #notification:hover{
+    cursor: pointer;
+  }

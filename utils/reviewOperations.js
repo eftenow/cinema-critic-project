@@ -59,11 +59,11 @@ const editReviewFormTemplate = (review, ctx) => html`
         </div>
         <div class="specific-form-group">
           <label for="reviewer-review-text">Review Title:</label>
-          <input value="${review.reviewTitle}" id="review-edit-title" name="reviewer-review-text" required>
+          <input value="${review.reviewTitle}" id="review-edit-title" name="reviewer-review-text">
         </div>
         <div class="specific-form-group">
           <label for="reviewer-review">Review Description:</label>
-          <textarea id="reviewer-review" name="reviewer-review" required>${review.reviewDescription}</textarea>
+          <textarea id="reviewer-review" name="reviewer-review">${review.reviewDescription}</textarea>
         </div>
         <div class="specific-form-group submit-review-btn-wrapper">
           <button class="submit-review-btn" type="submit">Submit Changes</button>

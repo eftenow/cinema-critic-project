@@ -36,7 +36,7 @@ export function sendReviewRequest(rating, title, description, type, movieId, use
   userObj.id = userId;
   review.set("user", userObj);
 
-  review.save();
+  return review.save();
 };
 
 export function addNewReview(ctx, ev, type, movieId, userId) {
@@ -50,11 +50,34 @@ export function addNewReview(ctx, ev, type, movieId, userId) {
   if(!rating){
     document.querySelector('.invalid-rating').textContent = 'You must select review rating.'
     return;
-  }
-  sendReviewRequest(rating, title, description, type, movieId, userId);
+  };
+
+  sendReviewRequest(rating, title, description, type, movieId, userId).then(() => {
+    showNotification('Review submitted successfully!');
+  }).catch((error) => {
+    console.error(error);
+  });
   ev.target.reset();
   ctx.redirect(ctx.path);
 };
+
+
+function showNotification(notificationMsg) {
+  const notification = document.getElementById('notification');
+  debugger;
+  notification.textContent = notificationMsg;
+  notification.classList.add('show');
+
+  notification.addEventListener('click', () => {
+    notification.classList.remove('show');
+  });
+
+  setTimeout(() => {
+    notification.classList.remove('show');
+  }, 1800);
+}
+
+
 
 export async function userAlreadyReviewed(userId, movieId, type) {
   const Review = Parse.Object.extend("Review");
@@ -123,11 +146,14 @@ export async function editExistingReview(ev, review, ctx) {
   const modal = document.querySelector('.modal');
   modal.style.display = 'none';
   ctx.redirect(ctx.path);
+  showNotification('Review updated successfully!');
+  
 };
 
 export async function deleteReview(ev, reviewId, ctx) {
   ev.preventDefault();
   await del(endpoints.delReview(reviewId));
+  showNotification('Review deleted successfully');
   ctx.redirect(ctx.path);
 };
 
@@ -141,15 +167,15 @@ export async function getUserReviews(userId) {
 
   const reviews = results.map((review) => {
     const target = review.get('target') || review.get('seriesTarget');
+
     return {
       reviewId: review.id,
       reviewRating: review.get('reviewRating'),
       reviewTitle: review.get('reviewTitle'),
       reviewDescription: review.get('reviewDescription'),
       targetId: target.id,
-      targetType: target.className == 'movie' ? 'movie' : 'series',
+      targetType: target.className == 'Movie' ? 'movie' : 'series',
     };
   });
-
   return reviews;
 }

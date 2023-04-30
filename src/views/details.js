@@ -12,7 +12,6 @@ export const reviewTemplate = (ctx, review, currentUser) => html`
 <div class="review">
 ${currentUser.username == review.username
     ? html`
-    ${console.log(review)}
   <section class='user-review-btns'>
   <button @click="${(e) => editReviewHandler(ctx, e, review)}" class='edit-review-btn' data-review-id="${review.reviewId}"><i class="fa-regular fa-pen-to-square"></i></button>
   <button @click="${(e) => deleteReviewHandler(ctx, e, review)}" class='delete-review-btn' data-review-id="${review.reviewId}"><i class="fa-solid fa-trash-can"></i></button>

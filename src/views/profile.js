@@ -49,7 +49,6 @@ export async function renderProfile(ctx) {
         rev.username = user.username,
         rev.profileImg = user.profileImg
     });
-    console.log(userReviews);
     const profile = profileTemplate(ctx, user, userReviews);
     ctx.render(profile);
 }

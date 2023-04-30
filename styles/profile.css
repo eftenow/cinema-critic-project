@@ -155,6 +155,10 @@
   font-size: 15px;
 }
 
+.links a:hover{
+  cursor: pointer;
+}
+
 .links .msg-btn {
   background-color: #fff;
   color: #8e47f8;
