@@ -2,6 +2,7 @@ import { html } from '../../node_modules/lit-html/lit-html.js';
 import { filterHandler, sortHandler, setCategorySelected, setTypeSelected, resetAllFilters } from '../../utils/filterButtons.js';
 import { PAGE_SIZE, getMoviesAndSeries, getMoviesAndSeriesCount } from '../services/itemServices.js';
 import { displayPages } from '../../utils/pagination.js';
+import { scrollToTop } from '../../utils/backToTopBtn.js';
 
 const movieTemplate = (movie) => html`
 <div class="movie-card" data-category="${movie.genres}" id="${movie.objectId}" data-type="${movie.type}">
@@ -121,12 +122,12 @@ export const moviesTemplate = (movies, ctx, currentPage = 1, pagesCount = 1) => 
             </div>
             <ul class="pagination">
         ${currentPage > 1
-        ? html`<li class="page-item action"><a href="?page=${currentPage - 1}" class="page-link"><i id = 'prev-page' class="fa-solid fa-caret-left"></i></a></li>`
+        ? html`<li class="page-item action"><a @click='${scrollToTop}' href="/dashboard?page=${currentPage - 1}" class="page-link"><i id = 'prev-page' class="fa-solid fa-caret-left"></i></a></li>`
         : ''}
         ${displayPages(currentPage, pagesCount).map(pageNumber => html`
-        <li class="page-item action ${pageNumber === currentPage ? 'active' : ''}"><a href="?page=${pageNumber}" class="page-link">${pageNumber}</a></li>`)}
+        <li class="page-item action ${pageNumber === currentPage ? 'active' : ''}"><a @click='${scrollToTop}' href="/dashboard?page=${pageNumber}" class="page-link">${pageNumber}</a></li>`)}
         ${currentPage < pagesCount
-        ? html`<li class="page-item action"><a href="?page=${currentPage + 1}" class="page-link"><i id='next-page' class="fa-solid fa-caret-right"></i></a></li>`
+        ? html`<li class="page-item action"><a @click='${scrollToTop}' href="/dashboard?page=${currentPage + 1}" class="page-link"><i id='next-page' class="fa-solid fa-caret-right"></i></a></li>`
         : ''}
         
     </ul>
