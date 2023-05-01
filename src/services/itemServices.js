@@ -26,17 +26,16 @@ export async function getAllMovies() {
 
 export async function getTopMovies() {
     try {
-        const movies = await get(endpoints.allMovies, {
-            keys: "name,movieLength,genres,rating,director,stars,description,objectId,type,image",
-            limit: 5,
-            order: "-views",
-        });
-        return movies.results;
+      const Movie = Parse.Object.extend('Movie');
+      const query = new Parse.Query(Movie);
+      query.limit(5);
+      query.descending('visits');
+      const movies = await query.find();
+      return movies.map(movie => movie.toJSON());
     } catch (err) {
-        console.error(err);
+      console.error(err);
     }
-}
-
+  }
 export async function getMoviesCount() {
     const response = await get(endpoints.allMovies, { count: 1 });
     return response.count;

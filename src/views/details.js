@@ -143,6 +143,8 @@ export async function renderSeriesDetails(ctx) {
 export async function renderDetails(ctx, type, movieId) {
   let currentObj, userBookmarks, alreadyReviewed, reviews;
   const currentUser = getUser();
+  console.log(type);
+  debugger;
   if (type === 'movie') {
     [currentObj, userBookmarks, reviews, alreadyReviewed] = await Promise.all([
       getMovieDetails(movieId),
@@ -158,7 +160,14 @@ export async function renderDetails(ctx, type, movieId) {
       userAlreadyReviewed(currentUser.objectId, movieId, 'Show')
     ]);
   };
+  
+  const Movie = Parse.Object.extend('Movie');
+  const Show = Parse.Object.extend('Show');
+  const obj = currentObj.type === 'movie' ? new Movie(currentObj) : new Show(currentObj);
 
+  obj.increment('visits');
+  await obj.save();
+  
   const details = detailsTemplate(currentObj, ctx, type, currentUser, userBookmarks, reviews, alreadyReviewed);
   console.log(reviews);
   ctx.render(details);
