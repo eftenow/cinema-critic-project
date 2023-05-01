@@ -6,7 +6,7 @@ import { editReviewHandler, deleteReviewHandler } from '../../utils/reviewOperat
 
 import { getUser, getUserBookmarks } from '../services/authServices.js';
 import { getMovieDetails, getSeriesDetails } from '../services/itemServices.js';
-import { addNewReview, getReviewsForMovie, sendReviewRequest, userAlreadyReviewed } from '../services/reviewServices.js';
+import { addNewReview, getReviewsForMovie, sendReviewRequest, updateRating, userAlreadyReviewed } from '../services/reviewServices.js';
 
 export const reviewTemplate = (ctx, review, currentUser) => html`
 <div class="review">
@@ -143,8 +143,7 @@ export async function renderSeriesDetails(ctx) {
 export async function renderDetails(ctx, type, movieId) {
   let currentObj, userBookmarks, alreadyReviewed, reviews;
   const currentUser = getUser();
-  console.log(type);
-  debugger;
+
   if (type === 'movie') {
     [currentObj, userBookmarks, reviews, alreadyReviewed] = await Promise.all([
       getMovieDetails(movieId),
@@ -164,7 +163,7 @@ export async function renderDetails(ctx, type, movieId) {
   const Movie = Parse.Object.extend('Movie');
   const Show = Parse.Object.extend('Show');
   const obj = currentObj.type === 'movie' ? new Movie(currentObj) : new Show(currentObj);
-
+  
   obj.increment('visits');
   await obj.save();
   

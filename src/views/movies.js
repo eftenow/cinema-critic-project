@@ -3,6 +3,7 @@ import { filterHandler, sortHandler, setCategorySelected, setTypeSelected, reset
 import { PAGE_SIZE, getMoviesAndSeries, getMoviesAndSeriesCount } from '../services/itemServices.js';
 import { displayPages } from '../../utils/pagination.js';
 import { scrollToTop } from '../../utils/backToTopBtn.js';
+import { updateRating } from '../services/reviewServices.js';
 
 const movieTemplate = (movie) => html`
 <div class="movie-card" data-category="${movie.genres}" id="${movie.objectId}" data-type="${movie.type}">
@@ -139,8 +140,8 @@ export async function renderAllContent(ctx) {
     let searchParams = new URLSearchParams(ctx.querystring);
     let currentPage = Number(searchParams.get('page') || 1);
     const seriensAndMovies = await getMoviesAndSeries(currentPage);
-    const moviesCount = await getMoviesAndSeriesCount();
-    let pagesCount = Math.ceil(moviesCount / PAGE_SIZE);
+    const totalCount = await getMoviesAndSeriesCount();
+    let pagesCount = Math.ceil(totalCount / PAGE_SIZE);
 
     const movies = moviesTemplate(seriensAndMovies, ctx, currentPage, pagesCount);
 
