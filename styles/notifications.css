@@ -1,10 +1,10 @@
 #notification {
     position: fixed;
-    top: 45%;
+    top: 42%;
     left: 50%;
     transform: translateX(-50%);
     padding: 1.1% 2.3%;
-    background-color: #05ab05;
+    
     color: #fff;
     font-size: 1rem;
     font-weight: 600;
@@ -20,4 +20,12 @@
   
   #notification:hover{
     cursor: pointer;
+  }
+
+  .notification-green{
+    background-color: #05ab05;
+  }
+
+  .notification-red{
+    background-color: rgb(165, 15, 15);
   }

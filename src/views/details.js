@@ -10,7 +10,7 @@ import { addNewReview, getReviewsForMovie, sendReviewRequest, updateRating, user
 
 export const reviewTemplate = (ctx, review, currentUser) => html`
 <div class="review">
-${currentUser.username == review.username
+${currentUser?.username == review.username
     ? html`
   <section class='user-review-btns'>
   <button @click="${(e) => editReviewHandler(ctx, e, review)}" class='edit-review-btn' data-review-id="${review.reviewId}"><i class="fa-regular fa-pen-to-square"></i></button>
@@ -86,7 +86,7 @@ const detailsTemplate = (movie, ctx, type, currentUser, userBookmarks, reviews, 
   ${reviews.length == 0
     ? html`<h2 id='no-movies-msg'>No reviews yet.</h2>`
     : html`${reviews.map(rev => reviewTemplate(ctx, rev, currentUser))}`}
-  <form class="add-review-form ${alreadyReviewed ? 'hidden' : ''}" @submit='${(e) => addNewReview(ctx, e, movie.type, movie.objectId, currentUser.objectId)}'>
+  <form class="add-review-form ${alreadyReviewed || !currentUser ? 'hidden' : ''}" @submit='${(e) => addNewReview(ctx, e, movie.type, movie.objectId, currentUser.objectId)}'>
     <h3>Add a Review:</h3>
     <div class="select-menu specific-form-group">
   <label for="select-rating">Rating: </label>
@@ -143,20 +143,20 @@ export async function renderSeriesDetails(ctx) {
 export async function renderDetails(ctx, type, movieId) {
   let currentObj, userBookmarks, alreadyReviewed, reviews;
   const currentUser = getUser();
-
+  console.log(currentUser);
   if (type === 'movie') {
     [currentObj, userBookmarks, reviews, alreadyReviewed] = await Promise.all([
       getMovieDetails(movieId),
       getUserBookmarks(),
       getReviewsForMovie(movieId, 'Movie'),
-      userAlreadyReviewed(currentUser.objectId, movieId, 'Movie')
+      currentUser !== null ? userAlreadyReviewed(currentUser.objectId, movieId, 'Movie') : false
     ]);
   } else if (type === 'series') {
     [currentObj, userBookmarks, reviews, alreadyReviewed] = await Promise.all([
       getSeriesDetails(movieId),
       getUserBookmarks(),
       getReviewsForMovie(movieId, 'Show'),
-      userAlreadyReviewed(currentUser.objectId, movieId, 'Show')
+      currentUser !== null ? userAlreadyReviewed(currentUser.objectId, movieId, 'Show') : false
     ]);
   };
   

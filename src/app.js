@@ -4,6 +4,7 @@ import { searchedMoviesPage } from '../utils/searchbar.js';
 import { requireAuth } from './middlewares/authMiddleware.js';
 import { setUpMiddleware } from './middlewares/renderMiddleware.js';
 import { logoutUser } from './services/authServices.js';
+import { pageNotFound } from './views/404page.js';
 import { renderCreateMovie, renderCreateSeries } from './views/create.js';
 import { renderMovieDetails, renderSeriesDetails } from './views/details.js';
 import { renderEdit } from './views/edit-profile.js';
@@ -38,10 +39,15 @@ page('/dashboard/search', searchedMoviesPage);
 page('/sort/:sortBy', sortHandler);
 
 
+page('*', pageNotFound);
+
+
 page('/logout', async (ctx)=> {
     await logoutUser();
     ctx.redirect('/');
 });
+
+
 
 
 page.start();

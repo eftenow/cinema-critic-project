@@ -65,24 +65,30 @@ export function sendReviewRequest(rating, title, description, type, movieId, use
 };
 
 
-function showNotification(notificationMsg) {
+export function showNotification(notificationMsg, color='green') {
   const notification = document.getElementById('notification');
-  debugger;
   notification.textContent = notificationMsg;
-  notification.classList.add('show');
+  notification.classList.remove('notification-red', 'notification-green');
+  notification.classList.add(`notification-${color}`);
+  notification.classList.add(`show`);
 
   notification.addEventListener('click', () => {
-    notification.classList.remove('show');
+    notification.classList.remove(`notification-${color}`);
+    notification.classList.remove(`show`);
   });
 
   setTimeout(() => {
-    notification.classList.remove('show');
+    notification.classList.remove(`notification-${color}`);
+    notification.classList.remove(`show`);
   }, 1800);
 }
 
 
-
 export async function userAlreadyReviewed(userId, movieId, type) {
+  if (!userId){
+    return null;
+  }
+
   const Review = Parse.Object.extend("Review");
   const query = new Parse.Query(Review);
   query.equalTo("user", { __type: "Pointer", className: "_User", objectId: userId });
