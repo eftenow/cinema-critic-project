@@ -1,4 +1,4 @@
-header {
+.cc-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -9,7 +9,7 @@ header {
   position: relative;
 }
 
-header::after {
+.cc-header::after {
   content: "";
   position: absolute;
   top: 0;
@@ -34,7 +34,7 @@ h1 {
   margin-bottom: 24px;
 }
 
-nav ul {
+.nav-cc ul {
   display: flex;
   list-style: none;
   margin: auto;
@@ -46,11 +46,11 @@ nav ul {
   margin: 0.2rem 2rem;
 }
 
-nav ul li {
+.nav-cc ul li {
   margin: 0px 13px;
 }
 
-nav ul li .nav-btns {
+.nav-cc ul li .nav-btns {
   position: relative;
   text-decoration: none;
   font-size: 15px;
@@ -61,7 +61,7 @@ nav ul li .nav-btns {
   font-weight: bold;
 }
 
-nav ul li a:after {
+.nav-cc ul li a:after {
   content: "";
   position: absolute;
   background-color: white;
@@ -72,11 +72,11 @@ nav ul li a:after {
   transition: 0.3s;
 }
 
-nav ul li a:hover:after {
+.nav-cc ul li a:hover:after {
   width: 100%;
 }
 
-nav ul li a:hover {
+.nav-cc ul li a:hover {
   color: white;
 }
 

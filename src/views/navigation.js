@@ -7,7 +7,7 @@ import { adminId } from '../../secrets.js';
 const navTemplate = (isAuthorized, user, ctx) => html`
 <a href="/" class="nav-logo-container"><img id="logo" src="../../images/logo.png" alt=""></a>
 
-<nav>
+<nav class='nav-cc'>
     <ul>
     <li>
             <form @submit="${(e) => searchHandler(e, ctx)}" class="search-form">

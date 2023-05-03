@@ -1,0 +1,357 @@
+ :root{
+    --main-color: #4b2c7af2;
+    --color-dark: #1D2231;
+    --text-grey: #8390A2;
+ }
+
+
+ .sidebar{
+    width: 345px;
+    position: fixed;
+    left: 0;
+    top: 0;
+    height: 100%;
+    background: var(--main-color);
+    z-index: 10;
+    transition: width 300ms;
+ }
+
+
+.sidebar-brand{
+    height: 90px;
+    padding: 1rem 0rem 1rem 2rem;
+    color: #fff;
+}
+
+.sidebar-brand span{
+    display: inline-block;
+    padding-right: 1rem;
+}
+
+.sidebar-brand li{
+    width: 100%;
+    margin-bottom: 1.7rem;
+    padding-left: 2rem;
+}
+
+.sidebar-brand a{
+    width: 100%;
+    margin-bottom: 1.7rem;
+    padding-left: 2rem;
+}
+
+.sidebar-menu a span:first-child {
+    font-size: 1.5rem;
+    padding-right: 1rem;
+}
+
+.sidebar-logo{
+    width: 180px;
+    height: 70px;
+    opacity: 0.85;
+    display: inline-block;
+    padding-right: 1rem;
+}
+
+.sidebar-menu{
+    margin-top: 1rem ;
+}
+
+.sidebar-menu span{
+    display: inline-block;
+    padding-right: 1rem;
+}
+
+.sidebar-menu li{
+    width: 100%;
+    margin-bottom: 1.3rem;
+    padding-left: 1rem;
+}
+
+.sidebar-menu ul li a{
+    padding-left: 1rem;
+    display: block;
+    color: #fff;
+    font-size: 1.1rem;
+}
+
+.sidebar-menu a.active-admin{
+    background-color: #fff;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+    color: var(--main-color);
+    border-radius: 30px 0 0 30px;
+}
+
+.sidebar-menu a span:first-child{
+    font-size: 1.5rem;
+    padding-right: 1rem;
+}
+
+
+.navigation-admin {
+    margin-left: 345px;
+    transition: margin-left 300ms;
+
+}
+
+.admin-header{
+    background: #fff;
+    display: flex;
+    justify-content: space-between;
+    padding: 1rem 1.5rem;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+    position: fixed;
+    left: 345px;
+    width: calc(100% - 345px);
+    top: 0;
+    z-index: 10;
+    transition: left 300ms;
+}
+
+.admin-header h2{
+    color: #222;
+    margin: 0.5%;
+    font-size: 2rem;
+}
+
+#nav-toggle{
+    display: none;
+}
+
+.admin-header label span {
+    font-size: 1.7rem;
+    padding-right: 1rem;
+}
+
+.search-wrapper-admin{
+    border: 1px solid #f0f0f0;
+    border-radius: 30px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    overflow-x: hidden;
+}
+
+.search-wrapper-admin span{
+    display: inline-block;
+    padding: 0rem 1rem;
+    font-size: 1.5rem;
+}
+
+.search-wrapper-admin input{
+    height: 100%;
+    padding: 0.4rem 3rem 0.4rem 0.7rem;
+    border: none;
+    outline: none;
+}
+
+.user-wrapper-admin{
+    display: flex;
+    align-items: center;
+}
+
+.user-wrapper-admin img{
+    border-radius: 50%;
+    margin-right: 1rem;
+}
+
+.user-wrapper-admin small{
+    display: inline-block;
+    color: var(--text-grey);
+    margin-top: -10px !important;
+}
+
+.main-section-admin{
+    margin-top: 85px;
+    padding: 2rem 1.5rem;
+    background-color: #f0f0f0;
+    min-height: calc(100vh - 90px);
+}
+
+.admin-cards{
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-gap: 2rem;
+    margin-top: 1rem;
+}
+
+.card-single{
+    display: flex;
+    justify-content: space-around;
+    background-color: #fff;
+    padding: 1.7rem;
+    border-radius: 8px;
+}
+
+.card-data{
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+
+.card-single div:last-child span{
+    font-size: 2.6rem;
+    color: var(--main-color);
+}
+
+.card-single div:first-child span { 
+    color: var(--text-grey);
+    font-size: 1.2rem;
+}
+
+@media only screen and (max-width:1200px){
+    .sidebar{
+        width: 70px;
+    }
+    
+    .sidebar-logo {
+        width: 80px;
+        height: 50px;
+        opacity: 0.85;
+        display: inline-block;
+        padding-right: 0.4rem;
+    }
+
+    .sidebar .sidebar-brand,
+    .sidebar li{
+        padding-left: 0rem;
+        text-align: center;
+    }
+    
+    .sidebar li a{
+        padding-left: 0rem;
+    }
+    
+    
+    /* .sidebar-logo */
+    .sidebar li a span:last-child {
+        display: none;
+    }
+
+    .navigation-admin{
+        margin-left: 70px;
+    }
+    
+    .admin-header{
+        width: calc(100% - 70px);
+        left: 70px;
+    }
+
+    .sidebar:hover{
+        width: 345px;
+        z-index: 11;
+    }
+
+    .sidebar:hover .sidebar-brand,
+    .sidebar:hover li {
+        padding-left: 2rem;
+        text-align: left;
+    }
+
+    .sidebar:hover li a {
+        padding-left: 1rem;
+    }
+
+    .sidebar:hover .sidebar-brand,
+    .sidebar:hover li a span:last-child {
+        display: inline;
+    }
+/* ///////////////// */
+    
+}
+
+@media only screen and (max-width: 960px){
+    .admin-cards{
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+@media only screen and (max-width: 768px) {
+    .admin-cards{
+        grid-template-columns: repeat(2, 1fr);
+    }
+    .search-wrapper-admin{
+        display: none;
+    }
+    .sidebar {
+        left: -100% !important;
+    }
+
+    .admin-header h2{
+        display: flex;
+        align-items: center;
+    }
+    .admin-header h2 label{
+        display: inline-block;
+        background-color: var(--main-color);
+        padding-right: 0rem;
+        margin-right: 1rem;
+        height: 40px;
+        width: 40px;
+        border-radius: 50% ;
+        color: #fff;
+        display: flex;
+        align-items: center;
+        justify-content: center !important;
+    }
+
+    .admin-header h2 span{
+        text-align: center;
+        padding-right: 0rem;
+    }
+
+    .admin-header h2{
+        font-size: 1.1rem;
+    }
+
+    .navigation-admin{
+        width: 100%;
+        margin-left: 0rem;
+    }
+
+    .admin-header{
+        width: 100% !important;
+        left: 0 !important;
+    }
+
+    #nav-toggle:checked + .sidebar{
+        left: 0 !important;
+        z-index: 10;
+        width: 345px;
+    }
+
+    /* ----------------------------------------- */
+
+    /* .sidebar:hover{
+        width: 345px;
+        z-index: 12;
+    } */
+    
+    #nav-toggle:checked + .sidebar .sidebar-brand,
+    #nav-toggle:checked + .sidebar li{
+        padding-left: 2rem;
+        text-align: left;
+    }
+    
+    #nav-toggle:checked + .sidebar li a{
+        padding-left: 1rem;
+    }
+    
+    
+    #nav-toggle:checked + .sidebar .sidebar-logo,
+    #nav-toggle:checked + .sidebar li a span:last-child {
+        display: inline;
+    }
+
+    #nav-toggle:checked ~ .navigation-admin{
+        margin-left: 0rem !important;
+    }
+}
+
+@media only screen and (max-width: 560px) {
+    .admin-cards{
+        grid-template-columns: 100%;
+    }
+
+}

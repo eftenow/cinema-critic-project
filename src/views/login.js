@@ -18,6 +18,35 @@ const loginTemplate = (ctx) => html`
         <p class="login-register-text">Don't have an account? <a href="/register" class="login-register-link">Register here</a></p>
     </form>
 </section>
+<section class="side-bar">
+    <div class="sidebar-brand">
+        <div class="sidebar-logo"><img src="../../images/logo.png"></div>
+        <nav class="sidebar-menu">
+            <ul>
+                <li>
+                    <a href=""><i class="fa-solid fa-chart-line"></i>
+                    <span>Dashboard</span></a>
+                </li>
+                <li>
+                    <a href=""><i class="fa-solid fa-film"></i>
+                    <span>Customers</span></a>
+                </li>
+                <li>
+                    <a href=""><i class="fa-solid fa-chart-line"></i>
+                    <span>Movies</span></a>
+                </li>
+                <li>
+                    <a href=""><i class="fa-solid fa-chart-line"></i>
+                    <span>Series</span></a>
+                </li>
+                <li>
+                    <a href=""><i class="fa-solid fa-chart-line"></i>
+                    <span>Reviews</span></a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+</section>
 `;
 
 export function renderLogin(ctx) {

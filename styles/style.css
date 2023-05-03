@@ -17,8 +17,10 @@ h2 {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  list-style: none;
+  text-decoration: none;
   font-family: 'Rubik', sans-serif;
-  color: rgb(179, 187, 199);
+  /* color: rgb(179, 187, 199); */
   align-content: center;
 
 }

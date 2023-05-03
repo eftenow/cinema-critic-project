@@ -1,5 +1,6 @@
-<img src="../../images/default-user.png" alt="">
+import { html, render } from '../../node_modules/lit-html/lit-html.js';
 
+const adminPanelTemplate = (ctx) => html`
 <input type="checkbox" id="nav-toggle">
 <section class="sidebar">
     <!-- sidebar -->
@@ -13,10 +14,12 @@
                     <a href="" class="active-admin"><span class="fa-solid fa-chart-line"></span>
                         <span>Dashboard</span></a>
                 </li>
+
                 <li>
-                    <a href=""></a><span class="fa-solid fa-users"></span>
-                    <span>Customers</span></a>
+                    <a href=""><span class="fa-solid fa-users"></span>
+                        <span>Users</span></a>
                 </li>
+                
                 <li>
                     <a href=""><span class="fa-solid fa-film"></span>
                         <span>Movies</span></a>
@@ -49,50 +52,59 @@
 
         <div class="user-wrapper-admin"> <!-- user-wrapper -->
             <img src="../../images/profile.png" width="30px" height="30px">
+            <div>
             <h4>Username</h4>
             <small>Head Admin</small>
+            </div>
         </div>
     </header>
-</section>
-
-<section class="main-section-admin"> <!-- main -->
+    <main class="main-section-admin"> <!-- main -->
 
     <div class="admin-cards"> <!-- cards -->
 
         <div class="card-single">
-            <div>
+            <div class='card-data'>
                 <h4>54</h4>
                 <span>Users</span>
             </div>
-            <span class="fa-solid fa-users"></span>
+            <div><span class="fa-solid fa-users"></span></div>
         </div>
 
         <div class="card-single">
-            <div>
+            <div class='card-data'>
                 <h4>32</h4>
                 <span>Movies</span>
             </div>
-            <span class="fa-solid fa-film"></span>
+            <div><span class="fa-solid fa-film"></span></div>
+            
         </div>
 
         <div class="card-single">
-            <div>
+            <div class='card-data'>
                 <h4>9</h4>
                 <span>TV Shows</span>
             </div>
-            <span class="fa-solid fa-video"></span>
+            <div><span class="fa-solid fa-video"></span></div>
         </div>
 
         <div class="card-single">
-            <div>
+            <div class='card-data'>
                 <h4>15</h4>
                 <span>Reviews</span>
             </div>
-            <span class="fa-solid fa-list"></span>
+            <div><span class="fa-solid fa-list"></span></div>
+            
         </div>
-
-
-
     </div>
 
+</main>
 </section>
+
+`
+
+export function renderAdminPanel(ctx) {
+    const adminPanel = adminPanelTemplate();
+    const body = document.querySelector('body');
+    body.innerHTML = '';
+    render(adminPanel, body);
+}

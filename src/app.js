@@ -5,6 +5,7 @@ import { requireAuth } from './middlewares/authMiddleware.js';
 import { setUpMiddleware } from './middlewares/renderMiddleware.js';
 import { logoutUser } from './services/authServices.js';
 import { pageNotFound } from './views/404page.js';
+import { renderAdminPanel } from './views/adminPanel.js';
 import { renderCreateMovie, renderCreateSeries } from './views/create.js';
 import { renderMovieDetails, renderSeriesDetails } from './views/details.js';
 import { renderEdit } from './views/edit-profile.js';
@@ -18,6 +19,7 @@ import { renderRegister } from './views/register.js';
 import { renderUserReviews } from './views/userReviews.js';
 
 
+page('/gg', renderAdminPanel);
 page(setUpMiddleware);
 
 page('/', renderHome);
@@ -37,7 +39,6 @@ page('/movie/:id', renderMovieDetails);
 page('/series/:id', renderSeriesDetails);
 page('/dashboard/search', searchedMoviesPage);
 page('/sort/:sortBy', sortHandler);
-
 
 page('*', pageNotFound);
 
