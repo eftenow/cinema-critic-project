@@ -8,6 +8,7 @@ import { logoutUser } from './services/authServices.js';
 import { pageNotFound } from './views/404page.js';
 import { renderMoviesAdmin } from './views/admin-views/adminMovies.js';
 import { renderAdminPanel } from './views/admin-views/adminPanel.js';
+import { renderReviewsAdmin } from './views/admin-views/adminReviews.js';
 import { renderSeriesAdmin } from './views/admin-views/adminSeries.js';
 import { renderUsersAdmin } from './views/admin-views/adminUsers.js';
 import { renderCreateMovie, renderCreateSeries } from './views/create.js';
@@ -25,9 +26,10 @@ import { renderUserReviews } from './views/userReviews.js';
 
 page('/admin', adminSetUpMiddleware, renderAdminPanel);
 page('/admin/dashboard',adminSetUpMiddleware, renderAdminPanel);
-page('/users',adminSetUpMiddleware, renderUsersAdmin);
+page('/admin/users',adminSetUpMiddleware, renderUsersAdmin);
 page('/admin/movies',adminSetUpMiddleware, renderMoviesAdmin);
 page('/admin/series',adminSetUpMiddleware, renderSeriesAdmin);
+page('/admin/reviews',adminSetUpMiddleware, renderReviewsAdmin);
 page(setUpMiddleware);
 
 page('/', renderHome);

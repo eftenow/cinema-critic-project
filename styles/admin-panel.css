@@ -414,7 +414,7 @@
   .movie-table td i {
     font-size: 1.2rem;
     margin-right: 0.5rem;
-    color: var(--color-dark);
+    /* color: var(--color-dark); */
   }
   
   .user-table td i:hover,
