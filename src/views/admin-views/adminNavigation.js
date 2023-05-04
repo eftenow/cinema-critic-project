@@ -34,6 +34,7 @@ const adminNavTemplate = (user, ctx) => html`
                     <a href="/admin/reviews"><span class="fa-solid fa-list"></span>
                         <span>Reviews</span></a>
                 </li>
+                
             </ul>
         </nav>
     </div>
