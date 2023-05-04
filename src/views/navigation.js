@@ -5,6 +5,7 @@ import { getUser } from '../services/authServices.js';
 import { adminId } from '../../secrets.js';
 
 const navTemplate = (isAuthorized, user, ctx) => html`
+<header class="cc-header">
 <a href="/" class="nav-logo-container"><img id="logo" src="../../images/logo.png" alt=""></a>
 
 <nav class='nav-cc'>
@@ -53,7 +54,7 @@ const navTemplate = (isAuthorized, user, ctx) => html`
                     <span>></span>
                 </a>
                 ${user.objectId == adminId ? html`
-                <a href="/adminPanel" class=sub-menu-link @click="${toggleMenu}">
+                <a href="/admin" class=sub-menu-link @click="${toggleMenu}">
                 <i class="fa-solid fa-wrench"></i>
                     <p>Admin Panel</p>
                     <span>></span>`
@@ -71,6 +72,20 @@ const navTemplate = (isAuthorized, user, ctx) => html`
     </ul>
 
 </nav>
+    </header>
+
+    <main>
+        <div id="notification"></div>
+        <div class="modal">
+            <div class="modal-content"></div>
+          </div>
+    </main>
+    <button id="back-to-top-btn">
+        <i id='arrows-up' class="fa-solid fa-angles-up"></i>
+            </button>
+    <footer>
+        <p>&copy; 2023 Cinema Critic. All rights reserved.</p>
+    </footer>
 `;
 
 export function showNavigation(ctx) {
@@ -78,6 +93,6 @@ export function showNavigation(ctx) {
     const user = getUser();
     const nav = navTemplate(isAuthorized, user, ctx);
 
-    render(nav, document.querySelector('header'));
+    render(nav, document.querySelector('body'));
 }
 

@@ -1,11 +1,15 @@
 import page from '../node_modules/page/page.mjs';
 import { filterMovies, filterSeries, sortHandler } from '../utils/filterButtons.js';
 import { searchedMoviesPage } from '../utils/searchbar.js';
+import { adminSetUpMiddleware } from './middlewares/adminPanelMiddleware.js';
 import { requireAuth } from './middlewares/authMiddleware.js';
 import { setUpMiddleware } from './middlewares/renderMiddleware.js';
 import { logoutUser } from './services/authServices.js';
 import { pageNotFound } from './views/404page.js';
-import { renderAdminPanel } from './views/adminPanel.js';
+import { renderMoviesAdmin } from './views/admin-views/adminMovies.js';
+import { renderAdminPanel } from './views/admin-views/adminPanel.js';
+import { renderSeriesAdmin } from './views/admin-views/adminSeries.js';
+import { renderUsersAdmin } from './views/admin-views/adminUsers.js';
 import { renderCreateMovie, renderCreateSeries } from './views/create.js';
 import { renderMovieDetails, renderSeriesDetails } from './views/details.js';
 import { renderEdit } from './views/edit-profile.js';
@@ -19,7 +23,11 @@ import { renderRegister } from './views/register.js';
 import { renderUserReviews } from './views/userReviews.js';
 
 
-page('/gg', renderAdminPanel);
+page('/admin', adminSetUpMiddleware, renderAdminPanel);
+page('/admin/dashboard',adminSetUpMiddleware, renderAdminPanel);
+page('/users',adminSetUpMiddleware, renderUsersAdmin);
+page('/admin/movies',adminSetUpMiddleware, renderMoviesAdmin);
+page('/admin/series',adminSetUpMiddleware, renderSeriesAdmin);
 page(setUpMiddleware);
 
 page('/', renderHome);

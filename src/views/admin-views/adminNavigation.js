@@ -1,6 +1,8 @@
-import { html, render } from '../../node_modules/lit-html/lit-html.js';
+import { html, render } from '../../../node_modules/lit-html/lit-html.js';
+import { getUser } from '../../services/authServices.js';
 
-const adminPanelTemplate = (ctx) => html`
+
+const adminNavTemplate = (user, ctx) => html`
 <input type="checkbox" id="nav-toggle">
 <section class="sidebar">
     <!-- sidebar -->
@@ -11,25 +13,25 @@ const adminPanelTemplate = (ctx) => html`
         <nav class="sidebar-menu">
             <ul>
                 <li>
-                    <a href="" class="active-admin"><span class="fa-solid fa-chart-line"></span>
+                    <a href="/admin/dashboard" class="active-admin"><span class="fa-solid fa-chart-line"></span>
                         <span>Dashboard</span></a>
                 </li>
 
                 <li>
-                    <a href=""><span class="fa-solid fa-users"></span>
+                    <a href="/admin/users"><span class="fa-solid fa-users"></span>
                         <span>Users</span></a>
                 </li>
                 
                 <li>
-                    <a href=""><span class="fa-solid fa-film"></span>
+                    <a href="/admin/movies"><span class="fa-solid fa-film"></span>
                         <span>Movies</span></a>
                 </li>
                 <li>
-                    <a href=""><span class="fa-solid fa-video"></span>
+                    <a href="/admin/series"><span class="fa-solid fa-video"></span>
                         <span>Series</span></a>
                 </li>
                 <li>
-                    <a href=""><span class="fa-solid fa-list"></span>
+                    <a href="/admin/reviews"><span class="fa-solid fa-list"></span>
                         <span>Reviews</span></a>
                 </li>
             </ul>
@@ -59,52 +61,19 @@ const adminPanelTemplate = (ctx) => html`
         </div>
     </header>
     <main class="main-section-admin"> <!-- main -->
-
-    <div class="admin-cards"> <!-- cards -->
-
-        <div class="card-single">
-            <div class='card-data'>
-                <h4>54</h4>
-                <span>Users</span>
-            </div>
-            <div><span class="fa-solid fa-users"></span></div>
-        </div>
-
-        <div class="card-single">
-            <div class='card-data'>
-                <h4>32</h4>
-                <span>Movies</span>
-            </div>
-            <div><span class="fa-solid fa-film"></span></div>
-            
-        </div>
-
-        <div class="card-single">
-            <div class='card-data'>
-                <h4>9</h4>
-                <span>TV Shows</span>
-            </div>
-            <div><span class="fa-solid fa-video"></span></div>
-        </div>
-
-        <div class="card-single">
-            <div class='card-data'>
-                <h4>15</h4>
-                <span>Reviews</span>
-            </div>
-            <div><span class="fa-solid fa-list"></span></div>
-            
-        </div>
-    </div>
-
 </main>
 </section>
 
-`
+`;
 
-export function renderAdminPanel(ctx) {
-    const adminPanel = adminPanelTemplate();
+export function showAdminNavigation(ctx) {
+    const isAuthorized = getUser() !== null;
+    const user = getUser();
+    const adminNav = adminNavTemplate(user, ctx);
     const body = document.querySelector('body');
-    body.innerHTML = '';
-    render(adminPanel, body);
+
+    console.log(adminNav);
+    console.log(body);
+    render(adminNav, body);
 }
+
