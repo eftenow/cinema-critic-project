@@ -1,11 +1,15 @@
 import { html, render } from '../../../node_modules/lit-html/lit-html.js';
+import { getUsersCount } from '../../services/authServices.js';
+import { getMoviesCount, getSeriesCount } from '../../services/itemServices.js';
+import { getReviewsCount } from '../../services/reviewServices.js';
 
-const adminPanelTemplate = (ctx) => html`
+
+const adminPanelTemplate = (usersCount, moviesCount, seriesCount, reviewsCount) => html`
   <div class="admin-cards"> <!-- cards -->
 
 <div class="card-single">
     <div class='card-data'>
-        <h4>54</h4>
+        <h4>${usersCount}</h4>
         <span>Users</span>
     </div>
     <div><span class="fa-solid fa-users"></span></div>
@@ -13,7 +17,7 @@ const adminPanelTemplate = (ctx) => html`
 
 <div class="card-single">
     <div class='card-data'>
-        <h4>32</h4>
+        <h4>${moviesCount}</h4>
         <span>Movies</span>
     </div>
     <div><span class="fa-solid fa-film"></span></div>
@@ -22,7 +26,7 @@ const adminPanelTemplate = (ctx) => html`
 
 <div class="card-single">
     <div class='card-data'>
-        <h4>9</h4>
+        <h4>${seriesCount}</h4>
         <span>TV Shows</span>
     </div>
     <div><span class="fa-solid fa-video"></span></div>
@@ -30,7 +34,7 @@ const adminPanelTemplate = (ctx) => html`
 
 <div class="card-single">
     <div class='card-data'>
-        <h4>15</h4>
+        <h4>${reviewsCount}</h4>
         <span>Reviews</span>
     </div>
     <div><span class="fa-solid fa-list"></span></div>
@@ -39,8 +43,15 @@ const adminPanelTemplate = (ctx) => html`
 </div>
 `
 
-export function renderAdminPanel(ctx) {
-    const adminPanel = adminPanelTemplate();
+export async function renderAdminPanel(ctx) {
+    const [usersCount, moviesCount, seriesCount, reviewsCount] = await Promise.all([
+        getUsersCount(),
+        getMoviesCount(),
+        getSeriesCount(),
+        getReviewsCount()
+    ]);
+
+    const adminPanel = adminPanelTemplate(usersCount, moviesCount, seriesCount, reviewsCount);
     
     ctx.render(adminPanel)
 }

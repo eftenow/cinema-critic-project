@@ -11,6 +11,12 @@ const endpoints = {
 
 };
 
+export async function getReviewsCount() {
+  console.log('asdasdas');
+  const response = await get(endpoints.allReviews, { count: 1 });
+  return response.count;
+};
+
 export function sendReviewRequest(rating, title, description, type, movieId, userId) {
   const Review = Parse.Object.extend("Review");
   const review = new Review();
@@ -204,3 +210,4 @@ export async function getUserReviews(userId) {
   });
   return reviews;
 }
+

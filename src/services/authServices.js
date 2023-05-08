@@ -12,6 +12,11 @@ const endpoints = {
   'users': '/users'
 }
 
+export async function getUsersCount() {
+  const response = await get(endpoints.users, { count: 1 });
+  return response.count;
+};
+
 export async function loginUser(username, password) {
   const data = await post(endpoints.login, { username, password });
   const sessionToken = data.sessionToken;
@@ -25,7 +30,6 @@ export async function registerUser(password, username, emailAddress) {
   parseUser.setPassword(password);
   parseUser.setEmail(emailAddress);
   parseUser.set('emailAddress', emailAddress);
-
 
   try {
     await parseUser.signUp();
@@ -103,6 +107,8 @@ export async function getAllEmails() {
 
   return emailAddresses;
 };
+
+
 
 
 
