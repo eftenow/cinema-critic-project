@@ -50,13 +50,12 @@ page('/series/:id', renderSeriesDetails);
 page('/dashboard/search', searchedMoviesPage);
 page('/sort/:sortBy', sortHandler);
 
-page('*', pageNotFound);
-
-
 page('/logout', async (ctx)=> {
     await logoutUser();
     ctx.redirect('/');
 });
+
+page('*', pageNotFound);
 
 
 

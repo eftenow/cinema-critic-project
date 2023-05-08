@@ -1,6 +1,20 @@
 import { html, render } from '../../../node_modules/lit-html/lit-html.js';
+import { getAllUsernames, getAllUsers } from '../../services/authServices.js';
 
-const adminUsersTemplate = (ctx) => html`
+const userTemplateAdmin = (user) => html`
+<tr>
+      <td>${user.username}</td>
+      <td>${user.email}</td>
+      <td>${user.role}</td>
+      <td>
+        <i class="fas fa-edit"></i>
+        <i class="fas fa-trash"></i>
+        <i class="fas fa-forward"></i>
+      </td>
+    </tr>
+`
+
+const adminUsersTemplate = (ctx, users) => html`
   <h2 class='admin-table-header'>Users</h2>
   <table class="user-table">
   <thead>
@@ -12,42 +26,19 @@ const adminUsersTemplate = (ctx) => html`
     </tr>
   </thead>
   <tbody>
-    <tr>
-      <td>user1</td>
-      <td>user1@example.com</td>
-      <td>Admin</td>
-      <td>
-        <i class="fas fa-edit"></i>
-        <i class="fas fa-trash"></i>
-        <i class="fas fa-forward"></i>
-      </td>
-    </tr>
-    <tr>
-      <td>user2</td>
-      <td>user2@example.com</td>
-      <td>User</td>
-      <td>
-        <i class="fas fa-edit"></i>
-        <i class="fas fa-trash"></i>
-        <i class="fas fa-forward"></i>
-      </td>
-    </tr>
-    <tr>
-      <td>user3</td>
-      <td>user3@example.com</td>
-      <td>User</td>
-      <td>
-        <i class="fas fa-edit"></i>
-        <i class="fas fa-trash"></i>
-        <i class="fas fa-forward"></i>
-      </td>
-    </tr>
+  ${users.map(user => userTemplateAdmin(user))}
   </tbody>
 </table>
 `
 
-export function renderUsersAdmin(ctx) {
-    const siteUsers = adminUsersTemplate();
-
-    ctx.render(siteUsers)
+export async function renderUsersAdmin(ctx) {
+  const users = await getAllUsers();
+  console.log(users);
+  const siteUsers = adminUsersTemplate(ctx, users);
+  ctx.render(siteUsers)
+  
 }
+
+
+
+

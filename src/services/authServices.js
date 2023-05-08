@@ -55,8 +55,8 @@ export function getUserBookmarks() {
 }
 
 export async function logoutUser() {
+  localStorage.clear();
   await post(endpoints.logout)
-  localStorage.removeItem('user');
 
 };
 
@@ -99,6 +99,21 @@ export async function getAllUsernames() {
 
   return username;
 };
+
+export async function getAllUsers() {
+  const User = Parse.Object.extend('User');
+  const query = new Parse.Query(User);
+  query.select('username', 'emailAddress', 'role', 'objectId');
+  const results = await query.find();
+
+  return results.map(result => ({
+    username: result.get('username'),
+    email: result.get('emailAddress'),
+    role: result.get('role'),
+    objectId: result.id
+  }));
+}
+
 
 export async function getAllEmails() {
   const response = await get('/classes/_User', { keys: 'emailAddress' });

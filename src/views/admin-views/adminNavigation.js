@@ -5,11 +5,8 @@ import { getUser } from '../../services/authServices.js';
 const adminNavTemplate = (user, ctx) => html`
 <input type="checkbox" id="nav-toggle">
 <section class="sidebar">
-    <!-- sidebar -->
     <div class="sidebar-brand">
-        <!-- sidebar-brand -->
         <div class="sidebar-logo"><img src="../../images/logo.png"></div>
-        <!-- h1 span -->
         <nav class="sidebar-menu">
             <ul>
                 <li>
@@ -54,10 +51,10 @@ const adminNavTemplate = (user, ctx) => html`
         </div>
 
         <div class="user-wrapper-admin"> <!-- user-wrapper -->
-            <img src="../../images/profile.png" width="30px" height="30px">
+            <img width="40px" height="40px" src="${user.profileImg}" onerror="this.onerror=null;this.src='../../../images/default-user.png';">
             <div>
-            <h4>Username</h4>
-            <small>Head Admin</small>
+            <h4>${user.username}</h4>
+            <small>Administrator</small>
             </div>
         </div>
     </header>
@@ -72,9 +69,7 @@ export function showAdminNavigation(ctx) {
     const user = getUser();
     const adminNav = adminNavTemplate(user, ctx);
     const body = document.querySelector('body');
-
-    console.log(adminNav);
-    console.log(body);
+ 
     render(adminNav, body);
 }
 
