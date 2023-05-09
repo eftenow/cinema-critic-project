@@ -13,39 +13,38 @@ const adminMoviesTemplate = (ctx) => html`
     </tr>
   </thead>
   <tbody>
-    <tr>
-      <td>Movie 1</td>
-      <td>Action</td>
-      <td>8.5</td>
-      <td>100</td>
+  ${movies.map(movie => movieTemplateAdmin(movie))}
+  </tbody>
+</table>
+`
+
+const movieTemplateAdmin = (movie) => html`
+<tr>
+      <td>${movie.name}</td>
+      <td>${movie.genre}</td>
+      <td>${movie.rating}</td>
+      <td>${movie.visits}</td>
       <td>
-      <button class='edit-btn-admin'><i class="fas fa-edit"></i></button>
+        <button class='edit-btn-admin'><i class="fas fa-edit"></i></button>
         <button class='delete-btn-admin'><i class="fas fa-trash"></i></button>
         <button class='forward-btn-admin'><i class="fa-solid fa-share-from-square"></i></button>
       </td>
     </tr>
+`
+
+const adminUsersTemplate = (ctx, users) => html`
+  <h2 class='admin-table-header'>Users</h2>
+  <table class="user-table">
+  <thead>
     <tr>
-      <td>Movie 2</td>
-      <td>Comedy</td>
-      <td>7.5</td>
-      <td>200</td>
-      <td>
-      <button class='edit-btn-admin'><i class="fas fa-edit"></i></button>
-        <button class='delete-btn-admin'><i class="fas fa-trash"></i></button>
-        <button class='forward-btn-admin'><i class="fa-solid fa-share-from-square"></i></button>
-      </td>
+      <th>Username</th>
+      <th>Email</th>
+      <th>Role</th>
+      <th>Actions</th>
     </tr>
-    <tr>
-      <td>Movie 3</td>
-      <td>Drama</td>
-      <td>9.0</td>
-      <td>150</td>
-      <td>
-      <button class='edit-btn-admin'><i class="fas fa-edit"></i></button>
-        <button class='delete-btn-admin'><i class="fas fa-trash"></i></button>
-        <button class='forward-btn-admin'><i class="fa-solid fa-share-from-square"></i></button>
-      </td>
-    </tr>
+  </thead>
+  <tbody>
+  ${users.map(user => userTemplateAdmin(user))}
   </tbody>
 </table>
 `
