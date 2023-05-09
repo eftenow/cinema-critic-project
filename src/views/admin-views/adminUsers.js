@@ -7,9 +7,9 @@ const userTemplateAdmin = (user) => html`
       <td>${user.email}</td>
       <td>${user.role}</td>
       <td>
-        <i class="fas fa-edit"></i>
-        <i class="fas fa-trash"></i>
-        <i class="fas fa-forward"></i>
+        <button class='edit-btn-admin'><i class="fas fa-edit"></i></button>
+        <button class='delete-btn-admin'><i class="fas fa-trash"></i></button>
+        <button class='forward-btn-admin'><i class="fa-solid fa-share-from-square"></i></button>
       </td>
     </tr>
 `

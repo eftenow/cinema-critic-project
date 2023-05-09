@@ -15,7 +15,6 @@ export const userReviews = (ctx, user, reviews) => html`
 
 export async function renderUserReviews(ctx, ev, user, reviews) {
   ev.preventDefault();
-  console.log('asd');
   const reviewSection = document.querySelector(".review-section");
   console.log(reviews);
   const myReviews = userReviews(ctx, user, reviews);

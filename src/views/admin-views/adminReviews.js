@@ -20,9 +20,9 @@ const adminReviewsTemplate = (ctx) => html`
       <td>8 <i class="fa-solid fa-star"></i></td>
       <td>Gladiator</td>
       <td>
-        <i class="fas fa-edit"></i>
-        <i class="fas fa-trash"></i>
-        <i class="fas fa-forward"></i>
+      <button class='edit-btn-admin'><i class="fas fa-edit"></i></button>
+        <button class='delete-btn-admin'><i class="fas fa-trash"></i></button>
+        <button class='forward-btn-admin'><i class="fa-solid fa-share-from-square"></i></button>
       </td>
     </tr>
 
@@ -32,9 +32,9 @@ const adminReviewsTemplate = (ctx) => html`
       <td>2 <i class="fa-solid fa-star"></i></td>
       <td>Avatar</td>
       <td>
-        <i class="fas fa-edit"></i>
-        <i class="fas fa-trash"></i>
-        <i class="fas fa-forward"></i>
+      <button class='edit-btn-admin'><i class="fas fa-edit"></i></button>
+        <button class='delete-btn-admin'><i class="fas fa-trash"></i></button>
+        <button class='forward-btn-admin'><i class="fa-solid fa-share-from-square"></i></button>
       </td>
     </tr>
     
