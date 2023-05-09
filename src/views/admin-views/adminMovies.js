@@ -9,7 +9,7 @@ const adminMoviesTemplate = (ctx) => html`
       <th>Genre</th>
       <th>Rating</th>
       <th>Visits</th>
-      <th>Actions</th>
+      <th>Actions</th> 
     </tr>
   </thead>
   <tbody>
