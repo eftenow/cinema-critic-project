@@ -19,7 +19,7 @@ const adminMoviesTemplate = (ctx) => html`
 `
 
 const movieTemplateAdmin = (movie) => html`
-<tr>
+<tr> 
       <td>${movie.name}</td>
       <td>${movie.genre}</td>
       <td>${movie.rating}</td>
