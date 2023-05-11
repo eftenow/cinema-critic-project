@@ -1,5 +1,6 @@
 import { html, render } from '../../../node_modules/lit-html/lit-html.js';
 import { getAllUsernames, getAllUsers } from '../../services/authServices.js';
+import { setActiveNavLink } from './adminNavigation.js';
 
 const userTemplateAdmin = (user) => html`
 <tr>
@@ -35,7 +36,8 @@ export async function renderUsersAdmin(ctx) {
   const users = await getAllUsers();
   console.log(users);
   const siteUsers = adminUsersTemplate(ctx, users);
-  ctx.render(siteUsers)
+  setActiveNavLink('/admin/users');
+  ctx.render(siteUsers);
   
 }
 

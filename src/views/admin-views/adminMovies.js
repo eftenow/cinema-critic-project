@@ -1,6 +1,8 @@
 import { html, render } from '../../../node_modules/lit-html/lit-html.js';
+import { getAllMovies } from '../../services/itemServices.js';
+import { setActiveNavLink } from './adminNavigation.js';
 
-const adminMoviesTemplate = (ctx) => html`
+const adminMoviesTemplate = (ctx, movies) => html`
     <h2 class='admin-table-header'>Movies</h2>
   <table class="movie-table">
   <thead>
@@ -21,7 +23,7 @@ const adminMoviesTemplate = (ctx) => html`
 const movieTemplateAdmin = (movie) => html`
 <tr>  
       <td>${movie.name}</td>
-      <td>${movie.genre}</td>
+      <td>${movie.genres}</td>
       <td>${movie.rating}</td>
       <td>${movie.visits}</td>
       <td>
@@ -49,8 +51,9 @@ const adminUsersTemplate = (ctx, users) => html`
 </table>
 `
 
-export function renderMoviesAdmin(ctx) {
-    const siteMovies = adminMoviesTemplate();
-
+export async function renderMoviesAdmin(ctx) {
+    const movies = await getAllMovies();
+    const siteMovies = adminMoviesTemplate(ctx, movies);
+    setActiveNavLink('/admin/movies');
     ctx.render(siteMovies);
 }

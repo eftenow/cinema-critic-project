@@ -2,6 +2,7 @@ import { html, render } from '../../../node_modules/lit-html/lit-html.js';
 import { getUsersCount } from '../../services/authServices.js';
 import { getMoviesCount, getSeriesCount } from '../../services/itemServices.js';
 import { getReviewsCount } from '../../services/reviewServices.js';
+import { setActiveNavLink } from './adminNavigation.js';
 
 
 const adminPanelTemplate = (usersCount, moviesCount, seriesCount, reviewsCount) => html`
@@ -52,6 +53,6 @@ export async function renderAdminPanel(ctx) {
     ]);
 
     const adminPanel = adminPanelTemplate(usersCount, moviesCount, seriesCount, reviewsCount);
-    
+    setActiveNavLink('/admin/dashboard');
     ctx.render(adminPanel)
 }

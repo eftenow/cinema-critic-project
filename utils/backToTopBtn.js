@@ -6,7 +6,10 @@ window.addEventListener("scroll", () => {
   const topBtn = document.querySelector('#back-to-top-btn');
   const scrollHeight = document.documentElement.scrollHeight;
   const scrollTop = document.documentElement.scrollTop;
-
+  if(!topBtn){
+    return;
+  };
+  
   const thirtyPercentHeight = scrollHeight * 0.3;
 
   if (scrollTop > thirtyPercentHeight) { 

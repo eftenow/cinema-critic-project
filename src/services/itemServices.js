@@ -19,7 +19,7 @@ const endpoints = {
 
 
 export async function getAllMovies() {
-    const movies = await get(endpoints.allMovies, { keys: 'genres,objectId,type,image,rating,name' });
+    const movies = await get(endpoints.allMovies, { keys: 'genres,objectId,type,image,rating,name,visits' });
     const moviesFound = movies.results;
     return moviesFound;
 };
@@ -63,7 +63,7 @@ export async function deleteMovie(id) {
 
 ////SERIES
 export async function getAllSeries() {
-    const series = await get(endpoints.allSeries, { keys: 'genres,objectId,type,image,rating,name' });
+    const series = await get(endpoints.allSeries, { keys: 'genres,objectId,type,image,rating,name,visits' });
     const seriesFound = series.results;
     return seriesFound;
 };

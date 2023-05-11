@@ -1,4 +1,5 @@
 import { html, render } from '../../../node_modules/lit-html/lit-html.js';
+import { setActiveNavLink } from './adminNavigation.js';
 
 const adminSeriesTemplate = (ctx) => html`
   <h2 class='admin-table-header'>TV Shows</h2>
@@ -53,7 +54,7 @@ const adminSeriesTemplate = (ctx) => html`
 
 export function renderSeriesAdmin(ctx) {
     const siteSeries = adminSeriesTemplate();
-
+    setActiveNavLink('/admin/series');
     ctx.render(siteSeries);
 }
 

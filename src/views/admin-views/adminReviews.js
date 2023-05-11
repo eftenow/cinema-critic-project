@@ -1,4 +1,5 @@
 import { html, render } from '../../../node_modules/lit-html/lit-html.js';
+import { setActiveNavLink } from './adminNavigation.js';
 
 const adminReviewsTemplate = (ctx) => html`
     <h2 class='admin-table-header'>Reviews</h2>
@@ -45,6 +46,6 @@ const adminReviewsTemplate = (ctx) => html`
 
 export function renderReviewsAdmin(ctx) {
     const siteReviews = adminReviewsTemplate();
-
+    setActiveNavLink('/admin/reviews');
     ctx.render(siteReviews);
 }

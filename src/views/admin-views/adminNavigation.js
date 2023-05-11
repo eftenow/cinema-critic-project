@@ -7,7 +7,7 @@ const adminNavTemplate = (user, ctx) => html`
 <section class="sidebar">
     <div class="sidebar-brand">
         <div class="sidebar-logo"><img src="../../images/logo.png"></div>
-        <nav class="sidebar-menu" @click=${setActiveNavLink}>
+        <nav class="sidebar-menu">
             <ul>
                 <li>
                     <a href="/admin/dashboard" class="active-admin"><span class="fa-solid fa-chart-line"></span>
@@ -73,13 +73,21 @@ export function showAdminNavigation(ctx) {
     render(adminNav, body);
 }
 
-function setActiveNavLink(ev) {
-    const selectedEl = ev.target;
-    debugger;
-    if (selectedEl.tagName === 'SPAN') {
-        const navLinks = ev.currentTarget.querySelectorAll('a');
-        navLinks.forEach(link => link.classList.remove('active-admin'));
-        selectedEl.parentNode.classList.add('active-admin');
-    }
-    
+// function setActiveNavLink(ev) {
+//     const selectedEl = ev.target;
+//     if (selectedEl.tagName === 'SPAN') {
+//         const navLinks = ev.currentTarget.querySelectorAll('a');
+//         navLinks.forEach(link => link.classList.remove('active-admin'));
+//         selectedEl.parentNode.classList.add('active-admin');
+//     }
+
+// }
+
+export function setActiveNavLink(path) {
+    const selectedSection = document.querySelector(`a[href="${path}"]`);
+ 
+    const navLinks = document.querySelectorAll('.sidebar-menu li a');
+    console.log(navLinks);
+    navLinks.forEach(link => link.classList.remove('active-admin'));
+    selectedSection.classList.add('active-admin');
 }
