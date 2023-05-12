@@ -18,6 +18,7 @@ export async function getAllReviews() {
     creator: review.creator,
     reviewRating: review.reviewRating,
     objectId: review.objectId,
+    title: review.title,
     target: review.target || review.seriesTarget
   }));
 }
