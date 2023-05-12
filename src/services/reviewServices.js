@@ -11,26 +11,39 @@ const endpoints = {
 
 };
 
+export async function getAllReviews() {
+  const response = await get(endpoints.allReviews);
+  return response.results.map(review => ({
+    reviewTitle: review.reviewTitle,
+    user: review.user?.objectId,
+    reviewRating: review.reviewRating,
+    objectId: review.objectId,
+    target: review.target.objectId || review.seriesTarget.objectId
+  }));
+}
+
 export async function getReviewsCount() {
-  console.log('asdasdas');
   const response = await get(endpoints.allReviews, { count: 1 });
   return response.count;
 };
 
-export function sendReviewRequest(rating, title, description, type, movieId, userId) {
+export function sendReviewRequest(rating, title, description, type, movieId, currentUser) {
   const Review = Parse.Object.extend("Review");
   const review = new Review();
+  const userId = currentUser.objectId;
+  const creator = currentUser.username;
 
   review.set("reviewRating", rating);
   review.set("reviewTitle", title);
   review.set("reviewDescription", description);
+  review.set("creator", creator);
 
   if (type === "series") {
     const seriesClass = Parse.Object.extend("Show");
     const seriesObj = new seriesClass();
     seriesObj.id = movieId;
     review.set("seriesTarget", seriesObj);
-  } else{
+  } else {
     const movieClass = Parse.Object.extend("Movie");
     const movieObj = new movieClass();
     movieObj.id = movieId;
@@ -41,23 +54,24 @@ export function sendReviewRequest(rating, title, description, type, movieId, use
   const userObj = new user();
   userObj.id = userId;
   review.set("user", userObj);
-  
+
   return review.save();
 };
 
- export async  function addNewReview(ctx, ev, type, movieId, userId) {
+export async function addNewReview(ctx, ev, type, movieId, user) {
   ev.preventDefault();
+
   const form = new FormData(ev.target);
 
   const rating = form.get('review-rating');
   const title = form.get('reviewer-review-text');
   const description = form.get('reviewer-review');
 
-  if(!rating){
+  if (!rating) {
     document.querySelector('.invalid-rating').textContent = 'You must select review rating.'
     return;
   };
-  sendReviewRequest(rating, title, description, type, movieId, userId)
+  sendReviewRequest(rating, title, description, type, movieId, user)
     .then(() => {
       showNotification('Review submitted successfully!');
     })
@@ -65,13 +79,13 @@ export function sendReviewRequest(rating, title, description, type, movieId, use
       console.error(error);
     });
   await updateRating(movieId, type);
-    
-    ev.target.reset();
-    ctx.redirect(ctx.path);
+
+  ev.target.reset();
+  ctx.redirect(ctx.path);
 };
 
 
-export function showNotification(notificationMsg, color='green') {
+export function showNotification(notificationMsg, color = 'green') {
   const notification = document.getElementById('notification');
   notification.textContent = notificationMsg;
   notification.classList.remove('notification-red', 'notification-green');
@@ -91,7 +105,7 @@ export function showNotification(notificationMsg, color='green') {
 
 
 export async function userAlreadyReviewed(userId, movieId, type) {
-  if (!userId){
+  if (!userId) {
     return null;
   }
 
@@ -113,13 +127,13 @@ export async function userAlreadyReviewed(userId, movieId, type) {
 export async function getReviewsForMovie(movieId, type) {
   const Review = Parse.Object.extend("Review");
   const query = new Parse.Query(Review);
-  
+
   if (type === "Movie" || type === "movie") {
     query.equalTo("target", { __type: "Pointer", className: "Movie", objectId: movieId });
   } else if (type === "Show" || type === "series") {
     query.equalTo("seriesTarget", { __type: "Pointer", className: "Show", objectId: movieId });
   }
-  
+
   query.include("user");
   const results = await query.find();
   const reviews = results.map((review) => {
@@ -133,7 +147,7 @@ export async function getReviewsForMovie(movieId, type) {
       profileImg: user.get("profileImg"),
     };
   });
-  
+
   return reviews;
 };
 
@@ -142,11 +156,12 @@ export async function updateRating(movieId, type) {
   const reviews = await getReviewsForMovie(movieId, type);
   const ratings = reviews.map((review) => review.reviewRating);
   const ratingSum = ratings.reduce((total, rating) => total + Number(rating), 0);
-  const avgRating = ratingSum / ratings.length;
+  let avgRating = ratingSum / ratings.length;
+  avgRating = avgRating !== null ? avgRating.toFixed(2) : null;
   const className = type === "movie" ? "Movie" : "Show";
   const query = new Parse.Query(className);
   const movie = await query.get(movieId);
-  movie.set("rating", avgRating);
+  movie.set("rating", Number(avgRating));
   await movie.save();
 };
 
@@ -169,7 +184,7 @@ export async function editExistingReview(ev, review, ctx) {
   result.set("reviewDescription", description);
 
   await result.save();
-  const [, type, currentId]  = ctx.path.split('/');
+  const [, type, currentId] = ctx.path.split('/');
 
   await updateRating(currentId, type);
 
@@ -182,7 +197,7 @@ export async function editExistingReview(ev, review, ctx) {
 export async function deleteReview(ev, reviewId, ctx) {
   ev.preventDefault();
   await del(endpoints.delReview(reviewId));
-  const [, type, currentId]  = ctx.path.split('/');
+  const [, type, currentId] = ctx.path.split('/');
   await updateRating(currentId, type);
   showNotification('Review deleted successfully');
   ctx.redirect(ctx.path);

@@ -6,7 +6,7 @@ import { editReviewHandler, deleteReviewHandler } from '../../utils/reviewOperat
 
 import { getUser, getUserBookmarks } from '../services/authServices.js';
 import { getMovieDetails, getSeriesDetails } from '../services/itemServices.js';
-import { addNewReview, getReviewsForMovie, sendReviewRequest, updateRating, userAlreadyReviewed } from '../services/reviewServices.js';
+import { addNewReview, getReviewsForMovie, userAlreadyReviewed } from '../services/reviewServices.js';
 
 export const reviewTemplate = (ctx, review, currentUser) => html`
 <div class="review">
@@ -86,7 +86,7 @@ const detailsTemplate = (movie, ctx, type, currentUser, userBookmarks, reviews, 
   ${reviews.length == 0
     ? html`<h2 id='no-movies-msg'>No reviews yet.</h2>`
     : html`${reviews.map(rev => reviewTemplate(ctx, rev, currentUser))}`}
-  <form class="add-review-form ${alreadyReviewed || !currentUser ? 'hidden' : ''}" @submit='${(e) => addNewReview(ctx, e, movie.type, movie.objectId, currentUser.objectId)}'>
+  <form class="add-review-form ${alreadyReviewed || !currentUser ? 'hidden' : ''}" @submit='${(e) => addNewReview(ctx, e, movie.type, movie.objectId, currentUser)}'>
     <h3>Add a Review:</h3>
     <div class="select-menu specific-form-group">
   <label for="select-rating">Rating: </label>

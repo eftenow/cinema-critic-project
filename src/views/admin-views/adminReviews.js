@@ -1,4 +1,5 @@
 import { html, render } from '../../../node_modules/lit-html/lit-html.js';
+import { getAllReviews } from '../../services/reviewServices.js';
 import { setActiveNavLink } from './adminNavigation.js';
 
 const adminReviewsTemplate = (ctx) => html`
@@ -44,7 +45,9 @@ const adminReviewsTemplate = (ctx) => html`
 </table>
 `
 
-export function renderReviewsAdmin(ctx) {
+export async function renderReviewsAdmin(ctx) {
+    const reviews = await getAllReviews();
+    console.log(reviews); 
     const siteReviews = adminReviewsTemplate();
     setActiveNavLink('/admin/reviews');
     ctx.render(siteReviews);

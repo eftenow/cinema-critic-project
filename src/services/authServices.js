@@ -70,6 +70,14 @@ export function getCurrentSessionToken() {
   return user.sessionToken;
 };
 
+export async function getUsernameById(objectId) {
+  const User = Parse.Object.extend('User');
+  const query = new Parse.Query(User);
+  query.equalTo('objectId', objectId);
+  const result = await query.first();
+  return result.get('username');
+};
+
 export function getUserId() {
   let user = getUser();
   try {
