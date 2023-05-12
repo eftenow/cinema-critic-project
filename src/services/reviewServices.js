@@ -15,10 +15,10 @@ export async function getAllReviews() {
   const response = await get(endpoints.allReviews);
   return response.results.map(review => ({
     reviewTitle: review.reviewTitle,
-    user: review.user?.objectId,
+    creator: review.creator,
     reviewRating: review.reviewRating,
     objectId: review.objectId,
-    target: review.target.objectId || review.seriesTarget.objectId
+    target: review.target || review.seriesTarget
   }));
 }
 
@@ -27,7 +27,7 @@ export async function getReviewsCount() {
   return response.count;
 };
 
-export function sendReviewRequest(rating, title, description, type, movieId, currentUser) {
+export function sendReviewRequest(rating, title, description, movie, currentUser) {
   const Review = Parse.Object.extend("Review");
   const review = new Review();
   const userId = currentUser.objectId;
@@ -37,16 +37,17 @@ export function sendReviewRequest(rating, title, description, type, movieId, cur
   review.set("reviewTitle", title);
   review.set("reviewDescription", description);
   review.set("creator", creator);
+  review.set("title", movie.name);
 
-  if (type === "series") {
+  if (movie.type === "series") {
     const seriesClass = Parse.Object.extend("Show");
     const seriesObj = new seriesClass();
-    seriesObj.id = movieId;
+    seriesObj.id = movie.objectId;
     review.set("seriesTarget", seriesObj);
   } else {
     const movieClass = Parse.Object.extend("Movie");
     const movieObj = new movieClass();
-    movieObj.id = movieId;
+    movieObj.id = movie.objectId;
     review.set("target", movieObj);
   }
 
@@ -58,9 +59,9 @@ export function sendReviewRequest(rating, title, description, type, movieId, cur
   return review.save();
 };
 
-export async function addNewReview(ctx, ev, type, movieId, user) {
+export async function addNewReview(ctx, ev, movie, user) {
   ev.preventDefault();
-
+  
   const form = new FormData(ev.target);
 
   const rating = form.get('review-rating');
@@ -71,14 +72,14 @@ export async function addNewReview(ctx, ev, type, movieId, user) {
     document.querySelector('.invalid-rating').textContent = 'You must select review rating.'
     return;
   };
-  sendReviewRequest(rating, title, description, type, movieId, user)
+  sendReviewRequest(rating, title, description, movie, user)
     .then(() => {
       showNotification('Review submitted successfully!');
     })
     .catch((error) => {
       console.error(error);
     });
-  await updateRating(movieId, type);
+  await updateRating(movie.objectId, movie.type);
 
   ev.target.reset();
   ctx.redirect(ctx.path);

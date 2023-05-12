@@ -86,7 +86,7 @@ const detailsTemplate = (movie, ctx, type, currentUser, userBookmarks, reviews, 
   ${reviews.length == 0
     ? html`<h2 id='no-movies-msg'>No reviews yet.</h2>`
     : html`${reviews.map(rev => reviewTemplate(ctx, rev, currentUser))}`}
-  <form class="add-review-form ${alreadyReviewed || !currentUser ? 'hidden' : ''}" @submit='${(e) => addNewReview(ctx, e, movie.type, movie.objectId, currentUser)}'>
+  <form class="add-review-form ${alreadyReviewed || !currentUser ? 'hidden' : ''}" @submit='${(e) => addNewReview(ctx, e, movie, currentUser)}'>
     <h3>Add a Review:</h3>
     <div class="select-menu specific-form-group">
   <label for="select-rating">Rating: </label>
@@ -170,4 +170,4 @@ export async function renderDetails(ctx, type, movieId) {
   const details = detailsTemplate(currentObj, ctx, type, currentUser, userBookmarks, reviews, alreadyReviewed);
   console.log(reviews);
   ctx.render(details);
-}
+};

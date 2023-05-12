@@ -28,21 +28,22 @@ const adminReviewsTemplate = (ctx) => html`
       </td>
     </tr>
 
-    <tr>
-      <td>This movie sucks</td>
-      <td>eftenow</td>
-      <td>2 <i class="fa-solid fa-star"></i></td>
-      <td>Avatar</td>
+  </tbody>
+</table>
+`
+
+const reviewTemplateAdmin = (review) => html`
+<tr>  
+      <td>${review.reviewTitle}</td>
+      <td>${review.creator}</td>
+      <td>${review.reviewRating}</td>
+      <td>${review.visits}</td>
       <td>
-      <button class='edit-btn-admin'><i class="fas fa-edit"></i></button>
+        <button class='edit-btn-admin'><i class="fas fa-edit"></i></button>
         <button class='delete-btn-admin'><i class="fas fa-trash"></i></button>
         <button class='forward-btn-admin'><i class="fa-solid fa-share-from-square"></i></button>
       </td>
     </tr>
-    
-    
-  </tbody>
-</table>
 `
 
 export async function renderReviewsAdmin(ctx) {
@@ -51,4 +52,4 @@ export async function renderReviewsAdmin(ctx) {
     const siteReviews = adminReviewsTemplate();
     setActiveNavLink('/admin/reviews');
     ctx.render(siteReviews);
-}
+};

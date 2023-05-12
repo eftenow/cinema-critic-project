@@ -34,22 +34,6 @@ const movieTemplateAdmin = (movie) => html`
     </tr>
 `
 
-const adminUsersTemplate = (ctx, users) => html`
-  <h2 class='admin-table-header'>Users</h2>
-  <table class="user-table">
-  <thead>
-    <tr>
-      <th>Username</th>
-      <th>Email</th>
-      <th>Role</th>
-      <th>Actions</th>
-    </tr>
-  </thead>
-  <tbody>
-  ${users.map(user => userTemplateAdmin(user))}
-  </tbody>
-</table>
-`
 
 export async function renderMoviesAdmin(ctx) {
     const movies = await getAllMovies();
