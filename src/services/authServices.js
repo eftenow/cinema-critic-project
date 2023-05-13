@@ -81,11 +81,24 @@ export function getUserId() {
 };
 
 export async function editUserInfo(userId, editedUserData) {
+  const User = Parse.Object.extend('User');
+  const query = new Parse.Query(User);
+  console.log(userId);
   console.log(editedUserData);
-  const user = await put(endpoints.edit(userId.toString()), editedUserData);
-  console.log(user);
-  updateLocalStorage(editedUserData);
-};
+  try {
+    const user = await query.get(userId);
+    Object.keys(editedUserData).forEach(key => {
+      user.set(key, editedUserData[key]);
+    });
+
+    // Save the changes
+    await user.save();
+
+    console.log('User data updated successfully');
+  } catch (error) {
+    console.error('Error updating user data:', error);
+  }
+}
 
 function updateLocalStorage(updatedData) {
   let user = JSON.parse(localStorage.getItem('user'));
@@ -104,16 +117,10 @@ export async function getAllUsernames() {
 export async function getAllUsers() {
   const User = Parse.Object.extend('User');
   const query = new Parse.Query(User);
-  query.select('username', 'emailAddress', 'role', 'objectId');
   query.ascending('role');
   const results = await query.find();
 
-  return results.map(result => ({
-    username: result.get('username'),
-    email: result.get('emailAddress'),
-    role: result.get('role'),
-    objectId: result.id
-  }));
+  return results.map(result => result.toJSON());
 }
 
 

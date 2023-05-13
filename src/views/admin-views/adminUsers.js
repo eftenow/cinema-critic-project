@@ -7,7 +7,7 @@ import { setActiveNavLink } from './adminNavigation.js';
 const userTemplateAdmin = (user, ctx) => html`
 <tr>
       <td>${user.username}</td>
-      <td>${user.email}</td>
+      <td>${user.emailAddress}</td>
       <td>${user.role}</td>
       <td>
         <button @click='${(e) => editUserData(ctx, e, user)}' class='edit-btn-admin'><i class="fas fa-edit"></i></button>
@@ -35,6 +35,7 @@ const adminUsersTemplate = (ctx, users) => html`
 
 export async function renderUsersAdmin(ctx) {
   const users = await getAllUsers();
+  console.log(users);
 
   const siteUsers = adminUsersTemplate(ctx, users);
   setActiveNavLink('/admin/users');
@@ -55,7 +56,6 @@ export function editUserData(ctx, ev, user) {
 
 const editUserFormTemplate = (user, ctx) => html`
      <div class="edit-profile admin-edit-modal">
-    <h2>Edit Profile</h2>
     <div class="info" id='edit-pic-container'>
         <img class="edit-avatar" src="${user.profileImg}"
             onerror="this.onerror=null;this.src='../../images/default-user.png';">
@@ -63,7 +63,7 @@ const editUserFormTemplate = (user, ctx) => html`
         <input type='text'  id="new-avatar-url" value="${user.profileImg}">
 
     </div>
-    <form @submit ="${(e) => saveChangesHandler(e, ctx, '/admin/Users')}">
+    <form @submit ="${(e) => saveChangesHandler(e, ctx, '/admin/Users', user.objectId)}">
         <div class="input-group ">
             <div class="input-group">
                 <label for="username">Username:</label>

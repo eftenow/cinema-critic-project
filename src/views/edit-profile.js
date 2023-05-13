@@ -1,4 +1,5 @@
 import { html } from '../../node_modules/lit-html/lit-html.js';
+import { hideModal } from '../../utils/reviewOperations.js';
 import { editUserInfo, getUser, getUserId } from '../services/authServices.js';
 import { hideUserReviews, renderUserReviews } from './userReviews.js';
 
@@ -60,7 +61,7 @@ export async function renderEdit(ctx) {
     ctx.render(editProfile);
 }
 
-export async function saveChangesHandler(ev, ctx, redirectLocation) {
+export async function saveChangesHandler(ev, ctx, redirectLocation, userId) {
     ev.preventDefault();
     const profileImg = document.getElementById('new-avatar-url').value;
     const form = new FormData(ev.target);
@@ -69,12 +70,13 @@ export async function saveChangesHandler(ev, ctx, redirectLocation) {
     const country = form.get('country');
     const city = form.get('city');
     const description = form.get('description');
-    const userId = getUserId();
+    userId = userId == null ? getUserId() : userId;
 
     const editedUserData = { username, emailAddress, country, city, description, profileImg };
     await editUserInfo(userId, editedUserData);
 
     ctx.redirect(redirectLocation);
+    hideModal();
 }
 
 
