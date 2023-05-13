@@ -71,8 +71,12 @@ const editReviewFormTemplate = (review, ctx) => html`
       </form>
     `;
 
-function hideModal() {
-  document.querySelector('.modal-content').classList.remove('small-modal');
-  document.querySelector('.modal').style.display = 'none';
+export function hideModal() {
+
+  const modalContent = document.querySelector('.modal-content');
+  const modal = document.querySelector('.modal');
+
+  modalContent ? modalContent.classList.remove('small-modal') : null;
+  modal ? modal.style.display = 'none' : null;
 };
 

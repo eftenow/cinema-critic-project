@@ -51,6 +51,7 @@
     opacity: 0.85;
     display: inline-block;
     padding-right: 1rem;
+    margin-bottom: 1.1rem;
 }
 
 .sidebar-menu{
@@ -440,4 +441,9 @@
   }
   .forward-btn-admin{
     background: rgb(23, 199, 23);
+  }
+
+  .admin-edit-modal{
+    margin-top: 8%;
+    border-radius: 2%;
   }

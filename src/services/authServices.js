@@ -105,6 +105,7 @@ export async function getAllUsers() {
   const User = Parse.Object.extend('User');
   const query = new Parse.Query(User);
   query.select('username', 'emailAddress', 'role', 'objectId');
+  query.ascending('role');
   const results = await query.find();
 
   return results.map(result => ({
@@ -125,6 +126,10 @@ export async function getAllEmails() {
 };
 
 
-
-
+export async function deleteUserById(objectId) {
+  const User = Parse.Object.extend('_User');
+  const query = new Parse.Query(User);
+  const user = await query.get(objectId);
+  // await user.destroy();
+}
 

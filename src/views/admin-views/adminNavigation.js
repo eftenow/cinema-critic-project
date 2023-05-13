@@ -59,6 +59,9 @@ const adminNavTemplate = (user, ctx) => html`
         </div>
     </header>
     <main class="main-section-admin"> <!-- main -->
+    <div id="notification"></div>
+        <div class="modal">
+          </div>
 </main>
 </section>
 

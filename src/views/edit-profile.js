@@ -13,7 +13,7 @@ export const profileTemplate = (ctx, user) => html`
         <input type='text'  id="new-avatar-url" value="${user.profileImg}">
 
     </div>
-    <form @submit ="${(e) => saveChangesHandler(e, ctx)}">
+    <form @submit ="${(e) => saveChangesHandler(e, ctx, '/myProfile')}">
         <div class="input-group ">
             <div class="input-group">
                 <label for="username">Username:</label>
@@ -43,7 +43,7 @@ export const profileTemplate = (ctx, user) => html`
 
             <div class="button-group">
                 <button type="submit" >Save Changes</button>
-                <button @click ="${(e) => cancelChangesHandler(e, ctx)}" type="button">Cancel</button>
+                <button @click ="${(e) => cancelChangesHandler(e, ctx, '/myProfile')}" type="button">Cancel</button>
             </div>
     </form>
 </div>
@@ -60,7 +60,7 @@ export async function renderEdit(ctx) {
     ctx.render(editProfile);
 }
 
-async function saveChangesHandler(ev, ctx) {
+export async function saveChangesHandler(ev, ctx, redirectLocation) {
     ev.preventDefault();
     const profileImg = document.getElementById('new-avatar-url').value;
     const form = new FormData(ev.target);
@@ -74,11 +74,10 @@ async function saveChangesHandler(ev, ctx) {
     const editedUserData = { username, emailAddress, country, city, description, profileImg };
     await editUserInfo(userId, editedUserData);
 
-    ctx.redirect('/myProfile');
+    ctx.redirect(redirectLocation);
 }
 
 
-function cancelChangesHandler(ev, ctx) {
-    console.log(ctx);
-    ctx.redirect('/myProfile');
+export function cancelChangesHandler(ev, ctx, redirectLocation) {
+    ctx.redirect(redirectLocation);
 }
