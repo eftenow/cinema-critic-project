@@ -1,5 +1,5 @@
 import { html, render } from '../../../node_modules/lit-html/lit-html.js';
-import { getAllMovies } from '../../services/itemServices.js';
+import { deleteMovie, getAllMovies } from '../../services/itemServices.js';
 import { setActiveNavLink } from './adminNavigation.js';
 
 const adminMoviesTemplate = (ctx, movies) => html`
@@ -28,7 +28,7 @@ const movieTemplateAdmin = (movie) => html`
       <td>${movie.visits}</td>
       <td>
         <button class='edit-btn-admin'><i class="fas fa-edit"></i></button>
-        <button class='delete-btn-admin'><i class="fas fa-trash"></i></button>
+        <button @click='${() => deleteMovie(movie.objectId)}' class='delete-btn-admin'><i class="fas fa-trash"></i></button>
         <button class='forward-btn-admin'><i class="fa-solid fa-share-from-square"></i></button>
       </td>
     </tr>
