@@ -447,3 +447,11 @@
     margin-top: 8%;
     border-radius: 2%;
   }
+
+  .admin-edit-btns{
+    display: flex;
+  }
+
+  .cancel-edit-btn{
+    margin-left: 5%;
+  }

@@ -28,7 +28,7 @@ const movieTemplateAdmin = (movie, ctx) => html`
       <td>${movie.rating}</td>
       <td>${movie.visits}</td>
       <td>
-        <button @click='${(e, ) => renderEditMovieAdmin(e, movie, ctx)}' class='edit-btn-admin'><i class="fas fa-edit"></i></button>
+        <button @click='${(e, ) => renderEditMovieAdmin(e, movie.objectId, ctx)}' class='edit-btn-admin'><i class="fas fa-edit"></i></button>
         <button @click='${() => deleteMovie(movie.objectId)}' class='delete-btn-admin'><i class="fas fa-trash"></i></button>
         <button class='forward-btn-admin'><i class="fa-solid fa-share-from-square"></i></button>
       </td>

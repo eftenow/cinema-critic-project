@@ -14,7 +14,8 @@ const endpoints = {
     movieDetails: '/classes/Movie/',
     seriesDetails: '/classes/Show/',
     like: '/data/likes',
-
+    editSeries: (id)=> `/classes/Show/${id}`,
+    editMovie: (id)=> `/classes/Movie/${id}`,
 };
 
 
@@ -56,6 +57,10 @@ export async function getMovieDetails(id) {
 
 };
 
+export async function updateMovie(id, updatedMovieData) {
+    return put(endpoints.editMovie(id), updatedMovieData);
+};
+
 export async function deleteMovie(id) {
     return del(endpoints.movieDetails + id);
 };
@@ -83,6 +88,10 @@ export async function getSeriesCount() {
 
 export async function createNewSeire(newSeries) {
     return post(endpoints.createSerie, newSeries);
+};
+
+export async function updateSeries(id, updatedSeriesData) {
+    return put(endpoints.editSeries(id), updatedSeriesData);
 };
 
 export async function getSeriesDetails(id) {
