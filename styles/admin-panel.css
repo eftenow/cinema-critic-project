@@ -455,3 +455,29 @@
   .cancel-edit-btn{
     margin-left: 5%;
   }
+
+  .admin-review{
+    position: absolute;
+    top: 50%;
+    left: 60%;
+    transform: translate(-50%, -50%);
+    width: 33%;
+    height: 50vh;
+    border-radius: 1.5%;
+  }
+
+  .admin-rev-btns{
+    margin: 7.5% 0 0 0;
+  }
+
+  .admin-rev-header{
+    margin: 3.8%;
+  }
+
+  .specific-form-group-admin{
+    margin-bottom: 5%;
+  }
+
+  .specific-form-group-admin:first-of-type {
+    margin-top: 2%;
+  }

@@ -83,7 +83,6 @@ export function setActiveNavLink(path) {
     const selectedSection = document.querySelector(`a[href="${path}"]`);
  
     const navLinks = document.querySelectorAll('.sidebar-menu li a');
-    console.log(navLinks);
     navLinks.forEach(link => link.classList.remove('active-admin'));
     selectedSection.classList.add('active-admin');
 }

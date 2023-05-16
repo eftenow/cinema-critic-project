@@ -1,5 +1,6 @@
 import { post, put, del, get } from './api.js';
 import { APP_ID, JS_KEY } from "../../secrets.js";
+import { hideModal } from '../../utils/reviewOperations.js';
 
 Parse.initialize(APP_ID, JS_KEY);
 Parse.serverURL = 'https://parseapi.back4app.com/';
@@ -10,6 +11,12 @@ const endpoints = {
   allReviews: '/classes/Review'
 
 };
+
+export async function getReviewById(reviewId) {
+  const review = await get(`${endpoints.allReviews}/${reviewId}`);
+  
+  return review;
+}
 
 export async function getAllReviews() {
   const response = await get(endpoints.allReviews);
@@ -154,7 +161,6 @@ export async function getReviewsForMovie(movieId, type) {
 };
 
 export async function updateRating(movieId, type) {
-  debugger;
   const reviews = await getReviewsForMovie(movieId, type);
   const ratings = reviews.map((review) => review.reviewRating);
   const ratingSum = ratings.reduce((total, rating) => total + Number(rating), 0);
@@ -187,7 +193,11 @@ export async function editExistingReview(ev, review, ctx) {
 
   await result.save();
   const [, type, currentId] = ctx.path.split('/');
-
+  if(type=='admin'){
+    ctx.redirect(ctx.path);
+    hideModal();
+    return
+  };
   await updateRating(currentId, type);
 
   const modal = document.querySelector('.modal');

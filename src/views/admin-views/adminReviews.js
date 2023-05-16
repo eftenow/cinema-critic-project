@@ -1,6 +1,7 @@
 import { html, render } from '../../../node_modules/lit-html/lit-html.js';
 import { editReviewHandler } from '../../../utils/reviewOperations.js';
 import { getAllReviews } from '../../services/reviewServices.js';
+import { editAdminReviewHandler } from './adminEditReview.js';
 import { setActiveNavLink } from './adminNavigation.js';
 
 const reviewTemplateAdmin = (review, ctx) => {
@@ -10,7 +11,7 @@ const reviewTemplateAdmin = (review, ctx) => {
       : review.target.className === 'Movie'
       ? `/movie/${review.target.objectId}`
       : '';
-      console.log(path);
+
   return html`
     <tr>  
       <td>${review.reviewTitle}</td>
@@ -18,7 +19,7 @@ const reviewTemplateAdmin = (review, ctx) => {
       <td>${review.reviewRating}</td>
       <td>${review.title}</td>
       <td>
-        <button @click="${(e) => editReviewHandler(ctx, e, review, true)}" class='edit-btn-admin'><i class="fas fa-edit"></i></button>
+        <button @click="${(e) => editAdminReviewHandler(ctx, e, review.objectId)}" class='edit-btn-admin'><i class="fas fa-edit"></i></button>
         <button class='delete-btn-admin'><i class="fas fa-trash"></i></button>
         <button class='forward-btn-admin' onclick="location.href='${path}'"><i class="fa-solid fa-share-from-square"></i></button>
       </td>
@@ -48,7 +49,6 @@ const adminReviewsTemplate = (ctx, reviews) => html`
 
 export async function renderReviewsAdmin(ctx) {
     const reviews = await getAllReviews();
-    console.log(reviews); 
     const siteReviews = adminReviewsTemplate(ctx, reviews);
     setActiveNavLink('/admin/reviews');
     ctx.render(siteReviews);

@@ -2,18 +2,13 @@ import { html, render } from '../node_modules/lit-html/lit-html.js';
 import { deleteReview, editExistingReview } from '../src/services/reviewServices.js';
 import { selectOption, showHideOptions } from './dropdowns.js';
 
-export function editReviewHandler(ctx, ev, review, adminRequest) {
+export function editReviewHandler(ctx, ev, review) {
     ev.preventDefault();
   
     const modal = document.querySelector('.modal');
     modal.style.display = 'block';
-    let editReviewForm;
-    debugger;
-    if(adminRequest){
-      editReviewForm = document.querySelector('.modal');
-    } else{
-      editReviewForm = document.querySelector('.modal-content');
-    }
+  
+    const editReviewForm = document.querySelector('.modal-content');
     render(editReviewFormTemplate(review, ctx), editReviewForm);
   };
 
