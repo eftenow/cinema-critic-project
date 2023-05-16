@@ -60,7 +60,9 @@ const adminNavTemplate = (user, ctx) => html`
     </header>
     <main class="main-section-admin"> <!-- main -->
     <div id="notification"></div>
+    
         <div class="modal">
+            
           </div>
 </main>
 </section>
@@ -76,15 +78,6 @@ export function showAdminNavigation(ctx) {
     render(adminNav, body);
 }
 
-// function setActiveNavLink(ev) {
-//     const selectedEl = ev.target;
-//     if (selectedEl.tagName === 'SPAN') {
-//         const navLinks = ev.currentTarget.querySelectorAll('a');
-//         navLinks.forEach(link => link.classList.remove('active-admin'));
-//         selectedEl.parentNode.classList.add('active-admin');
-//     }
-
-// }
 
 export function setActiveNavLink(path) {
     const selectedSection = document.querySelector(`a[href="${path}"]`);

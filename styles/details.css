@@ -112,8 +112,7 @@
 }
 
 .trailer-section {
-  margin-top: 60px;
-  margin-top: 40px;
+  margin: 2% auto;
   width: 1024px;
   height: 768px;
   display: flex;
