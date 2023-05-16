@@ -1,17 +1,19 @@
 import { html, render } from '../../../node_modules/lit-html/lit-html.js';
-import { getAllSeries } from '../../services/itemServices.js';
+import { scrollToTop } from '../../../utils/backToTopBtn.js';
+import { deleteSeries, getAllSeries } from '../../services/itemServices.js';
+import { renderEditMovieAdmin } from './adminEditMovie.js';
 import { setActiveNavLink } from './adminNavigation.js';
 
-const seriesTemplateAdmin = (series) => html`
+const seriesTemplateAdmin = (series, ctx) => html`
 <tr>  
       <td>${series.name}</td>
       <td>${series.genres}</td>
       <td>${series.rating}</td>
       <td>${series.visits}</td>
       <td>
-        <button class='edit-btn-admin'><i class="fas fa-edit"></i></button>
-        <button class='delete-btn-admin'><i class="fas fa-trash"></i></button>
-        <button class='forward-btn-admin'><i class="fa-solid fa-share-from-square"></i></button>
+        <button @click='${(e) => renderEditMovieAdmin(e, series.objectId, ctx, 'series')}' class='edit-btn-admin'><i class="fas fa-edit"></i></button>
+        <button @click='${() => deleteSeries(series.objectId)}' class='delete-btn-admin'><i class="fas fa-trash"></i></button>
+        <a @click=${scrollToTop} href="/${series.type}/${series.objectId}" class='forward-btn-admin'><i class="fa-solid fa-share-from-square"></i></a>
       </td>
     </tr>
 `
@@ -28,7 +30,7 @@ const adminSeriesTemplate = (ctx, series) => html`
     </tr>
   </thead>
   <tbody>
-  ${series.map(currentSeries => seriesTemplateAdmin(currentSeries))}
+  ${series.map(currentSeries => seriesTemplateAdmin(currentSeries, ctx))}
   </tbody>
 </table>
 

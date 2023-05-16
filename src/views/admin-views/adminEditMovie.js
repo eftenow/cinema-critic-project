@@ -1,6 +1,6 @@
 import { html, render } from '../../../node_modules/lit-html/lit-html.js';
 import { hideModal } from '../../../utils/reviewOperations.js';
-import { getMovieDetails, updateMovie, updateSeries } from "../../services/itemServices.js";
+import { getMovieDetails, getSeriesDetails, updateMovie, updateSeries } from "../../services/itemServices.js";
 
 const editMovieTemplate = (movie, ctx) => html`
 <section class='create-section admin-edit-movie'>
@@ -62,9 +62,14 @@ const editMovieTemplate = (movie, ctx) => html`
   </div>
 </section>`
 
-export async function renderEditMovieAdmin(ev, movieId, ctx) {
+export async function renderEditMovieAdmin(ev, movieId, ctx, type) {
+  let movie;
   ev.preventDefault();
-  const movie = await getMovieDetails(movieId);
+  if (type=='series'){
+    movie = await getSeriesDetails(movieId);
+  } else{
+    movie = await getMovieDetails(movieId);
+  }
   const modal = document.querySelector('.modal');
   modal.style.display = 'block';
 

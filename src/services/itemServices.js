@@ -98,6 +98,9 @@ export async function getSeriesDetails(id) {
     return get(endpoints.seriesDetails + id);
 };
 
+export async function deleteSeries(id) {
+    return del(endpoints.seriesDetails + id);
+};
 
 //ALL
 export async function getMoviesAndSeries(page = 1, pageSize = PAGE_SIZE) {
