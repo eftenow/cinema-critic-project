@@ -1,4 +1,5 @@
 import { html, render } from '../../../node_modules/lit-html/lit-html.js';
+import { scrollToTop } from '../../../utils/backToTopBtn.js';
 import { deleteMovie, getAllMovies } from '../../services/itemServices.js';
 import { renderEditMovieAdmin } from './adminEditMovie.js';
 import { setActiveNavLink } from './adminNavigation.js';
@@ -30,7 +31,7 @@ const movieTemplateAdmin = (movie, ctx) => html`
       <td>
         <button @click='${(e, ) => renderEditMovieAdmin(e, movie.objectId, ctx)}' class='edit-btn-admin'><i class="fas fa-edit"></i></button>
         <button @click='${() => deleteMovie(movie.objectId)}' class='delete-btn-admin'><i class="fas fa-trash"></i></button>
-        <button class='forward-btn-admin'><i class="fa-solid fa-share-from-square"></i></button>
+        <a @click=${scrollToTop} href="/${movie.type}/${movie.objectId}" class='forward-btn-admin'><i class="fa-solid fa-share-from-square"></i></a>
       </td>
     </tr>
 `
