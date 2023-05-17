@@ -206,10 +206,18 @@ export async function editExistingReview(ev, review, ctx) {
   showNotification('Review updated successfully!');
 };
 
-export async function deleteReview(ev, reviewId, ctx) {
+export async function deleteReview(ev, reviewId, ctx, target) {
   ev.preventDefault();
+  let type;
+  let currentId;
   await del(endpoints.delReview(reviewId));
-  const [, type, currentId] = ctx.path.split('/');
+  if (target){
+    type = target.className == 'Movie' ? 'movie' : 'series';
+    currentId = target.objectId;
+    console.log(type, currentId);
+  } else{
+    [, type, currentId] = ctx.path.split('/');
+  }
   await updateRating(currentId, type);
   showNotification('Review deleted successfully');
   ctx.redirect(ctx.path);

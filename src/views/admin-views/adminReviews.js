@@ -1,6 +1,6 @@
 import { html, render } from '../../../node_modules/lit-html/lit-html.js';
-import { editReviewHandler } from '../../../utils/reviewOperations.js';
-import { getAllReviews } from '../../services/reviewServices.js';
+import { deleteReviewHandler, editReviewHandler } from '../../../utils/reviewOperations.js';
+import { deleteReview, getAllReviews } from '../../services/reviewServices.js';
 import { editAdminReviewHandler } from './adminEditReview.js';
 import { setActiveNavLink } from './adminNavigation.js';
 
@@ -11,7 +11,7 @@ const reviewTemplateAdmin = (review, ctx) => {
       : review.target.className === 'Movie'
       ? `/movie/${review.target.objectId}`
       : '';
-
+  console.log(review);
   return html`
     <tr>  
       <td>${review.reviewTitle}</td>
@@ -20,7 +20,7 @@ const reviewTemplateAdmin = (review, ctx) => {
       <td>${review.title}</td>
       <td>
         <button @click="${(e) => editAdminReviewHandler(ctx, e, review.objectId)}" class='edit-btn-admin'><i class="fas fa-edit"></i></button>
-        <button class='delete-btn-admin'><i class="fas fa-trash"></i></button>
+        <button @click="${(e) => deleteReview(e, review.objectId, ctx, review.target)}" class='delete-btn-admin'><i class="fas fa-trash"></i></button>
         <button class='forward-btn-admin' onclick="location.href='${path}'"><i class="fa-solid fa-share-from-square"></i></button>
       </td>
     </tr>
