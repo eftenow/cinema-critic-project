@@ -1,4 +1,5 @@
 import { html, render } from '../../../node_modules/lit-html/lit-html.js';
+import { scrollToBottom } from '../../../utils/backToTopBtn.js';
 import { deleteReviewHandler, editReviewHandler } from '../../../utils/reviewOperations.js';
 import { deleteReview, getAllReviews } from '../../services/reviewServices.js';
 import { editAdminReviewHandler } from './adminEditReview.js';
@@ -21,7 +22,8 @@ const reviewTemplateAdmin = (review, ctx) => {
       <td>
         <button @click="${(e) => editAdminReviewHandler(ctx, e, review.objectId)}" class='edit-btn-admin'><i class="fas fa-edit"></i></button>
         <button @click="${(e) => deleteReview(e, review.objectId, ctx, review.target)}" class='delete-btn-admin'><i class="fas fa-trash"></i></button>
-        <button class='forward-btn-admin' onclick="location.href='${path}'"><i class="fa-solid fa-share-from-square"></i></button>
+        <a href='${path}' @click="${(e) => scrollToBottom()}" class='forward-btn-admin'><i class="fa-solid fa-share-from-square"></i></a>
+
       </td>
     </tr>
   `;
