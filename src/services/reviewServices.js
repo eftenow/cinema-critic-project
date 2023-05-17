@@ -14,7 +14,7 @@ const endpoints = {
 
 export async function getReviewById(reviewId) {
   const review = await get(`${endpoints.allReviews}/${reviewId}`);
-  
+  console.log(review);
   return review;
 }
 
@@ -174,14 +174,14 @@ export async function updateRating(movieId, type) {
 };
 
 
-export async function editExistingReview(ev, review, ctx) {
+export async function editExistingReview(ev, review, ctx, target) {
   ev.preventDefault();
   const form = new FormData(ev.target);
   const rating = form.get('review-rating');
   const title = form.get('reviewer-review-text');
   const description = form.get('reviewer-review');
 
-  console.log(rating, title, description);
+  console.log(target);
   const Review = Parse.Object.extend("Review");
   const query = new Parse.Query(Review);
   query.equalTo("objectId", review.reviewId || review.objectId);
@@ -192,12 +192,15 @@ export async function editExistingReview(ev, review, ctx) {
   result.set("reviewDescription", description);
 
   await result.save();
-  const [, type, currentId] = ctx.path.split('/');
-  if(type=='admin'){
-    ctx.redirect(ctx.path);
-    hideModal();
-    return
-  };
+  let type;
+  let currentId;
+  if (target){
+    type = target.className == 'Movie' ? 'movie' : 'series';
+    currentId = target.objectId;
+    console.log(type, currentId);
+  } else{
+    [, type, currentId] = ctx.path.split('/');
+  }
   await updateRating(currentId, type);
 
   const modal = document.querySelector('.modal');
