@@ -1,4 +1,5 @@
 import { html, render } from '../../../node_modules/lit-html/lit-html.js';
+import { scrollToTop } from '../../../utils/backToTopBtn.js';
 import { hideModal } from '../../../utils/reviewOperations.js';
 import { deleteUserById, getAllUsernames, getAllUsers } from '../../services/authServices.js';
 import { cancelChangesHandler, saveChangesHandler } from '../edit-profile.js';
@@ -12,6 +13,7 @@ const userTemplateAdmin = (user, ctx) => html`
       <td>
         <button @click='${(e) => editUserData(ctx, e, user)}' class='edit-btn-admin'><i class="fas fa-edit"></i></button>
         <button @click='${() => deleteUserById(user.objectId)}' class='delete-btn-admin'><i class="fas fa-trash"></i></button>
+        <a @click=${scrollToTop} href="/user/${user.username}" class='forward-btn-admin'><i class="fa-solid fa-share-from-square"></i></a>
       </td>
     </tr>
 `
