@@ -21,7 +21,6 @@ window.addEventListener("scroll", () => {
 });
 
 export function scrollToBottom(delay=800) {
-  debugger;
   setTimeout(() => {
     window.scrollTo({ top: document.body.scrollHeight, behavior: 'auto' });
   }, delay);

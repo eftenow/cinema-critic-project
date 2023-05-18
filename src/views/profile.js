@@ -1,5 +1,5 @@
 import { html } from '../../node_modules/lit-html/lit-html.js';
-import { getUser } from '../services/authServices.js';
+import { getUser, getUserByUsername } from '../services/authServices.js';
 import { getUserReviews } from '../services/reviewServices.js';
 import { hideUserReviews, renderUserReviews } from './userReviews.js';
 import { hideUserWatchlist, renderUserWatchlist } from './userWatchlist.js';
@@ -22,11 +22,11 @@ export const profileTemplate = (ctx, user, userReviews) => html`
                 <li><i class="fa-solid fa-location-dot"></i> ${user.city}, ${user.country}</li>
             </ul>
             <div class="links">
-                <a @click="${(e) => renderUserReviews(ctx, e, user, userReviews)}" href="/myProfile/reviews" id='show-reviews' class="button">Show Reviews</a>
-                <a @click="${hideUserReviews}" href="/myProfile" class="hidden button" id='hide-reviews'>Hide Reviews</a>
+                <a @click="${(e) => renderUserReviews(ctx, e, user, userReviews)}" href="${ctx.path}/reviews" id='show-reviews' class="button">Show Reviews</a>
+                <a @click="${hideUserReviews}" href="${ctx.path}" class="hidden button" id='hide-reviews'>Hide Reviews</a>
                 <a href="#" class="msg-btn hidden">Message User</a>
-                <a @click="${(e) => renderUserWatchlist(e, user)}" href="/myProfile/watchlist" id='show-watchlist' class="watchlist button">Watchlist</a>
-                <a @click="${hideUserWatchlist}" href="/myProfile" class="hidden button" id='hide-watchlist'>Hide Watchlist</a>
+                <a @click="${(e) => renderUserWatchlist(e, user)}" href="${ctx.path}/watchlist" id='show-watchlist' class="watchlist button">Watchlist</a>
+                <a @click="${hideUserWatchlist}" href="${ctx.path}" class="hidden button" id='hide-watchlist'>Hide Watchlist</a>
             </div>
         </div>
         <section class="review-section hidden">
@@ -44,6 +44,18 @@ export const profileTemplate = (ctx, user, userReviews) => html`
 
 export async function renderProfile(ctx) {
     const user = getUser();
+    await displayUserProfile(ctx, user); 
+};
+
+
+export async function renderUserProfile(ctx) {
+    const username = ctx.path.split('/')[2];
+    const user = await getUserByUsername(username);
+    await displayUserProfile(ctx, user); 
+}
+
+
+async function displayUserProfile(ctx, user) {
     const userReviews = await getUserReviews(user.objectId);
     userReviews.forEach((rev) => {
         rev.username = user.username,
@@ -52,16 +64,6 @@ export async function renderProfile(ctx) {
     const profile = profileTemplate(ctx, user, userReviews);
     ctx.render(profile);
 }
-
-
-
-
-
-
-
-
-
-
 
 
 

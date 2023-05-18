@@ -19,7 +19,7 @@ import { renderHome } from './views/home.js';
 import { renderLogin } from './views/login.js';
 import { renderAllContent } from './views/movies.js';
 import { renderPopular } from './views/popular.js';
-import { renderProfile } from './views/profile.js';
+import { renderProfile, renderUserProfile } from './views/profile.js';
 import { renderRegister } from './views/register.js';
 import { renderUserReviews } from './views/userReviews.js';
 
@@ -44,6 +44,7 @@ page('/userReviews', requireAuth, renderUserReviews);
 page('/login', renderLogin);
 page('/register', renderRegister);
 page('/myProfile', requireAuth, renderProfile);
+page('/user/:id', requireAuth, renderUserProfile);
 page('/settings', requireAuth, renderEdit);
 page('/movie/:id', renderMovieDetails);
 page('/series/:id', renderSeriesDetails);

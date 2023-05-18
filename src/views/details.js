@@ -21,7 +21,7 @@ ${currentUser?.username == review.username
     : ''}
     <h3 class="review-title-details">${review.reviewTitle}</h3>
     <div class="review-header">
-    <img src="${review.profileImg}" alt="Avatar" onerror="this.onerror=null; this.src='../../images/default-user.png';">
+    <img src="${review.profileImg}" onclick="location.href='user/${review.username}'" alt="Avatar" onerror="this.onerror=null; this.src='../../images/default-user.png';">
       <div class="review-info">
         <p class="reviewer-name">${review.username}</p>
         <p class="movie-score reviewer-rating">Rating: ${review.reviewRating} <i id="star" class="fa-solid fa-star"></i></p>

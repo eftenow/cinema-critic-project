@@ -137,6 +137,14 @@ export async function deleteUserById(objectId) {
   const User = Parse.Object.extend('_User');
   const query = new Parse.Query(User);
   const user = await query.get(objectId);
-  // await user.destroy();
+  await user.destroy();
 }
 
+export async function getUserByUsername(username) {
+  const User = Parse.Object.extend('_User');
+  const query = new Parse.Query(User);
+  query.equalTo('username', username);
+  query.limit(1);
+  const user = await query.first();
+  return user ? user.toJSON() : null;
+}
