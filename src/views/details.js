@@ -8,9 +8,9 @@ import { getUser, getUserBookmarks } from '../services/authServices.js';
 import { getMovieDetails, getSeriesDetails } from '../services/itemServices.js';
 import { addNewReview, getReviewsForMovie, userAlreadyReviewed } from '../services/reviewServices.js';
 
-export const reviewTemplate = (ctx, review, currentUser) => html`
+export const reviewTemplate = (ctx, review, currentUser, isProfileGuest) => html`
 <div class="review">
-${currentUser?.username == review.username
+${currentUser?.username == review.username && !isProfileGuest
     ? html`
   <section class='user-review-btns'>
   <button @click="${(e) => editReviewHandler(ctx, e, review)}" class='edit-review-btn' data-review-id="${review.reviewId}"><i class="fa-regular fa-pen-to-square"></i></button>

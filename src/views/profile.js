@@ -4,7 +4,7 @@ import { getUserReviews } from '../services/reviewServices.js';
 import { hideUserReviews, renderUserReviews } from './userReviews.js';
 import { hideUserWatchlist, renderUserWatchlist } from './userWatchlist.js';
 
-export const profileTemplate = (ctx, user, userReviews) => html`
+export const profileTemplate = (ctx, user, userReviews, isProfileGuest) => html`
 <div class="user-container">
     <div class="user-card">
         <img class="profile-img" src="${user.profileImg}"
@@ -13,19 +13,21 @@ export const profileTemplate = (ctx, user, userReviews) => html`
         <div class="info">
 
             <h2>${user.username}</h2>
-            <span><a href="/settings" class="edit-account"><i class="fa-solid fa-pencil"></i> Edit Profile</a></span>
-
-
+            ${!isProfileGuest ? html`
+  <span>
+    <a href="/settings" class="edit-account"><i class="fa-solid fa-pencil"></i> Edit Profile</a>
+  </span>
+` : ''}
             <h4>User Reviews: <span><b>${userReviews.length}</b></span></h4>
             <p>${user.description}</p>
             <ul>
                 <li><i class="fa-solid fa-location-dot"></i> ${user.city}, ${user.country}</li>
             </ul>
             <div class="links">
-                <a @click="${(e) => renderUserReviews(ctx, e, user, userReviews)}" href="${ctx.path}/reviews" id='show-reviews' class="button">Show Reviews</a>
+                <a @click="${(e) => renderUserReviews(ctx, e, user, userReviews, isProfileGuest)}" href="${ctx.path}/reviews" id='show-reviews' class="button">Show Reviews</a>
                 <a @click="${hideUserReviews}" href="${ctx.path}" class="hidden button" id='hide-reviews'>Hide Reviews</a>
                 <a href="#" class="msg-btn hidden">Message User</a>
-                <a @click="${(e) => renderUserWatchlist(e, user)}" href="${ctx.path}/watchlist" id='show-watchlist' class="watchlist button">Watchlist</a>
+                <a @click="${(e) => renderUserWatchlist(e, user, isProfileGuest)}" href="${ctx.path}/watchlist" id='show-watchlist' class="watchlist button">Watchlist</a>
                 <a @click="${hideUserWatchlist}" href="${ctx.path}" class="hidden button" id='hide-watchlist'>Hide Watchlist</a>
             </div>
         </div>
@@ -44,24 +46,25 @@ export const profileTemplate = (ctx, user, userReviews) => html`
 
 export async function renderProfile(ctx) {
     const user = getUser();
-    await displayUserProfile(ctx, user); 
+    await displayUserProfile(ctx, user);
 };
 
 
 export async function renderUserProfile(ctx) {
     const username = ctx.path.split('/')[2];
     const user = await getUserByUsername(username);
-    await displayUserProfile(ctx, user); 
+    const isProfileGuest = true;
+    await displayUserProfile(ctx, user, isProfileGuest);
 }
 
 
-async function displayUserProfile(ctx, user) {
+async function displayUserProfile(ctx, user, isProfileGuest) {
     const userReviews = await getUserReviews(user.objectId);
     userReviews.forEach((rev) => {
         rev.username = user.username,
-        rev.profileImg = user.profileImg
+            rev.profileImg = user.profileImg
     });
-    const profile = profileTemplate(ctx, user, userReviews);
+    const profile = profileTemplate(ctx, user, userReviews, isProfileGuest);
     ctx.render(profile);
 }
 

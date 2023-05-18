@@ -1,23 +1,22 @@
 import { html, render } from '../../node_modules/lit-html/lit-html.js';
 import { reviewTemplate } from './details.js';
 
-export const userReviews = (ctx, user, reviews) => html`
+export const userReviews = (ctx, user, reviews, isProfileGuest) => html`
 
   <h2 class="myReviews-heading">${user.username}'s reviews</h2>
   <div class="user-reviews">
   ${reviews.length == 0
         ? html`<h2 id='no-movies-msg'>You don't have any reviews yet.</h2>`
-        : html`${reviews.map(rev => reviewTemplate(ctx, rev, user))}`}
+        : html`${reviews.map(rev => reviewTemplate(ctx, rev, user, isProfileGuest))}`}
   </div>
 `
 
 
 
-export async function renderUserReviews(ctx, ev, user, reviews) {
+export async function renderUserReviews(ctx, ev, user, reviews, isProfileGuest) {
   ev.preventDefault();
   const reviewSection = document.querySelector(".review-section");
-  console.log(reviews);
-  const myReviews = userReviews(ctx, user, reviews);
+  const myReviews = userReviews(ctx, user, reviews, isProfileGuest);
   const action = 'show';
   
   render(myReviews, reviewSection);

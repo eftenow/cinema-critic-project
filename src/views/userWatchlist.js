@@ -5,7 +5,7 @@ import { getUserBookmarks } from '../services/authServices.js';
 import { getUserWatchlist } from '../services/itemServices.js';
 
 
-const watchlistMovieTemplate = (movie) => html`
+const watchlistMovieTemplate = (movie, isProfileGuest) => html`
 <div class="review-container">
     <div class="review-movie">
       <img class="movie-img" src="${movie.image}" alt="Movie Image">
@@ -18,42 +18,39 @@ const watchlistMovieTemplate = (movie) => html`
       <div class="review-buttons">
         <a @click=${scrollToTop} id='watchlist-details' class="more-info btn" href="/${movie.type}/${movie.objectId}">Details</a>
       </div>
-      <div class="movie-watchlist">
-              <button class="add-to-watchlist" @click='${toggleBookmarkIcon}'>
-              <span id='to-add' class="fa-stack fa-2x" @click=${() => removeUserBookmark(null, movie.objectId)}>
-                <i id="bookmark-checked" class="fa-solid fa-bookmark fa-stack-2x"></i>
-                <i id='check' class="fa-solid fa-check fa-stack-1x"></i>
-            </span>
-
-      <span id='to-remove' class="hidden fa-stack fa-2x" @click=${() => addUserBookmark(null, movie.objectId)}>
-        <i id="bookmark" class="fa-solid fa-bookmark fa-stack-2x"></i>
-        <i id="plus" class="fa-solid fa-plus fa-stack-1x"></i>
-      </span>      
-              </button>
-            </div>
-    </div>
+      ${!isProfileGuest ? html`
+  <button class="add-to-watchlist" @click='${toggleBookmarkIcon}'>
+    <span id='to-add' class="fa-stack fa-2x" @click=${() => removeUserBookmark(null, movie.objectId)}>
+      <i id="bookmark-checked" class="fa-solid fa-bookmark fa-stack-2x"></i>
+      <i id='check' class="fa-solid fa-check fa-stack-1x"></i>
+    </span>
+    <span id='to-remove' class="hidden fa-stack fa-2x" @click=${() => addUserBookmark(null, movie.objectId)}>
+      <i id="bookmark" class="fa-solid fa-bookmark fa-stack-2x"></i>
+      <i id="plus" class="fa-solid fa-plus fa-stack-1x"></i>
+    </span>
+  </button>` : ''}
   </div>
 `
 
-export const userWatchlist = (user, watchlist) => html`
+export const userWatchlist = (user, watchlist, isProfileGuest) => html`
 
   <h2 class="watchlist-heading">${user.username}'s watchlist</h2>
   <div class="watchlist-container">
   ${watchlist.length == 0
     ? html`<h2 id='no-watchlist-msg'>Your watchlist is empty.</h2>`
-    : html`${watchlist.map(m => watchlistMovieTemplate(m))}`}
+    : html`${watchlist.map(m => watchlistMovieTemplate(m, isProfileGuest))}`}
     </div>
   </div>
 `
 
 
 
-export async function renderUserWatchlist(ev, user) {
+export async function renderUserWatchlist(ev, user, isProfileGuest) {
   ev.preventDefault();
   const watchlistSection = document.querySelector(".watchlist-section");
   const userWatchlistedMovies = await getUserWatchlist(user.objectId);
   console.log(userWatchlistedMovies);
-  const myWatchlist = userWatchlist(user, userWatchlistedMovies);
+  const myWatchlist = userWatchlist(user, userWatchlistedMovies, isProfileGuest);
   render(myWatchlist, watchlistSection)
 
   Array.from(document.querySelectorAll('#to-add')).map(x => x.classList.remove('hidden'));
