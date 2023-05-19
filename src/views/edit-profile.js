@@ -38,7 +38,7 @@ export const profileTemplate = (ctx, user) => html`
 
             <div class="input-group">
                 <label for="description">Description:</label>
-                <textarea id="description" name="description" rows="5" required> ${user.description}</textarea>
+                <textarea id="description" name="description" rows="5" required>${user.description}</textarea>
             </div>
 
 
