@@ -171,6 +171,16 @@ input[type="text"]::placeholder {
   padding: 4px;
 } */
 
+#subMenu,
+#subMenuOptions{
+  text-align: initial;
+  display: block;
+}
+
+#burger-btn{
+  display: none;
+}
+
 .icon i {
   color: #cfcdf3da;
 }
@@ -189,7 +199,7 @@ input[type="text"]::placeholder {
   font-weight: bold;
 }
 
-.suggestion:hover{
+.suggestion:hover {
   cursor: pointer;
   transform: scale(1.03);
 }
@@ -197,13 +207,13 @@ input[type="text"]::placeholder {
 #s-image {
   width: 46px;
   height: 60px;
-    border-radius: 6px;
-    margin-right: 6px;
-    margin-left: 4px;
-    overflow: hidden;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+  border-radius: 6px;
+  margin-right: 6px;
+  margin-left: 4px;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 #s-image img {
@@ -213,7 +223,8 @@ input[type="text"]::placeholder {
   object-fit: revert;
 }
 
-#s-name, #no-matches-text-span {
+#s-name,
+#no-matches-text-span {
   flex: 1;
   font-size: 14px;
   overflow: hidden;
@@ -222,21 +233,42 @@ input[type="text"]::placeholder {
   color: #73727c;
 }
 
-#no-matches-text-span{
+#no-matches-text-span {
   padding: 4px 12px;
 }
 
 
-@media only screen and (max-width:1200px){
-  .nav-cc ul{
+@media only screen and (max-width:1200px) {
+  .nav-cc ul {
     flex-wrap: nowrap;
   }
 
-  .nav-cc ul li:first-of-type{
-    width: 42%;
+  .nav-cc ul li:first-of-type {
+    width: 45%;
   }
 
   .nav-cc ul li {
     margin: 0px 1.5%;
+  }
 }
+
+
+@media only screen and (max-width: 820px) {
+  #burger-btn {
+    background-color: #7126e0;
+    height: 40px;
+    width: 40px;
+    border-radius: 50%;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center !important;
+  }
+
+  .nav-btns{
+    display: none;
+  }
+
+
 }
+

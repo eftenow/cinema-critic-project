@@ -321,13 +321,6 @@
         z-index: 10;
         width: 345px;
     }
-
-    /* ----------------------------------------- */
-
-    /* .sidebar:hover{
-        width: 345px;
-        z-index: 12;
-    } */
     
     #nav-toggle:checked + .sidebar .sidebar-brand,
     #nav-toggle:checked + .sidebar li{

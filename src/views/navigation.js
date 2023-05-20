@@ -1,5 +1,5 @@
 import { html, render } from '../../node_modules/lit-html/lit-html.js';
-import { toggleMenu } from '../../utils/dropdowns.js';
+import { toggleMenu, toggleNavMenu } from '../../utils/dropdowns.js';
 import { searchHandler, searchSuggestionsHandler, suggestionClickHandler } from '../../utils/searchbar.js';
 import { getUser } from '../services/authServices.js';
 import { adminId } from '../../secrets.js';
@@ -28,6 +28,66 @@ const navTemplate = (isAuthorized, user, ctx) => html`
         <li><a class='nav-btns' href="/createMovie">Create Movie</a></li>
         <li><a class='nav-btns' href="/createSerie">Create Series</a></li>
         <li><a class='nav-btns' href="/popular">Popular</a></li>
+        <li id='burger-btn' @click="${toggleNavMenu}" ><span class="fa-solid fa-bars"></span></li>
+        <li  class="sub-menu-options-wrap" id="subMenuOptions">
+            <div  class="sub-menu-options">
+                <div class="nav-info">
+                    <h3>Menu</h3>
+                </div>
+                <hr>
+                <a class=sub-menu-link href="/home" @click="${toggleNavMenu}">
+                    <p>Home</p>
+                    <span>></span></a>
+
+                <a class=sub-menu-link href="/dashboard" @click="${toggleNavMenu}">
+                    <p>Movies and Shows</p>
+                    <span>></span></a>
+
+                <a class=sub-menu-link href="/createMovie" @click="${toggleNavMenu}">
+                    <p>Create Movie</p>
+                    <span>></span></a>
+
+                <a class=sub-menu-link href="/createSerie" @click="${toggleNavMenu}">
+                    <p>Create Series</p>
+                    <span>></span>
+                </a>
+                <a class=sub-menu-link href="/popular" @click="${toggleNavMenu}">
+                    <p>Popular</p>
+                    <span>></span>
+                </a>
+            </div>
+        </li>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
         ${isAuthorized ?
         html`
         <li @click="${toggleMenu}" ><img class="user-pic" src="${user.profileImg}" onerror="this.onerror=null;this.src='../../images/default-user.png';"></li>
@@ -58,13 +118,12 @@ const navTemplate = (isAuthorized, user, ctx) => html`
                 <i class="fa-solid fa-wrench"></i>
                     <p>Admin Panel</p>
                     <span>></span>`
-                    :''}
-                
+                : ''}
                 </a>
             </div>
         </li>
         `
-        
+
         : html`
         <li><a class='nav-btns' href="/login">Login</a></li>
         <li><a class='nav-btns' href="/register">Register</a></li>

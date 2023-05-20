@@ -1,6 +1,15 @@
 export function toggleMenu() {
-    let subMenu = document.getElementById('subMenu');
-    subMenu.classList.toggle('open-menu');
+    const subUserMenu = document.getElementById('subMenu');
+    const subNavMenu = document.getElementById('subMenuOptions');
+    subUserMenu.classList.toggle('open-menu');
+    subNavMenu.classList.remove('open-menu');
+}
+
+export function toggleNavMenu() {
+    const subUserMenu = document.getElementById('subMenu');
+    const subNavMenu = document.getElementById('subMenuOptions');
+    subNavMenu.classList.toggle('open-menu');
+    subUserMenu.classList.remove('open-menu');
 }
 
 
