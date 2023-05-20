@@ -95,7 +95,8 @@ export async function updateSeries(id, updatedSeriesData) {
 };
 
 export async function getSeriesDetails(id) {
-    return get(endpoints.seriesDetails + id);
+    const currentSeries =  get(endpoints.seriesDetails + id);
+    return currentSeries;
 };
 
 export async function deleteSeries(id) {

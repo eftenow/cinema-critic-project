@@ -11,6 +11,7 @@ const homeTempalte = () => html`
         <article>Join our community of film and TV lovers and share your thoughts on the latest
             blockbusters, hidden
             gems, and classic favorites. Start exploring Cinema Critic today and let your voice be heard!
+            zzz
         </article>
         <a href="/dashboard" class="button start-btn">Get Started</a>
     </section>

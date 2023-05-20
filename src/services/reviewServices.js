@@ -87,6 +87,7 @@ export async function addNewReview(ctx, ev, movie, user) {
     .catch((error) => {
       console.error(error);
     });
+  debugger;
   await updateRating(movie.objectId, movie.type);
 
   ev.target.reset();
@@ -121,7 +122,6 @@ export async function userAlreadyReviewed(userId, movieId, type) {
   const Review = Parse.Object.extend("Review");
   const query = new Parse.Query(Review);
   query.equalTo("user", { __type: "Pointer", className: "_User", objectId: userId });
-  console.log(type);
   if (type === "Movie") {
     query.equalTo("target", { __type: "Pointer", className: "Movie", objectId: movieId });
   } else if (type === "Show") {
@@ -129,7 +129,6 @@ export async function userAlreadyReviewed(userId, movieId, type) {
   }
 
   const results = await query.find();
-  console.log(results);
   return results.length > 0;
 }
 
@@ -142,9 +141,10 @@ export async function getReviewsForMovie(movieId, type) {
   } else if (type === "Show" || type === "series") {
     query.equalTo("seriesTarget", { __type: "Pointer", className: "Show", objectId: movieId });
   }
-
+  console.log(query);
   query.include("user");
   const results = await query.find();
+  console.log(results);
   const reviews = results.map((review) => {
     const user = review.get("user");
     return {
@@ -163,7 +163,7 @@ export async function getReviewsForMovie(movieId, type) {
 export async function updateRating(movieId, type) {
   const reviews = await getReviewsForMovie(movieId, type);
   const ratings = reviews.map((review) => review.reviewRating);
-  const ratingSum = ratings.reduce((total, rating) => total + Number(rating), 0);
+  const ratingSum = ratings.reduce((total, rating) => Number(total) + Number(rating), 0);
   let avgRating = ratingSum / ratings.length;
   avgRating = avgRating !== null ? avgRating.toFixed(2) : null;
   const className = type === "movie" ? "Movie" : "Show";
@@ -201,6 +201,7 @@ export async function editExistingReview(ev, review, ctx, target) {
   } else{
     [, type, currentId] = ctx.path.split('/');
   }
+  debugger;
   await updateRating(currentId, type);
 
   const modal = document.querySelector('.modal');

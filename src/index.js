@@ -1,4 +1,4 @@
-import page from '../node_modules/page/page.mjs';
+import page from '../node_modules/page/page.mjs'
 import { filterMovies, filterSeries, sortHandler } from '../utils/filterButtons.js';
 import { searchedMoviesPage } from '../utils/searchbar.js';
 import { adminSetUpMiddleware } from './middlewares/adminPanelMiddleware.js';

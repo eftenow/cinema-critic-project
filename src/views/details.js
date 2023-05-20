@@ -58,6 +58,7 @@ const detailsTemplate = (movie, ctx, type, currentUser, userBookmarks, reviews, 
     : html``}
   </div>
   <div class="specific-movie-info">
+    ${console.log(movie)}
     <h2 class="specific-movie-title details-movie-specifics">${movie.name}</h2>
     <p class="specific-movie-genre"><span class="details-movie-specifics">Rating: </span>${movie.rating} <i id ="star" class="fa-solid fa-star"></i></p>
     <p class="specific-movie-genre"><span class="details-movie-specifics">Genre: </span>${movie.genres}</p>
@@ -143,7 +144,7 @@ export async function renderSeriesDetails(ctx) {
 export async function renderDetails(ctx, type, movieId) {
   let currentObj, userBookmarks, alreadyReviewed, reviews;
   const currentUser = getUser();
-  console.log(currentUser);
+  
   if (type === 'movie') {
     [currentObj, userBookmarks, reviews, alreadyReviewed] = await Promise.all([
       getMovieDetails(movieId),
@@ -168,6 +169,6 @@ export async function renderDetails(ctx, type, movieId) {
   await obj.save();
   
   const details = detailsTemplate(currentObj, ctx, type, currentUser, userBookmarks, reviews, alreadyReviewed);
-  console.log(reviews);
+
   ctx.render(details);
 };
