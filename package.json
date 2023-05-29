@@ -5,7 +5,9 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "lite-server"
+    "start": "lite-server",
+    "deploy": "npx webpack && xcopy /E /I images dist\\images && xcopy /E /I styles dist\\styles && firebase deploy"
+
   },
   "keywords": [],
   "author": "",

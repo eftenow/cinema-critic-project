@@ -25,8 +25,10 @@ const navTemplate = (isAuthorized, user, ctx) => html`
             </form>
         </li>
         <li><a class='nav-btns' href="/dashboard">Movies and Shows</a></li>
+        ${isAuthorized
+        ? html`
         <li><a class='nav-btns' href="/createMovie">Create Movie</a></li>
-        <li><a class='nav-btns' href="/createSerie">Create Series</a></li>
+        <li><a class='nav-btns' href="/createSerie">Create Series</a></li>` : ''}
         <li><a class='nav-btns' href="/popular">Popular</a></li>
         <li id='burger-btn' @click="${toggleNavMenu}" ><span class="fa-solid fa-bars"></span></li>
         <li  class="sub-menu-options-wrap" id="subMenuOptions">
@@ -35,14 +37,20 @@ const navTemplate = (isAuthorized, user, ctx) => html`
                     <h3>Menu</h3>
                 </div>
                 <hr>
-                <a class=sub-menu-link href="/home" @click="${toggleNavMenu}">
+                <a class=sub-menu-link href="/" @click="${toggleNavMenu}">
                     <p>Home</p>
                     <span>></span></a>
 
-                <a class=sub-menu-link href="/dashboard" @click="${toggleNavMenu}">
-                    <p>Movies and Shows</p>
+                ${!isAuthorized
+        ? html`
+                <a class=sub-menu-link href="/login" @click="${toggleNavMenu}">
+                    <p>Login</p>
                     <span>></span></a>
 
+                <a class=sub-menu-link href="/register" @click="${toggleNavMenu}">
+                    <p>Register</p>
+                    <span>></span></a>`
+        : html`
                 <a class=sub-menu-link href="/createMovie" @click="${toggleNavMenu}">
                     <p>Create Movie</p>
                     <span>></span></a>
@@ -51,42 +59,18 @@ const navTemplate = (isAuthorized, user, ctx) => html`
                     <p>Create Series</p>
                     <span>></span>
                 </a>
+                `
+    }
+                <a class=sub-menu-link href="/dashboard" @click="${toggleNavMenu}">
+                    <p>Movies and Shows</p>
+                    <span>></span></a>
+
                 <a class=sub-menu-link href="/popular" @click="${toggleNavMenu}">
                     <p>Popular</p>
                     <span>></span>
                 </a>
             </div>
         </li>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
         ${isAuthorized ?
         html`
