@@ -26,9 +26,9 @@
 
 #logo {
   width: 90%;
-  max-width: 150px;
+  max-width: 160px;
   height: 9vh;
-  max-height: 60px;
+  max-height: 68px;
   opacity: 0.80;
 }
 
@@ -40,6 +40,7 @@ h1 {
 
 .nav-cc ul {
   display: flex;
+  justify-content: flex-end;
   list-style: none;
   margin: auto;
   align-items: center;
@@ -97,6 +98,7 @@ h1 {
   border: 2px solid rgb(206, 195, 195);
   color: #cfcdf3;
   position: relative;
+  width: 232px;
 }
 
 input[type="text"]::placeholder {
@@ -105,7 +107,7 @@ input[type="text"]::placeholder {
 
 .search-input {
   display: flex;
-  padding: 1.4% 3%;
+  padding: 2.5% 3.2%;
   color: #d3d1f3;
   width: 100%;
   border-radius: 4px;
@@ -250,10 +252,18 @@ input[type="text"]::placeholder {
   .nav-cc ul li {
     margin: 0px 1.5%;
   }
+
+  .search-form {
+    width: 200px;
+  }
+
+  footer p{
+    font-size: 1.1rem;
+  }
 }
 
 
-@media only screen and (max-width: 820px) {
+@media only screen and (max-width: 830px) {
   #burger-btn {
     background-color: #7126e0;
     min-height: 40px;
@@ -265,10 +275,22 @@ input[type="text"]::placeholder {
     justify-content: center !important;
   }
 
+  .nav-logo-container {
+    margin: 0.2rem 0rem 0.2rem 1.3rem;
+}
+
+  .search-form {
+    width: 270px;
+    margin-right: -24%;
+  }
+  
   .nav-btns{
     display: none;
   }
 
+  footer p{
+    font-size: 1rem;
+  }
 
 }
 
@@ -277,8 +299,13 @@ input[type="text"]::placeholder {
     display: none;
   }
 
-  .nav-cc ul{
-    margin-right: 100%;
+  .sub-menu-wrap, .sub-menu-options-wrap{
+    right: -76px;
+    top: 44px;
+  }
+
+  footer p{
+    font-size: 0.8rem;
   }
 }
 
