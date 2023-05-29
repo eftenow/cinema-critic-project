@@ -260,6 +260,11 @@ input[type="text"]::placeholder {
   footer p{
     font-size: 1.1rem;
   }
+
+  #logo{
+    max-width: 140px;
+    max-height: 58px;
+  }
 }
 
 
@@ -292,6 +297,10 @@ input[type="text"]::placeholder {
     font-size: 1rem;
   }
 
+  #logo{
+    max-width: 124px;
+    max-height: 48px;
+  }
 }
 
 @media only screen and (max-width: 540px){
@@ -307,5 +316,6 @@ input[type="text"]::placeholder {
   footer p{
     font-size: 0.8rem;
   }
+
 }
 
