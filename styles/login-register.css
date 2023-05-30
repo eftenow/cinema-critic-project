@@ -6,10 +6,18 @@ body {
 .login-title,
 .register-title  {
   margin-top: 0;
-  margin-bottom: 60px;
-  padding-top: 44px;
+  margin-bottom: 4%;
+  padding-top: 2%;
   color: #333;
   text-align: center;
+}
+
+.login-section{
+  padding: 5%;
+}
+
+.register-section{
+  padding: 3%;
 }
 
 .login-form,

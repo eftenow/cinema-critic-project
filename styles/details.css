@@ -151,8 +151,7 @@
 }
 
 .reviews-title {
-  margin-bottom: 20px;
-  font-size: 20px;
+  font-size: 1.6rem;
   font-weight: bold;
 }
 
@@ -165,7 +164,7 @@
 }
 
 .review:last-of-type {
-  margin-bottom: 4rem;
+  margin-bottom: 5rem;
 }
 
 .review * {

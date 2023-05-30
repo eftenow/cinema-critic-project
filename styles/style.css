@@ -33,8 +33,13 @@ body {
   background: #ebe9fd;
 }
 
-main{
-  /* background-color: #eceafc; */
+
+.home-page,
+.movies-section,
+.popular-movies,
+.login-section,
+.register-section {
+  min-height: 87.1vh;
 }
 
 
