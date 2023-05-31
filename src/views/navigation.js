@@ -24,7 +24,7 @@ const navTemplate = (isAuthorized, user, ctx) => html`
 
             </form>
         </li>
-        <li><a class='nav-btns' href="/dashboard">Movies and Shows</a></li>
+        <li id='navMoviesSeries'><a class='nav-btns' href="/dashboard">Movies and Shows</a></li>
         ${isAuthorized
         ? html`
         <li><a class='nav-btns' href="/createMovie">Create Movie</a></li>

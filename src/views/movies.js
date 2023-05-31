@@ -22,7 +22,7 @@ export const moviesTemplate = (movies, ctx, currentPage = 1, pagesCount = 1) => 
             
             <section class="sort-section"> 
             <div class="search-category">
-            <a href="#">
+            <a>
                     <span>Genre</span>
                     <i class="fa-solid fa-angle-down"></i>
                 </a>
@@ -73,38 +73,38 @@ export const moviesTemplate = (movies, ctx, currentPage = 1, pagesCount = 1) => 
 </div>
             </div>
             <div class="search-category">
-                <a href="#">
+                <a>
                     <span>Rating</span>
                     <i class="fa-solid fa-angle-down"></i>
                 </a>
                 <div class="category-menu" @click="${(e) => sortHandler(ctx, movies, e)}">
                     <span class="subject">Sort by rating</span>
-                    <a href="#" data-id="asc" data-specific='best' id='rating' class="menu-item">Best rated </a>
-                    <a href="#" data-id="desc" data-specific='worst' id='rating'class="menu-item">Worst rated</a>
+                    <a data-id="asc" data-specific='best' id='rating' class="menu-item">Best rated </a>
+                    <a data-id="desc" data-specific='worst' id='rating'class="menu-item">Worst rated</a>
                     
                 </div>
             </div>
             <div class="search-category"  @click="${(e) => sortHandler(ctx, movies, e)}">
-                <a href="#">
+                <a>
                     <span>Year</span>
                     <i class="fa-solid fa-angle-down"></i>
                 </a>
                 <div class="category-menu">
                     <span class="subject">Sort by year</span>
-                    <a href="#" data-id="asc" data-specific='newest' id='year' class="menu-item">Newest to oldest</a>
-                    <a href="#" data-id="desc" data-specific='oldest' id='year' class="menu-item">Oldest to newest</a>
+                    <a data-id="asc" data-specific='newest' id='year' class="menu-item">Newest to oldest</a>
+                    <a data-id="desc" data-specific='oldest' id='year' class="menu-item">Oldest to newest</a>
                     
                 </div>
             </div>
             <div  class="search-category" >
-                <a href="#">
+                <a>
                     <span>Type</span>
                     <i class="fa-solid fa-angle-down"></i>
                 </a>
                 <div class="category-menu" @click="${(e) => filterHandler(e, ctx)}">
                     <span class="subject">Sort by type</span>
-                    <a href="#" data-type="movie" class="menu-item menu-item-type">Movies</a>
-                    <a href="#" data-type="series" class="menu-item menu-item-type">Series</a>
+                    <a data-type="movie" class="menu-item menu-item-type">Movies</a>
+                    <a data-type="series" class="menu-item menu-item-type">Series</a>
                     <a href="/dashboard" data-type="all" class="menu-item menu-item-type">All</a>
                     
                 </div>
