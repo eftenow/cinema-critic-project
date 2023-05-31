@@ -379,7 +379,7 @@ input[type="checkbox"]:checked+label {
     }
 }
 
-@media only screen and (max-width:540px) {
+@media only screen and (max-width:550px) {
     .movie-card {
         flex: 0 1 46%;
         height: 42.5vh;
@@ -391,10 +391,10 @@ input[type="checkbox"]:checked+label {
     }
 }
 
-@media only screen and (max-width:420px) {
+@media only screen and (max-width:440px) {
     .movie-card {
-        flex: 0 1 73%;
-        height: 52vh;
+        flex: 0 1 71%;
+        height: 56.5vh;
         margin: 2.5%;
     }
 
@@ -423,10 +423,10 @@ input[type="checkbox"]:checked+label {
     
 }
 
-@media only screen and (max-width:330px) {
+@media only screen and (max-width:380px) {
     .movie-card {
-        flex: 0 1 87%;
-        height: 49vh;
+        flex: 0 1 70%;
+        height: 68vh;
         margin: 2.5%;
     }
 
