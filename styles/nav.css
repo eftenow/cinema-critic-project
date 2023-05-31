@@ -300,7 +300,7 @@ input[type="text"]::placeholder {
   }
 }
 
-@media only screen and (max-width: 540px){
+@media only screen and (max-width: 560px){
   .search-form{
     display: none;
   }

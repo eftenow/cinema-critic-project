@@ -164,7 +164,8 @@ a:hover {
 #reset-all-btn:hover span
  {
   background-color: #7126e0;
-  color: #fff
+  color: #fff;
+  transform: scale(1.05);
 }
 
 button[disabled] {

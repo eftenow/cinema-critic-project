@@ -86,7 +86,7 @@ export const moviesTemplate = (movies, ctx, currentPage = 1, pagesCount = 1) => 
             </div>
             <div class="search-category"  @click="${(e) => sortHandler(ctx, movies, e)}">
                 <a href="#">
-                    <span>Release year</span>
+                    <span>Year</span>
                     <i class="fa-solid fa-angle-down"></i>
                 </a>
                 <div class="category-menu">

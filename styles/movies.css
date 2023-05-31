@@ -11,7 +11,8 @@
     margin: 0 auto;
 }
 
-#no-movies-msg, #no-matches{
+#no-movies-msg,
+#no-matches {
     display: none;
     color: #7126e0;
     width: 55%;
@@ -100,7 +101,7 @@
     transition: background-color 0.2s ease-in-out;
     text-align: center;
     text-decoration: none;
-    
+
 }
 
 .movie-details-button:hover {
@@ -144,33 +145,34 @@ option:checked {
 
 .search-category {
     border-radius: 24px;
-    padding: 20px 14px;
-    height: 18px;
+    padding: 1.1%;
     border: solid 1px #bcbdbe;
     background-color: #fff;
     color: #2a2c32;
     flex-direction: row;
     cursor: pointer;
     position: relative;
-    
+    margin: 0.7% 0;
+
 }
 
-.sort-section{
+.sort-section {
     margin-left: 7%;
     display: flex;
+    flex-wrap: wrap;
 }
 
-.sort-section *{
+.sort-section * {
     margin-right: 8px;
 }
 
 .search-category *,
-.category-menu .menu *{
+.category-menu .menu * {
     color: rgb(95, 94, 94);
 }
 
-.search-category span{
-    font-size: 13px;
+.search-category span {
+    font-size: 0.8rem;
     line-height: 1.1;
     color: #505257;
     letter-spacing: .12px;
@@ -222,10 +224,11 @@ option:checked {
 
 .category-menu .subject {
     margin: 4px 0;
-    color:rgb(62, 62, 63);
+    color: rgb(62, 62, 63);
     text-transform: capitalize;
     font-size: 14px;
 }
+
 .subject {
     font-size: 16px;
     font-weight: bold;
@@ -258,22 +261,176 @@ option:checked {
 
 .genre-item input[type="checkbox"]:checked {
     accent-color: #8e47f8;
-  }
+}
 
-  .genre-list label {
+.genre-list label {
     font-size: 1.02rem;
     position: relative;
     line-height: 22px;
     text-transform: capitalize;
     transition: all 0.18s;
-  }
+}
 
-  input[type="checkbox"]:checked + label {
+input[type="checkbox"]:checked+label {
     color: #8e47f8;
     font-weight: bold;
     font-size: 1.05rem;
-  }
+}
 
-  .genre-item label:hover{
+.genre-item label:hover {
     cursor: pointer;
-  }
+}
+
+
+@media only screen and (max-width:1330px) {
+    .movie-card {
+        flex: 0 1 23%;
+        height: 40.2vh;
+    }
+
+    .sort-section {
+        margin-left: 1.2%;
+    }
+
+    .movie-rating {
+        height: 32px;
+        width: 32px;
+        font-size: 0.9;
+    }
+
+}
+
+@media only screen and (max-width:1040px) {
+    .movie-card {
+        flex: 0 1 28%;
+        height: 39vh;
+    }
+
+    .sort-section {
+        margin-left: 6%;
+    }
+}
+
+@media only screen and (max-width:860px) {
+    .movies-section {
+        width: 100%;
+    }
+
+    .movie-card {
+        flex: 0 1 26.5%;
+        height: 41vh;
+    }
+
+    .sort-section {
+        margin-left: 8.5%;
+    }
+
+    #back-to-top-btn {
+        bottom: 9%;
+        right: 1.4%;
+        width: 36px;
+        height: 36px;
+    }
+
+    #back-to-top-btn i {
+        font-size: 18px;
+        padding: 8px;
+    }
+
+    .category-menu {
+        width: 180px;
+    }
+
+    .category-menu .menu-item {
+        font-size: 0.9rem;
+        padding-left: 14px;
+    }
+
+    .category-menu .menu-item:hover,
+    .selected-category,
+    .selected-type {
+        font-size: 0.95rem;
+
+    }
+}
+
+@media only screen and (max-width:680px) {
+    .movies-section {
+        width: 100%;
+    }
+
+    .search-category {
+        padding: 1.8% 1%;
+    }
+
+    .movie-card {
+        flex: 0 1 41%;
+        height: 48vh;
+        margin: 1.6%;
+    }
+
+    .sort-section {
+        margin-right: 18.5%;
+    }
+
+    .movies-section h2 {
+        font-size: 32px;
+        margin-bottom: 5%;
+    }
+}
+
+@media only screen and (max-width:540px) {
+    .movie-card {
+        flex: 0 1 46%;
+        height: 42.5vh;
+    }
+
+    .sort-section {
+        margin-left: 3.3%;
+        margin-right: 18.5%;
+    }
+}
+
+@media only screen and (max-width:420px) {
+    .movie-card {
+        flex: 0 1 73%;
+        height: 52vh;
+        margin: 2.5%;
+    }
+
+    .sort-section {
+        margin-left: 13%;
+        margin-right: 5%;
+        margin: 3% 5% 3% 13%;
+    }
+
+    .search-category {
+        width: 42%;
+        padding: 1.8% 2.4%;
+        margin: 1.5% 2%;
+    }
+
+    .search-category a {
+        text-align: center;
+    }
+
+    #reset-all-btn {
+        width: 57%;
+        padding: 2.6% 5%;
+        margin: 3% auto;
+    }
+
+    
+}
+
+@media only screen and (max-width:330px) {
+    .movie-card {
+        flex: 0 1 87%;
+        height: 49vh;
+        margin: 2.5%;
+    }
+
+    .movies-section h2{
+        font-size: 30px;
+    }
+}
