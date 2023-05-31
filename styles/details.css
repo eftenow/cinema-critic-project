@@ -91,8 +91,8 @@
 }
 
 .trailer-section h3 {
-  margin-top: 40px;
-  margin-bottom: 60px;
+  margin-top: 6%;
+  margin-bottom: 8%;
 }
 
 
@@ -134,7 +134,7 @@
 }
 
 .specific-movie-reviews {
-  padding: 20px;
+  padding: 1.35rem;
   padding-bottom: 16px;
   background-color: #f5f5f5;
   border-radius: 12px;
@@ -143,11 +143,12 @@
 }
 
 .movie-score {
-  font-size: 18px;
+  font-size: 1rem;
 }
 
 .review-body p {
-  font-size: 14px;
+  font-size: 0.85rem;
+  margin: 0.35rem 0;
 }
 
 .reviews-title {
@@ -159,7 +160,7 @@
   position: relative;
   margin-bottom: 2.5rem;
   border: 1px solid #ddd;
-  padding: 20px;
+  padding: 1.4rem;
   border-radius: 8px;
 }
 
@@ -181,7 +182,7 @@
 }
 
 .review-header img:hover,
-.reviewer-name:hover{
+.reviewer-name:hover {
   cursor: pointer;
 }
 
@@ -198,14 +199,14 @@
 }
 
 .reviewer-name {
-  font-size: 16px;
+  font-size: 0.9rem;
   font-weight: bold;
   color: rgb(55, 55, 56);
 }
 
 
 .review-body {
-  font-size: 16px;
+  font-size: 0.9rem;
   line-height: 1.5;
   margin-top: 16px;
 }
@@ -219,14 +220,14 @@
   margin-top: 20px;
 }
 
-.edit-review-form{
+.edit-review-form {
   background-color: #fefefe;
   margin: 1% 0;
   padding: 20px;
   position: relative;
 }
 
-.edit-review-form h3{
+.edit-review-form h3 {
   text-align: center;
   font-size: 1.5rem;
   color: rgb(55, 55, 56);
@@ -284,10 +285,10 @@
 
 .review-title-details {
   padding: 0 20%;
-  font-size: 18px;
+  font-size: 1rem;
   text-align: center;
   color: rgb(55, 55, 56);
-  margin-bottom: 16px;
+  margin-bottom: 5%;
 }
 
 
@@ -377,8 +378,149 @@
   border-radius: 8px;
 }
 
-.invalid-rating{
+.invalid-rating {
   font-weight: bold;
   text-align: center;
   color: #e10808;
+}
+
+
+
+@media only screen and (max-width:1200px) {
+  .specific-movie-details {
+    width: 86%;
+  }
+}
+
+@media only screen and (max-width:1000px) {
+
+  .specific-movie-details,
+  .specific-movie-reviews {
+    width: 100%;
+  }
+}
+
+@media only screen and (max-width:850px) {
+  .specific-movie-description {
+    line-height: 1.3;
+    width: 99%;
+  }
+
+  .specific-movie-info * {
+    width: auto;
+  }
+
+  .movie-poster {
+    flex: 2 1 23%;
+    margin-top: 9%;
+  }
+
+  .trailer-section {
+    width: 800px;
+    height: 600px;
+  }
+
+}
+
+@media only screen and (max-width:740px) {
+  .details-header {
+    display: block;
+  }
+
+  .movie-poster img {
+    display: block;
+    width: 33%;
+    /* height: auto; */
+    height: 26vh;
+    border-radius: 10px;
+    margin: 0 auto;
+  }
+
+  .specific-movie-details {
+    padding-top: 0;
+  }
+
+  .movie-poster {
+    margin: 0;
+    padding: 0;
+    margin: 5% 0 0 0;
+  }
+
+  .add-to-watchlist-details {
+    border: none;
+    position: absolute;
+    top: 1.5%;
+    right: 1.5%;
+    font-size: 0.8rem;
+  }
+
+  .trailer-section {
+    width: 640px;
+    height: 480px;
+  }
+
+  .specific-form-group input {
+    width: 70%;
+  }
+}
+
+@media only screen and (max-width:520px) {
+  .movie-poster img {
+    width: 45%;
+  }
+
+  .trailer-section {
+    width: 480px;
+    height: 360px;
+  }
+
+  .review-title-details {
+    padding: 0px 11%;
+    font-size: 0.9rem;
+  }
+
+  .review-header img {
+    width: 36px;
+    height: 36px;
+  }
+
+  .review:last-of-type {
+    margin-bottom: 4rem;
+  }
+}
+
+@media only screen and (max-width:420px) {
+  .movie-poster img {
+    width: 55%;
+  }
+
+  .trailer-section {
+    width: 360px;
+    height: 280px;
+  }
+
+  .add-review-form {
+    background-color: #F4F4F4;
+    margin-bottom: 7%;
+    padding: 8px;
+    border-radius: 10px;
+    margin-top: 5px;
+  }
+
+  .review:last-of-type {
+    margin-bottom: 2.2rem;
+  }
+
+  .review {
+    padding: 1rem;
+  }
+
+  .specific-movie-reviews {
+    padding: 1.1rem;
+    padding-bottom: 0px;
+  }
+
+  .specific-form-group input{
+    width: 80%;
+  }
 }
