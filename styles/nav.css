@@ -257,9 +257,6 @@ input[type="text"]::placeholder {
     width: 200px;
   }
 
-  footer p{
-    font-size: 1.1rem;
-  }
 
   #logo{
     max-width: 140px;
@@ -294,7 +291,7 @@ input[type="text"]::placeholder {
   }
 
   footer p{
-    font-size: 1rem;
+    font-size: 0.9rem;
   }
 
   #logo{
