@@ -437,7 +437,7 @@ input[type="checkbox"]:checked+label {
 @media only screen and (max-width:380px) {
     .movie-card {
         flex: 0 1 75%;
-        height: 67vh;
+        height: 66.5vh;
         margin: 2.5%;
     }
 
