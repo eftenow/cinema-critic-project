@@ -15,7 +15,7 @@ const loginTemplate = (ctx) => html`
       
         <input type="submit" value="Login" class="login-button">
         <p id="login-error" class="login-error"></p>
-        <p class="login-register-text">Don't have an account? <a href="/register" class="login-register-link">Register here</a></p>
+        <p class="login-register-text">Don't have an account?<br><a href="/register" class="login-register-link">Register here</a></p>
     </form>
 </section>
 `;

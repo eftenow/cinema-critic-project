@@ -155,7 +155,7 @@
   font-size: 15px;
 }
 
-.links a:hover{
+.links a:hover {
   cursor: pointer;
 }
 
@@ -301,4 +301,141 @@
 .edit-profile button[type="button"]:hover {
   background-color: #a7a7a7;
   color: #fff;
+}
+
+
+@media only screen and (max-width: 920px) {
+  .profile-img {
+    width: 100px;
+    margin: 0 3% 0 5%;
+  }
+
+  .edit-profile-text {
+    font-size: 1rem;
+  }
+
+  .user-card {
+    padding: 2%;
+    max-width: 72%;
+  }
+
+  .links a {
+    height: 36px;
+    padding: 8px;
+    margin-right: 12px;
+    font-size: 14px;
+  }
+
+  .info h4 {
+    font-size: 18px;
+    margin-bottom: 16px;
+  }
+
+  .info h4 {
+    font-size: 22x;
+  }
+
+  .edit-account {
+    height: auto;
+    padding: 7px;
+    margin: 3%;
+  }
+
+}
+
+@media only screen and (max-width: 700px) {
+  .edit-profile-text {
+    display: none;
+  }
+
+  .user-card {
+    max-width: 79%;
+  }
+
+  .edit-account {
+    padding: 5px;
+    border-radius: 50%;
+  }
+}
+
+@media only screen and (max-width: 560px) {
+  .info {
+    margin-left: 2%;
+  }
+
+  .profile-img {
+    width: 60px;
+    margin: 0 3.5%;
+    border: 10px solid #f4eeff;
+  }
+
+  .edit-account {
+    padding: 1px;
+    border-radius: 50%;
+  }
+
+  .info ul {
+    margin: 0;
+  }
+
+  .info ul li {
+    margin: 0;
+  }
+
+  .info h4 {
+    font-size: 18px;
+    margin-bottom: 10%;
+  }
+
+  .info h2 {
+    font-size: 22px;
+  }
+
+  .info p {
+    font-size: 1rem;
+  }
+
+  .links a {
+    height: 28px;
+    padding: 6px;
+    margin-right: 12px;
+    font-size: 14px;
+  }
+}
+
+@media only screen and (max-width: 400px) {
+  .user-card {
+    max-width: 96%;
+  }
+
+  .links a {
+    font-size: 12px;
+  }
+
+}
+
+@media only screen and (max-width: 350px) {
+  .info {
+    margin-left: 0%;
+  }
+
+  .profile-img {
+    width: 52px;
+    margin: 0 1.5%;
+    border: 6px solid #f4eeff;
+  }
+
+  .info h2 {
+    font-size: 19px;
+  }
+
+  .info h4 {
+    font-size: 16px;
+  }
+
+  .links a {
+    font-size: 11px;
+    margin-right: 8px;
+  }
+
 }

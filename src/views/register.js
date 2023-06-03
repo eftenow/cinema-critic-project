@@ -48,7 +48,7 @@ const registerTemplate = (ctx, usernames, emails) => html`
       <p class='incorrect-repeat-msg'></p>
 
       <button  type="submit" class="register-button" disabled>Create account</button>
-      <p class="register-register-text">Already have an account? <a href="/login" class="register-login-link">Login here</a></p>
+      <p class="register-register-text">Already have an account?<br><a href="/login" class="register-login-link">Login here</a></p>
     </form>
 </section>
 `

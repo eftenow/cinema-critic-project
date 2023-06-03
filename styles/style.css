@@ -38,7 +38,8 @@ body {
 .movies-section,
 .popular-movies,
 .login-section,
-.register-section {
+.register-section,
+.user-container {
   min-height: 84.4vh;
 }
 

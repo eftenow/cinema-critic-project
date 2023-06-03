@@ -15,7 +15,7 @@ export const profileTemplate = (ctx, user, userReviews, isProfileGuest) => html`
             <h2>${user.username}</h2>
             ${!isProfileGuest ? html`
   <span>
-    <a href="/settings" class="edit-account"><i class="fa-solid fa-pencil"></i> Edit Profile</a>
+    <a href="/settings" class="edit-account"><i class="fa-solid fa-pencil"></i> <span class='edit-profile-text'>Edit Profile</span></a>
   </span>
 ` : ''}
             <h4>User Reviews: <span><b>${userReviews.length}</b></span></h4>

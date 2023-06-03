@@ -18,7 +18,7 @@
     flex-direction: column;
     align-items: center;
     width: 100%;
-    margin-bottom: 2%;
+    margin-bottom: 5%;
 }
 
 .create-form label {
@@ -107,4 +107,37 @@
     padding: 1.5%;
     border-radius: 1%;
     width: 31%;
+}
+
+
+
+@media only screen and (max-width: 1080px){
+    .create-section{
+        width: 55%;
+    }
+}
+
+@media only screen and (max-width: 720px){
+    .create-section{
+        width: 65%;
+    }
+}
+
+@media only screen and (max-width: 600px){
+    .create-section{
+        width: 80%;
+    }
+    .create-form-group{
+        margin-bottom: 4px;
+    }
+}
+
+@media only screen and (max-width: 420px){
+    .create-section{
+        width: 92%;
+    }
+
+    .create-form-group{
+        margin-bottom: 2px;
+    }
 }
