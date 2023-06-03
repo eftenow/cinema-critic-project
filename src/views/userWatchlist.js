@@ -71,17 +71,20 @@ function toggleWatchlistButtons(action) {
   const showWatchlistBtn = document.getElementById('show-watchlist');
   const hideWatchlistBtn = document.getElementById('hide-watchlist');
   const showReviewsBtn = document.getElementById('show-reviews');
+  const userCard = document.querySelector('.user-card');
 
   if (action == 'show') {
     watchlistSection.classList.toggle('hidden');
     showWatchlistBtn.classList.add('hidden');
     showReviewsBtn.classList.add('hidden');
     hideWatchlistBtn.classList.remove('hidden');
+    userCard.classList.add('userCardMargin');
   } else if (action == 'hide') {
     watchlistSection.classList.toggle('hidden');
     showWatchlistBtn.classList.remove('hidden');
     showReviewsBtn.classList.remove('hidden');
     hideWatchlistBtn.classList.add('hidden');
+    userCard.classList.remove('userCardMargin');
   }
 }
 

@@ -33,16 +33,20 @@ function toggleReviewButtons(action) {
   const showReviewsBtn = document.getElementById('show-reviews');
   const hideReviewsBtn = document.getElementById('hide-reviews');
   const showWatchlistBtn = document.getElementById('show-watchlist');
+  const userCard = document.querySelector('.user-card');
+
 
   if (action == 'show') {
     reviewSection.classList.toggle('hidden');
     showReviewsBtn.classList.add('hidden');
     showWatchlistBtn.classList.add('hidden');
     hideReviewsBtn.classList.remove('hidden');
+    userCard.classList.add('userCardMargin');
   } else if (action == 'hide') {
     reviewSection.classList.toggle('hidden');
     showReviewsBtn.classList.remove('hidden');
     showWatchlistBtn.classList.remove('hidden');
     hideReviewsBtn.classList.add('hidden');
+    userCard.classList.remove('userCardMargin');
   }
 }

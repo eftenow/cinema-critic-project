@@ -303,6 +303,10 @@
   color: #fff;
 }
 
+.userCardMargin{
+  margin: 2% auto !important;
+}
+
 
 @media only screen and (max-width: 920px) {
   .profile-img {
@@ -317,6 +321,7 @@
   .user-card {
     padding: 2%;
     max-width: 72%;
+    margin-top: -15%;
   }
 
   .links a {
@@ -350,6 +355,7 @@
 
   .user-card {
     max-width: 79%;
+    margin-top: -17%;
   }
 
   .edit-account {
@@ -401,11 +407,13 @@
     margin-right: 12px;
     font-size: 14px;
   }
+  
 }
 
 @media only screen and (max-width: 400px) {
   .user-card {
     max-width: 96%;
+    margin-top: -27%;
   }
 
   .links a {
