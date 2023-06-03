@@ -303,7 +303,7 @@
   color: #fff;
 }
 
-.userCardMargin{
+.userCardMargin {
   margin: 2% auto !important;
 }
 
@@ -346,9 +346,19 @@
     margin: 3%;
   }
 
+  .edit-review-btn{
+    right: 4%;
+  }
+  .delete-review-btn{
+    right: 1%;
+  }
+  .redirect-review-btn {
+    right: 7%;
+  }
+
 }
 
-@media only screen and (max-width: 700px) {
+@media only screen and (max-width: 710px) {
   .edit-profile-text {
     display: none;
   }
@@ -362,6 +372,17 @@
     padding: 5px;
     border-radius: 50%;
   }
+
+  .edit-review-btn{
+    right: 6.5%;
+  }
+  .delete-review-btn{
+    right: 3.5%;
+  }
+  .redirect-review-btn {
+    right: 9.5%;
+  }
+
 }
 
 @media only screen and (max-width: 560px) {
@@ -407,7 +428,25 @@
     margin-right: 12px;
     font-size: 14px;
   }
-  
+
+  .edit-review-btn{
+    right: 5%;
+    font-size: 0.8rem;
+  }
+  .delete-review-btn{
+    right: 1%;
+    font-size: 0.8rem;
+  }
+  .redirect-review-btn {
+    right: 9%;
+    font-size: 0.72rem;
+  }
+
+  .review-title-details {
+    padding: 0px 12%;
+    font-size: 0.8rem;
+}
+
 }
 
 @media only screen and (max-width: 400px) {
@@ -419,6 +458,18 @@
   .links a {
     font-size: 12px;
   }
+
+  .edit-review-btn{
+    right: 5.5%;
+  }
+  .delete-review-btn{
+    right: 1.2%;
+  }
+  .redirect-review-btn {
+    right: 9.5%;
+
+  }
+
 
 }
 
@@ -446,4 +497,14 @@
     margin-right: 8px;
   }
 
+  .edit-review-btn{
+    right: 5.5%;
+  }
+  .delete-review-btn{
+    right: 1.2%;
+  }
+  .redirect-review-btn {
+    right: 9.9%;
+
+  }
 }
