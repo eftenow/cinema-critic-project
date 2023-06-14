@@ -318,12 +318,6 @@
     margin: 0 3% 0 5%;
   }
 
-  .login-section,
-  .register-section,
-  .user-container {
-    min-height: 87.3vh;
-  }
-
   .edit-profile-text {
     font-size: 1rem;
   }

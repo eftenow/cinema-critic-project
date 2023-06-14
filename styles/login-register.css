@@ -4,7 +4,7 @@ body {
 }
 
 .login-title,
-.register-title  {
+.register-title {
   margin-top: 0;
   margin-bottom: 5%;
   padding-top: 0;
@@ -12,15 +12,15 @@ body {
   text-align: center;
 }
 
-.register-title{
+.register-title {
   margin-bottom: 2.5%;
 }
 
-.login-section{
+.login-section {
   padding: 5%;
 }
 
-.register-section{
+.register-section {
   padding: 3%;
 }
 
@@ -62,7 +62,8 @@ body {
   outline: none;
 }
 
-.login-button, .register-button {
+.login-button,
+.register-button {
   background-color: #8e47f8;
   border: none;
   border-radius: 5px;
@@ -74,7 +75,8 @@ body {
   width: 100%;
 }
 
-.login-button:hover, .register-button:hover {
+.login-button:hover,
+.register-button:hover {
   background-color: #6a2cde;
 }
 
@@ -86,7 +88,7 @@ body {
   color: rgb(179, 187, 199);
 }
 
-.form-input-field{
+.form-input-field {
   position: relative;
 }
 
@@ -102,6 +104,7 @@ body {
   text-decoration: underline;
   color: #6a2cde;
 }
+
 .valid {
   border: 2px solid rgb(4 135 4 / 36%) !important;
   background: #0080000f;
@@ -116,37 +119,38 @@ body {
 
 #login-error {
   color: #fc2b2b;
-    margin-top: 26px;
-    font-weight: bold;
-    text-align: center;
-    margin-bottom: -16px;
+  margin-top: 26px;
+  font-weight: bold;
+  text-align: center;
+  margin-bottom: -16px;
 
 }
 
 .incorrect-username-msg,
 .incorrect-email-msg,
 .incorrect-password-msg,
-.incorrect-repeat-msg{
+.incorrect-repeat-msg {
   color: #fc2b2b;
   font-size: 13px;
   font-weight: bold;
   margin: -12px 0 10px 1px;
 }
-.icon-container{
-    position: absolute;
-    right: 3%;
-    top: 60%;
-    transform: translateY(-50%);
+
+.icon-container {
+  position: absolute;
+  right: 3%;
+  top: 60%;
+  transform: translateY(-50%);
 }
 
-.register-input.invalid ~ .icon-container .fa-triangle-exclamation,
-.login-input.invalid ~ .icon-container .fa-triangle-exclamation {
+.register-input.invalid~.icon-container .fa-triangle-exclamation,
+.login-input.invalid~.icon-container .fa-triangle-exclamation {
   display: inline-block;
-  color: #fc2b2b; 
+  color: #fc2b2b;
 }
 
-.register-input.valid ~ .icon-container .fa-circle-check,
-.login-input.valid ~ .icon-container .fa-circle-check {
+.register-input.valid~.icon-container .fa-circle-check,
+.login-input.valid~.icon-container .fa-circle-check {
   display: inline-block;
   color: rgb(13 173 13 / 76%);
 }
@@ -156,4 +160,60 @@ body {
   font-size: 1.3em;
 }
 
+@media only screen and (max-width:1200px) {
 
+  .login-section,
+  .register-section,
+  .user-container {
+    min-height: 85.4vh;
+  }
+
+  .register-title {
+    margin-bottom: 4.5%;
+  }
+}
+
+@media only screen and (max-width:840px) {
+
+  .login-section,
+  .register-section,
+  .user-container {
+    min-height: 86.7vh;
+  }
+
+  .register-title,
+  .login-title {
+    margin-bottom: 5%;
+    margin-top: 1%;
+  }
+}
+
+@media only screen and (max-width:580px) {
+
+  .login-section,
+  .register-section,
+  .user-container {
+    min-height: 87.5vh;
+  }
+
+
+}
+
+@media only screen and (max-width:380px) {
+
+  .register-form,
+  .login-form {
+    padding: 28px 18px;
+  }
+
+  .login-label,
+  .register-label {
+    font-size: 15px;
+  }
+
+  .login-input,
+  .register-input {
+    font-size: 14px;
+    padding: 8px;
+  }
+}
