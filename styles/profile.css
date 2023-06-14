@@ -314,6 +314,12 @@
     margin: 0 3% 0 5%;
   }
 
+  .login-section,
+  .register-section,
+  .user-container {
+    min-height: 87.3vh;
+  }
+
   .edit-profile-text {
     font-size: 1rem;
   }
@@ -394,6 +400,14 @@
     margin-left: 2%;
   }
 
+  .user-card {
+    max-width: 87%;
+  }
+
+  .review-header {
+    margin-top: 7.5%;
+  }
+
   .profile-img {
     width: 60px;
     margin: 0 3.5%;
@@ -434,17 +448,17 @@
   }
 
   .edit-review-btn {
-    right: 5%;
+    right: 5.5%;
     font-size: 0.8rem;
   }
 
   .delete-review-btn {
-    right: 1%;
+    right: 1.2%;
     font-size: 0.8rem;
   }
 
   .redirect-review-btn {
-    right: 9%;
+    right: 10%;
     font-size: 0.72rem;
   }
 
@@ -547,7 +561,7 @@
     font-size: 0.95rem;
   }
 
-  #description{
+  #description {
     font-size: 0.85rem;
   }
 
@@ -556,7 +570,7 @@
     margin-top: 0.4rem;
   }
 
-  .edit-profile button{
+  .edit-profile button {
     font-size: 0.9rem;
     padding: 0.5rem 0.8rem;
   }
@@ -566,12 +580,12 @@
   }
 }
 
-@media only screen and (max-width: 350px){
+@media only screen and (max-width: 350px) {
   #new-avatar-url {
     width: 85%;
   }
 
-  .edit-profile button{
+  .edit-profile button {
     font-size: 0.8rem;
     padding: 0.5rem;
   }
@@ -588,7 +602,7 @@
     font-size: 0.85rem;
   }
 
-  #description{
+  #description {
     font-size: 0.8rem;
   }
 }
