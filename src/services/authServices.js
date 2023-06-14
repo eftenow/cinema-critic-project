@@ -83,18 +83,14 @@ export function getUserId() {
 export async function editUserInfo(userId, editedUserData) {
   const User = Parse.Object.extend('User');
   const query = new Parse.Query(User);
-  console.log(userId);
-  console.log(editedUserData);
+
   try {
     const user = await query.get(userId);
     Object.keys(editedUserData).forEach(key => {
       user.set(key, editedUserData[key]);
     });
-
-    // Save the changes
+    updateLocalStorage(editedUserData)
     await user.save();
-
-    console.log('User data updated successfully');
   } catch (error) {
     console.error('Error updating user data:', error);
   }

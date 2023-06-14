@@ -72,6 +72,8 @@ export async function saveChangesHandler(ev, ctx, redirectLocation, userId) {
     const description = form.get('description');
     userId = userId == null ? getUserId() : userId;
 
+    debugger;
+    
     const editedUserData = { username, emailAddress, country, city, description, profileImg };
     await editUserInfo(userId, editedUserData);
 
