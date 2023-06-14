@@ -320,7 +320,7 @@ input[type="text"]::placeholder {
   }
 }
 
-@media only screen and (max-width: 560px){
+@media only screen and (max-width: 580px){
   .search-form{
     display: none;
   }
@@ -328,6 +328,10 @@ input[type="text"]::placeholder {
   .sub-menu-wrap, .sub-menu-options-wrap{
     right: -76px;
     top: 44px;
+  }
+
+  .nav-cc{
+    margin-right: 1.6%;
   }
 
   footer p{
