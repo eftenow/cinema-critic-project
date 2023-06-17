@@ -401,6 +401,10 @@ input[type="checkbox"]:checked+label {
         margin: 2.5%;
     }
 
+    input[type="checkbox"]:checked+label {
+        font-size: 1.03rem;
+    }
+
     .sort-section {
         margin: 0 auto;
     }
@@ -439,6 +443,10 @@ input[type="checkbox"]:checked+label {
         flex: 0 1 75%;
         height: 66.5vh;
         margin: 2.5%;
+    }
+
+    input[type="checkbox"]:checked+label {
+        font-size: 1.02rem;
     }
 
     .movies-section h2 {
