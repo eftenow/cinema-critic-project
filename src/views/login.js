@@ -1,5 +1,5 @@
 import { html } from '../../node_modules/lit-html/lit-html.js';
-import { loginUser } from '../services/authServices.js';
+import { getUser, loginUser } from '../services/authServices.js';
 
 
 const loginTemplate = (ctx) => html`
@@ -22,7 +22,13 @@ const loginTemplate = (ctx) => html`
 
 export function renderLogin(ctx) {
     const login = loginTemplate(ctx);
-    ctx.render(login);
+    const userAlreadyLogged = getUser()
+    if (userAlreadyLogged) {
+        ctx.redirect('/myProfile')
+    } else {
+        ctx.render(login);
+
+    }
 };
 
 async function onLoginHandler(ev, ctx) {
