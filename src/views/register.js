@@ -1,5 +1,5 @@
 import { html } from '../../node_modules/lit-html/lit-html.js';
-import { getAllEmails, getAllUsernames, registerUser } from '../services/authServices.js';
+import { getAllEmails, getAllUsernames, registerUser, getUser } from '../services/authServices.js';
 
 
 const registerTemplate = (ctx, usernames, emails) => html`
@@ -18,7 +18,7 @@ const registerTemplate = (ctx, usernames, emails) => html`
 
       <label for="email" class="register-label">Email:</label>  
       <span class="form-input-field">
-      <input @input=${(e)=> emailInputHandler(e, emails)} type="email" id="email" name="email" class="register-input">
+      <input @input=${(e) => emailInputHandler(e, emails)} type="email" id="email" name="email" class="register-input">
       <span class="icon-container">
     <i class="fa-solid fa-triangle-exclamation"></i>
     <i class="fa-solid fa-circle-check"></i>
@@ -54,11 +54,17 @@ const registerTemplate = (ctx, usernames, emails) => html`
 `
 
 export async function renderRegister(ctx) {
-    const usernames = await getAllUsernames();
-    const emails = await getAllEmails();
-    console.log(emails);
-    const register = registerTemplate(ctx, usernames, emails);
-    ctx.render(register);
+    const userAlreadyLogged = getUser()
+    if (userAlreadyLogged) {
+        ctx.redirect('/myProfile')
+    } else {
+        const usernames = await getAllUsernames();
+        const emails = await getAllEmails();
+
+        registerTemplate(ctx, usernames, emails);
+    }
+
+
 };
 
 async function onRegisterHandler(ev, ctx) {
@@ -77,7 +83,7 @@ async function usernameInputHandler(ev, existingUsernames) {
     const usename = ev.target.value;
     const errorField = document.querySelector('.incorrect-username-msg'); //paragraph
     const takenUsername = existingUsernames.includes(usename);
-    
+
     if (usename.length < 3 || usename.length > 12) {
         errorField.textContent = 'Username must be between 3 and 12 characters long.'
         inputField.classList.add('invalid');
@@ -100,7 +106,7 @@ async function emailInputHandler(ev, existingEmails) {
     const errorField = document.querySelector('.incorrect-email-msg');
     const emailRegex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
     const takenEmail = existingEmails.includes(email);
-    
+
     if (!email) {
         errorField.textContent = 'Email is required.'
         inputField.classList.add('invalid');
