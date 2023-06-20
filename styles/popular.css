@@ -80,6 +80,10 @@
 
 }
 
+.popular-movie-title:hover {
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+}
+
 .title-anchor {
     align-self: center;
 }
@@ -100,7 +104,7 @@
     font-size: 24px;
     font-weight: bold;
     margin: 0;
-    margin-right: 20px;
+    margin-right: 12px;
 }
 
 .rate-button {
@@ -142,17 +146,20 @@
     top: 4%;
     right: 0;
     font-size: 0.8rem;
+    background-color: inherit;
 }
 
-
+.add-to-watchlist:hover {
+    background-color: inherit;
+}
 
 #bookmark {
     color: rgb(54, 52, 52);
-    background-color: #fff;
+    background-color: inherit;
 }
 
 #bookmark-checked {
-    background-color: #fff;
+    background-color: inherit;
     color: rgb(10 151 27 / 67%);
 }
 
@@ -163,11 +170,11 @@
 }
 
 
-
 #plus:hover,
 #check:hover {
     color: white;
     cursor: pointer;
+    background-color: inherit;
 }
 
 .fa-star {
@@ -188,8 +195,8 @@
 
 
     a.more-info-btn {
-        width: 19%;
-        padding: 6px 0;
+        width: auto;
+        padding: 6px 12px;
     }
 
     .movie-text p {
@@ -211,7 +218,133 @@
     }
 
     .fa-star {
-        margin-right: 10%;
+        margin-right: 9%;
     }
 
+}
+
+@media only screen and (max-width:700px) {
+    .popular-movie-title {
+        font-size: 20px;
+    }
+
+    .movie-text p {
+        width: 112%;
+        margin-left: 12%;
+        font-size: 12px;
+    }
+
+    .add-to-watchlist {
+        font-size: 0.7rem;
+    }
+
+    .movie-text {
+        flex: 1.8;
+    }
+
+    .movie-thumbnail {
+        flex: 1.2;
+    }
+
+}
+
+@media only screen and (max-width:600px) {
+    .movie-text {
+        flex: 1.3;
+    }
+
+    .more-info-btn {
+        align-self: center;
+    }
+
+    .add-to-watchlist {
+        font-size: 0.6rem;
+    }
+
+    .rate-button,
+    a.more-info-btn {
+        font-size: 12px;
+    }
+}
+
+@media only screen and (max-width:500px) {
+    .movie-text p {
+        width: 129%;
+        margin-left: 19%;
+        font-size: 11px;
+    }
+
+    .popular-movie-title {
+        font-size: 18px;
+    }
+
+    .add-to-watchlist {
+        font-size: 0.5rem;
+    }
+
+    .movie-text {
+        flex: 1;
+    }
+
+    .movie-container {
+        padding: 8px;
+    }
+}
+
+@media only screen and (max-width:440px) {
+    .movie-details {
+        flex-direction: column;
+        flex: initial;
+    }
+
+    .movie-thumbnail {
+        margin-right: 0;
+        margin-bottom: 2%;
+    }
+
+    .add-to-watchlist {
+        font-size: 0.8rem;
+        top: 2.2%;
+    }
+
+    .movie-text p {
+        width: 100%;
+        margin-left: 1%;
+        font-size: 11.5px;
+    }
+
+    .movie-container {
+        padding: 12px;
+        width: 82%;
+        margin: 3% auto
+    }
+
+    a.more-info-btn {
+        width: 40%;
+        margin-top: 1.5%;
+    }
+
+    #bookmark-checked {
+        color: rgba(15, 153, 31, 0.89);
+    }
+}
+
+@media only screen and (max-width:340px) {
+    .add-to-watchlist {
+        font-size: 0.7rem;
+        top: 2.1%;
+    }
+
+    a.more-info-btn {
+        width: 46%;
+    }
+
+    .movie-container{
+        width: 90%;
+        padding: 8px;
+    }
+
+    .popular-movie-title{
+        font-size: 17px;
+    }
 }

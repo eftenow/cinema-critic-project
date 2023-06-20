@@ -14,7 +14,7 @@ const movieContainerTemplate = (ctx, movie, rank, currentUser, userBookmarks) =>
           </div>
           <div class="movie-text">
             <a class='title-anchor' href="/${movie.type}/${movie.objectId}" @click=${scrollToTop}>
-            <h4 class="popular-movie-title"> <span>${rank+1}. </span>${truncateTextByWords(movie.name, 7)}</h4>
+            <h4 class="popular-movie-title"> <span>${rank+1}. </span>${truncateTextByWords(movie.name, 6)}</h4>
           </a>
             <p class="movie-meta">${movie.movieLength} | ${movie.genres}</p>
             <div class="popular-movie-rating">
