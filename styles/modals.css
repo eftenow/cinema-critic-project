@@ -90,3 +90,28 @@
 .delete-form-group{
   display: flex;
 }
+
+
+
+@media only screen and (max-width:580px) {
+  .modal-content{
+    width: 85%;
+    height: 61vh;
+  }
+
+  .submit-review-btn {
+    margin-top: 18px;
+  }
+
+  .edit-review-form h3{
+    margin-bottom: 3.5%;
+  }
+
+  .small-modal{
+    width: 87%;
+    height: 25.5vh;
+    padding: 1%;
+    text-align: center;
+    margin-top: 65%;
+  }
+}

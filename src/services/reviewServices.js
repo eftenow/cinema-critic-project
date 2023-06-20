@@ -14,7 +14,6 @@ const endpoints = {
 
 export async function getReviewById(reviewId) {
   const review = await get(`${endpoints.allReviews}/${reviewId}`);
-  console.log(review);
   return review;
 }
 
@@ -87,7 +86,7 @@ export async function addNewReview(ctx, ev, movie, user) {
     .catch((error) => {
       console.error(error);
     });
-  debugger;
+
   await updateRating(movie.objectId, movie.type);
 
   ev.target.reset();
@@ -141,10 +140,10 @@ export async function getReviewsForMovie(movieId, type) {
   } else if (type === "Show" || type === "series") {
     query.equalTo("seriesTarget", { __type: "Pointer", className: "Show", objectId: movieId });
   }
-  console.log(query);
+
   query.include("user");
   const results = await query.find();
-  console.log(results);
+
   const reviews = results.map((review) => {
     const user = review.get("user");
     return {
@@ -181,7 +180,6 @@ export async function editExistingReview(ev, review, ctx, target) {
   const title = form.get('reviewer-review-text');
   const description = form.get('reviewer-review');
 
-  console.log(target);
   const Review = Parse.Object.extend("Review");
   const query = new Parse.Query(Review);
   query.equalTo("objectId", review.reviewId || review.objectId);
@@ -197,11 +195,10 @@ export async function editExistingReview(ev, review, ctx, target) {
   if (target){
     type = target.className == 'Movie' ? 'movie' : 'series';
     currentId = target.objectId;
-    console.log(type, currentId);
   } else{
     [, type, currentId] = ctx.path.split('/');
   }
-  debugger;
+
   await updateRating(currentId, type);
 
   const modal = document.querySelector('.modal');
@@ -218,7 +215,6 @@ export async function deleteReview(ev, reviewId, ctx, target) {
   if (target){
     type = target.className == 'Movie' ? 'movie' : 'series';
     currentId = target.objectId;
-    console.log(type, currentId);
   } else{
     [, type, currentId] = ctx.path.split('/');
   }
