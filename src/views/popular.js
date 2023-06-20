@@ -1,6 +1,7 @@
 import { html } from '../../node_modules/lit-html/lit-html.js';
 import { scrollToBottom, scrollToTop } from '../../utils/backToTopBtn.js';
 import { addUserBookmark, removeUserBookmark } from '../../utils/bookmarkBtns.js';
+import { truncateTextByWords, truncateTextByChars } from '../../utils/stringModifiers.js';
 import { getUser, getUserBookmarks } from '../services/authServices.js';
 import { getTopMovies } from '../services/itemServices.js';
 
@@ -12,7 +13,9 @@ const movieContainerTemplate = (ctx, movie, rank, currentUser, userBookmarks) =>
             <img src="${movie.image}" alt="Movie Name">
           </div>
           <div class="movie-text">
-            <h4 class="popular-movie-title"> <span>${rank+1}. </span>${movie.name}</h4>
+            <a class='title-anchor' href="/${movie.type}/${movie.objectId}" @click=${scrollToTop}>
+            <h4 class="popular-movie-title"> <span>${rank+1}. </span>${truncateTextByWords(movie.name, 7)}</h4>
+          </a>
             <p class="movie-meta">${movie.movieLength} | ${movie.genres}</p>
             <div class="popular-movie-rating">
               <p class="movie-score"><i class="fa-solid fa-star"></i> ${movie.rating}</p>
@@ -20,7 +23,7 @@ const movieContainerTemplate = (ctx, movie, rank, currentUser, userBookmarks) =>
             </div>
             <p class="movie-cast"><b>Director: </b> ${movie.director}</p>
             <p class="movie-cast"><b>Stars: </b> ${movie.stars}</p>
-            <p class="movie-description">${movie.description}</p>
+            <p class="movie-description">${truncateTextByChars(movie.description, 420)}</p>
             <a href="/${movie.type}/${movie.objectId}" class="more-info-btn" @click=${scrollToTop}>More Info</a>
           </div>
         </div>
