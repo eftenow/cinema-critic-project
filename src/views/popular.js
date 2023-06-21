@@ -18,7 +18,7 @@ const movieContainerTemplate = (ctx, movie, rank, currentUser, userBookmarks) =>
           </a>
             <p class="movie-meta">${movie.movieLength} | ${movie.genres}</p>
             <div class="popular-movie-rating">
-              <p class="movie-score"><i class="fa-solid fa-star"></i> ${movie.rating}</p>
+              <p class="movie-score"><i id='popular-rating-star' class="fa-solid fa-star"></i> ${movie.rating}</p>
               <a href="/${movie.type}/${movie.objectId}" class="rate-button" id="rate-button" @click=${scrollToBottom}>Rate</a>
             </div>
             <p class="movie-cast"><b>Director: </b> ${movie.director}</p>
