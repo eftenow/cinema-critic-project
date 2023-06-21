@@ -118,6 +118,7 @@ const navTemplate = (isAuthorized, user, ctx) => html`
     </header>
 
     <main>
+    <div class="loader"></div>
         <div id="notification"></div>
         <div class="modal">
             <div class="modal-content"></div>
@@ -139,3 +140,12 @@ export function showNavigation(ctx) {
     render(nav, document.querySelector('body'));
 }
 
+window.addEventListener("load", () => {
+    const loader = document.querySelector(".loader");
+  
+    loader.classList.add("loader--hidden");
+  
+    loader.addEventListener("transitionend", () => {
+      loader.remove;
+    });
+  });

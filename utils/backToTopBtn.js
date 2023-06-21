@@ -9,7 +9,7 @@ window.addEventListener("scroll", () => {
   if(!topBtn){
     return;
   };
-  
+
   const thirtyPercentHeight = scrollHeight * 0.3;
 
   if (scrollTop > thirtyPercentHeight) { 
