@@ -485,6 +485,13 @@
   .review:last-of-type {
     margin-bottom: 4rem;
   }
+
+  #star-review{
+    margin: 0 0 2% 2%;
+  }
+  .movie-score{
+    width: 100%;
+  }
 }
 
 @media only screen and (max-width:420px) {
