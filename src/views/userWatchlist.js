@@ -19,7 +19,7 @@ const watchlistMovieTemplate = (movie, isProfileGuest) => html`
         <a @click=${scrollToTop} id='watchlist-details' class="more-info btn" href="/${movie.type}/${movie.objectId}">Details</a>
       </div>
       ${!isProfileGuest ? html`
-  <button class="add-to-watchlist" @click='${toggleBookmarkIcon}'>
+  <button id='watchlist-bookmark-btn' class="add-to-watchlist" @click='${toggleBookmarkIcon}'>
     <span id='to-add' class="fa-stack fa-2x" @click=${() => removeUserBookmark(null, movie.objectId)}>
       <i id="bookmark-checked" class="fa-solid fa-bookmark fa-stack-2x"></i>
       <i id='check' class="fa-solid fa-check fa-stack-1x"></i>
