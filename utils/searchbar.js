@@ -1,5 +1,6 @@
 import { getSearchMatches, getSearchedMovies} from '../src/services/itemServices.js';
 import { moviesTemplate } from '../src/views/movies.js';
+import { truncateTextByChars, truncateTextByWords } from './stringModifiers.js';
 
 export async function searchHandler(ev, ctx) {
     ev.preventDefault();
@@ -34,7 +35,7 @@ export async function searchSuggestionsHandler(e) {
           (item) => `
         <a href="/${item.type}/${item.objectId}" class="suggestion">
           <div id="s-image"><img src="${item.image}" alt="${item.name}" /></div>
-          <span id="s-name">${item.name}</span>
+          <span id="s-name">${truncateTextByChars(item.name, 24)}</span>
         </a>`
         )
         .join('');
