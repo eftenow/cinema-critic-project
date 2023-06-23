@@ -427,7 +427,7 @@
 
   .movie-poster img {
     display: block;
-    width: 33%;
+    width: 200px;
     /* height: auto; */
     height: 26vh;
     border-radius: 10px;
@@ -464,7 +464,7 @@
 
 @media only screen and (max-width:520px) {
   .movie-poster img {
-    width: 45%;
+    width: 182px;
   }
 
   .trailer-section {
@@ -486,17 +486,18 @@
     margin-bottom: 4rem;
   }
 
-  #star-review{
+  #star-review {
     margin: 0 0 2% 2%;
   }
-  .movie-score{
+
+  .movie-score {
     width: 100%;
   }
 }
 
 @media only screen and (max-width:420px) {
   .movie-poster img {
-    width: 55%;
+    width: 168px;
   }
 
   .trailer-section {
@@ -525,7 +526,18 @@
     padding-bottom: 0px;
   }
 
-  .specific-form-group input{
+  .specific-form-group input {
     width: 80%;
+  }
+}
+
+@media only screen and (max-width:320px) {
+  .movie-poster img {
+    width: 160px;
+  }
+
+  .add-to-watchlist-details {
+    font-size: 0.7rem;
+    right: 0%;
   }
 }

@@ -276,9 +276,9 @@
     }
 
     #watchlist-bookmark-btn {
-        font-size: 0.55rem;
+        font-size: 0.43rem;
         top: 3.1%;
-        left: -88%;
+        right: -0.7%;
     }
 
     .review-content p {
@@ -291,6 +291,14 @@
     }
 
     .movie-title {
+        font-size: 1.1rem;
+    }
+
+    .review-container{
+        width: 102%;
+    }
+
+    .review-title {
         font-size: 1.1rem;
     }
 }

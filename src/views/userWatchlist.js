@@ -1,9 +1,9 @@
 import { html, render } from '../../node_modules/lit-html/lit-html.js';
 import { scrollToTop } from '../../utils/backToTopBtn.js';
 import { addUserBookmark, removeUserBookmark, toggleBookmarkIcon } from '../../utils/bookmarkBtns.js';
+import { truncateTextByChars } from '../../utils/stringModifiers.js';
 import { getUserBookmarks } from '../services/authServices.js';
 import { getUserWatchlist } from '../services/itemServices.js';
-
 
 const watchlistMovieTemplate = (movie, isProfileGuest) => html`
 <div class="review-container">
@@ -12,7 +12,7 @@ const watchlistMovieTemplate = (movie, isProfileGuest) => html`
       <h3 class="movie-title">${movie.rating}/10 <i class="fa-solid fa-star"></i></h3>
     </div>
     <div class="review-content">
-      <h3 class="review-title">${movie.name}</h3>
+      <a href="/${movie.type}/${movie.objectId}"><h3 class="review-title">${truncateTextByChars(movie.name, 45)}</h3></a>
       <p class="review-rating">${movie.genres}</p>
       <p class="review-text">${movie.description}</p>
       <div class="review-buttons">
