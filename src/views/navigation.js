@@ -118,6 +118,7 @@ const navTemplate = (isAuthorized, user, ctx) => html`
     </header>
 
     <main>
+    <div class="loader"></div>
         <div id="notification"></div>
         <div class="modal">
             <div class="modal-content"></div>

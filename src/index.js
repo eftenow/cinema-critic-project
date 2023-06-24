@@ -1,5 +1,6 @@
 import page from '../node_modules/page/page.mjs'
 import { filterMovies, filterSeries, sortHandler } from '../utils/filterButtons.js';
+import { hideSpinner } from '../utils/loading-spinner.js';
 import { searchedMoviesPage } from '../utils/searchbar.js';
 import { adminSetUpMiddleware } from './middlewares/adminPanelMiddleware.js';
 import { requireAuth } from './middlewares/authMiddleware.js';
@@ -25,11 +26,11 @@ import { renderUserReviews } from './views/userReviews.js';
 
 
 page('/admin', adminSetUpMiddleware, renderAdminPanel);
-page('/admin/dashboard',adminSetUpMiddleware, renderAdminPanel);
-page('/admin/users',adminSetUpMiddleware, renderUsersAdmin);
-page('/admin/movies',adminSetUpMiddleware, renderMoviesAdmin);
-page('/admin/series',adminSetUpMiddleware, renderSeriesAdmin);
-page('/admin/reviews',adminSetUpMiddleware, renderReviewsAdmin);
+page('/admin/dashboard', adminSetUpMiddleware, renderAdminPanel);
+page('/admin/users', adminSetUpMiddleware, renderUsersAdmin);
+page('/admin/movies', adminSetUpMiddleware, renderMoviesAdmin);
+page('/admin/series', adminSetUpMiddleware, renderSeriesAdmin);
+page('/admin/reviews', adminSetUpMiddleware, renderReviewsAdmin);
 page(setUpMiddleware);
 
 page('/', renderHome);
@@ -38,8 +39,8 @@ page('/dashboard', renderAllContent);
 page('/movies', filterMovies);
 page('/series', filterSeries);
 page('/createMovie', requireAuth, renderCreateMovie);
-page('/createSerie', requireAuth,renderCreateSeries);
-page('/popular',renderPopular);
+page('/createSerie', requireAuth, renderCreateSeries);
+page('/popular', renderPopular);
 page('/userReviews', requireAuth, renderUserReviews);
 page('/login', renderLogin);
 page('/register', renderRegister);
@@ -51,7 +52,7 @@ page('/series/:id', renderSeriesDetails);
 page('/dashboard/search', searchedMoviesPage);
 page('/sort/:sortBy', sortHandler);
 
-page('/logout', async (ctx)=> {
+page('/logout', async (ctx) => {
     await logoutUser();
     ctx.redirect('/');
 });

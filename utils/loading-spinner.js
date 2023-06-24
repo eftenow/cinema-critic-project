@@ -1,34 +1,15 @@
-export function setLoadingState(isLoading) {
-    if (isLoading) {
-        console.log('loading');
-      createLoader();
-    } else {
-      removeLoader();
-    }
-  }
-  
-  function createLoader() {
-    const loader = document.createElement("div");
-    loader.className = "loader";
-  
-    const loaderAfter = document.createElement("div");
-    loaderAfter.className = "loader--after";
-    loader.appendChild(loaderAfter);
-  
-    document.body.appendChild(loader);
-  }
-  
-  export function removeLoader() {
-    const loader = document.querySelector(".loader");
-    if (loader) {
-      loader.remove();
-    }
-  }
+export function showSpinner() {
+  const spinner = document.querySelector(".loader");
+  spinner.style.display = 'flex';
+  spinner.classList.remove("loader--hidden");
+  console.log('show spinner');
+}
 
-  export function isContentLoaded() {
-    return new Promise((resolve) => {
-      if (document.readyState === 'complete') {
-        resolve(true);
-      }
-    });
-  }
+export function hideSpinner() {
+  const spinner = document.querySelector(".loader");
+  spinner.classList.add("loader--hidden");
+  setTimeout(() => {
+    spinner.style.display = 'none';
+  }, 300);
+  console.log('hide spinner');
+}
