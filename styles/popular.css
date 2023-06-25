@@ -377,7 +377,10 @@
         height: 100%;
         object-fit: contain;
     }
-        
+    
+    h2 {
+        margin: 16px 0px 14px 0px;
+    }
 }
 
 @media only screen and (max-width:340px) {

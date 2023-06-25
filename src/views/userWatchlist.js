@@ -1,7 +1,7 @@
 import { html, render } from '../../node_modules/lit-html/lit-html.js';
 import { scrollToTop } from '../../utils/backToTopBtn.js';
 import { addUserBookmark, removeUserBookmark, toggleBookmarkIcon } from '../../utils/bookmarkBtns.js';
-import { truncateTextByChars } from '../../utils/stringModifiers.js';
+import { truncateTextByChars, truncateTextByWords, truncateTextByWordsWatchlist } from '../../utils/stringModifiers.js';
 import { getUserBookmarks } from '../services/authServices.js';
 import { getUserWatchlist } from '../services/itemServices.js';
 
@@ -12,9 +12,9 @@ const watchlistMovieTemplate = (movie, isProfileGuest) => html`
       <h3 class="movie-title">${movie.rating}/10 <i class="fa-solid fa-star"></i></h3>
     </div>
     <div class="review-content">
-      <a href="/${movie.type}/${movie.objectId}"><h3 class="review-title">${truncateTextByChars(movie.name, 45)}</h3></a>
+      <a href="/${movie.type}/${movie.objectId}"><h3 class="review-title">${truncateTextByWordsWatchlist(movie.name)}</h3></a>
       <p class="review-rating">${movie.genres}</p>
-      <p class="review-text">${movie.description}</p>
+      <p class="review-text">${truncateTextByChars(movie.description, 420)}</p>
       <div class="review-buttons">
         <a @click=${scrollToTop} id='watchlist-details' class="more-info btn" href="/${movie.type}/${movie.objectId}">Details</a>
       </div>
