@@ -4,6 +4,8 @@ export function truncateTextByChars(text, maxChars) {
         maxChars = maxChars * 0.3
     } else if (screenWidth <= 600) {
         maxChars = maxChars * 0.5
+      } else if (screenWidth <= 650){
+        maxChars = maxChars * 0.6
       } else if (screenWidth <= 800){
         maxChars = maxChars * 0.7
       }

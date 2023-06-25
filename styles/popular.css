@@ -196,7 +196,7 @@
 
     a.more-info-btn {
         width: auto;
-        padding: 6px 12px;
+        padding: 8px 14px;
     }
 
     .movie-text p {
@@ -211,6 +211,11 @@
         font-size: 13px;
     }
 
+    a.more-info-btn {
+        width: auto;
+        padding: 6px 13px;
+    }
+
     .movie-score {
         display: flex;
         align-items: center;
@@ -221,6 +226,18 @@
         margin-right: 9%;
     }
 
+    .movie-thumbnail {
+        max-width: 172px;
+    }
+
+    .movie-container {
+        padding: 12px;
+    }
+
+    .movie-thumbnail img {
+        width: 100%;
+        height: 260px;
+    }
 }
 
 @media only screen and (max-width:700px) {
@@ -246,6 +263,11 @@
         flex: 1.2;
     }
 
+    .rate-button {
+        padding: 2px 12px;
+        font-size: 12px;
+    }
+
 }
 
 @media only screen and (max-width:600px) {
@@ -264,6 +286,10 @@
     .rate-button,
     a.more-info-btn {
         font-size: 12px;
+    }
+
+    .leaderboard {
+        padding: 16px;
     }
 }
 
@@ -287,11 +313,23 @@
     }
 
     .movie-container {
+        padding: 6px;
+    }
+
+    .leaderboard {
         padding: 8px;
+    }
+
+    .movie-thumbnail {
+        max-width: 156px;
+    }
+
+    .movie-thumbnail img {
+        height: 240px;
     }
 }
 
-@media only screen and (max-width:440px) {
+@media only screen and (max-width:400px) {
     .movie-details {
         flex-direction: column;
         flex: initial;
@@ -314,9 +352,9 @@
     }
 
     .movie-container {
-        padding: 12px;
-        width: 82%;
-        margin: 3% auto
+        padding: 10px;
+        width: 77%;
+        margin: 4.5% auto
     }
 
     a.more-info-btn {
@@ -327,6 +365,19 @@
     #bookmark-checked {
         color: rgba(15, 153, 31, 0.89);
     }
+
+    .movie-thumbnail {
+        max-width: 262px;
+        max-height: 320px;
+        overflow: hidden;
+    }
+
+    .movie-thumbnail img {
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+    }
+        
 }
 
 @media only screen and (max-width:340px) {
@@ -346,5 +397,29 @@
 
     .popular-movie-title {
         font-size: 17px;
+    }
+}
+
+@media only screen and (max-width:320px) {
+    .movie-thumbnail {
+        max-height: 300px;
+    }
+}
+
+@media only screen and (max-width:305px) {
+    .movie-thumbnail {
+        max-height: 290px;
+    }
+}
+
+@media only screen and (max-width:299px) {
+    .movie-thumbnail {
+        max-height: 284px;
+    }
+}
+
+@media only screen and (max-width:285px) {
+    .movie-thumbnail {
+        max-height: 272px;
     }
 }
