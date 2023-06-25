@@ -10,6 +10,6 @@ export function hideSpinner() {
   spinner.classList.add("loader--hidden");
   setTimeout(() => {
     spinner.style.display = 'none';
-  }, 300);
+  }, 400);
   console.log('hide spinner');
 }

@@ -18,12 +18,12 @@
   
   .loader::after {
     content: "";
-    width: 75px;
-    height: 75px;
-    border: 12px solid #dddddd;
+    width: 70px;
+    height: 70px;
+    border: 13px solid #dddddd;
     border-top-color: #7449f5ea;
     border-radius: 50%;
-    animation: loading 0.75s ease infinite;
+    animation: loading 0.7s ease infinite;
   }
   
   @keyframes loading {
@@ -34,4 +34,31 @@
       transform: rotate(1turn);
     }
   }
+
+  @media only screen and (max-width: 1081px) {
+    .loader::after {
+      width: 60px;
+      height: 60px;
+      border: 12px solid #dddddd;
+      border-top-color: #7449f5ea;
+    }
+  }
   
+
+  @media only screen and (max-width: 700px) {
+    .loader::after {
+      width: 54px;
+      height: 54px;
+      border: 11px solid #dddddd;
+      border-top-color: #7449f5ea;
+    }
+  }
+
+  @media only screen and (max-width: 460px) {
+    .loader::after {
+      width: 45px;
+      height: 45px;
+      border: 10px solid #dddddd;
+      border-top-color: #7449f5ea;
+    }
+  }

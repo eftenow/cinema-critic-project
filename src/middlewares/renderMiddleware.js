@@ -13,7 +13,7 @@ export function setUpMiddleware(ctx, next) {
     ctx.render = (content) => {
 
       render(content, mainRootElement);
-      setTimeout(hideSpinner, 10); // Delay hiding the spinner after rendering the content
+      setTimeout(hideSpinner, 5); // Delay hiding the spinner after rendering the content
     };
     ctx.redirect = (targetLocation) => page.redirect(targetLocation);
   
