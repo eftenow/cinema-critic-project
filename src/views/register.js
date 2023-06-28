@@ -54,18 +54,22 @@ const registerTemplate = (ctx, usernames, emails) => html`
 `
 
 export async function renderRegister(ctx) {
-    const userAlreadyLogged = getUser()
+    const userAlreadyLogged = getUser();
     if (userAlreadyLogged) {
-        ctx.redirect('/myProfile')
+        ctx.redirect('/myProfile');
     } else {
-        const usernames = await getAllUsernames();
-        const emails = await getAllEmails();
+        try {
+            const [usernames, emails] = await Promise.all([getAllUsernames(), getAllEmails()]);
 
-        registerTemplate(ctx, usernames, emails);
+            const registerPage = registerTemplate(ctx, usernames, emails);
+            ctx.render(registerPage);
+        } catch (error) {
+
+            console.error(error);
+        }
     }
+}
 
-
-};
 
 async function onRegisterHandler(ev, ctx) {
     ev.preventDefault();
