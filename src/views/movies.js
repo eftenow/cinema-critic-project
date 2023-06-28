@@ -12,7 +12,7 @@ const movieTemplate = (movie) => html`
                         <div class="movie-rating">${movie.rating}</div>
                     </div>
                     <h3 class="movie-card-title">${movie.name}</h3>
-                    <a href="/${movie.type}/${movie.objectId}" class="movie-details-button">Details</a>
+                    <a @click='${scrollToTop}' href="/${movie.type}/${movie.objectId}" class="movie-details-button">Details</a>
                 </div>
 `
 
@@ -116,9 +116,12 @@ export const moviesTemplate = (movies, ctx, currentPage = 1, pagesCount = 1) => 
             </div>
         </section>
             <div class="movies-list">
-            <h2 id='no-movies-msg'>No matches found.</h2>
+              
             ${movies.length == 0
-        ? html`<h2 id='no-movies-msg'>No matches found.</h2>`
+        ? html`<div class="movies-list">
+              <h2 id='no-movies-msg'>No matches found.</h2>
+              <img id='no-matches-img' src="../../images/no-matches-found.gif">
+          <div class='no-matches-found'>`
         : html`${movies.map(m => movieTemplate(m))}`}
 
             </div>

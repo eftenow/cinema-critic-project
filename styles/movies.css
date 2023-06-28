@@ -13,11 +13,20 @@
 
 #no-movies-msg,
 #no-matches {
-    display: none;
     color: #7126e0;
     width: 55%;
-    margin: 6% auto;
+    margin: 3% auto;
 }
+
+#no-matches-img{
+    max-width: 800px;
+}
+
+#no-matches{
+    display: none;
+}
+
+
 
 .movies-list {
     display: flex;
@@ -298,6 +307,10 @@ input[type="checkbox"]:checked+label {
         font-size: 0.9;
     }
 
+    #no-movies-msg{
+        font-size: 2rem;
+    }
+
 }
 
 @media only screen and (max-width:1040px) {
@@ -330,6 +343,10 @@ input[type="checkbox"]:checked+label {
         right: 1.4%;
         width: 36px;
         height: 36px;
+    }
+
+    #no-movies-msg{
+        font-size: 1.8rem;
     }
 
     #back-to-top-btn i {
@@ -390,6 +407,10 @@ input[type="checkbox"]:checked+label {
     .movie-card {
         flex: 0 1 46%;
         height: 42.5vh;
+    }
+
+    #no-movies-msg{
+        font-size: 1.6rem;
     }
 
 }
@@ -463,6 +484,10 @@ input[type="checkbox"]:checked+label {
     .category-menu .menu-item{
         padding-left: 6px;
         font-size: 0.9;
+    }
+
+    #no-movies-msg{
+        font-size: 1.5rem;
     }
 
     .category-menu .menu-item:hover,

@@ -64,7 +64,7 @@ export async function filterHandler(ev, ctx) {
     const pagesCount = Math.ceil(totalItems / PAGE_SIZE);
     const matches = moviesTemplate(filteredItems, ctx, currentPage, pagesCount);
     ctx.render(matches);
-    const noMatchesEl = document.getElementById('no-movies-msg')
+    const noMatchesEl = document.querySelector('.no-matches-found')
     
     if (filteredItems.length == 0) {
       noMatchesEl.style.display = 'block'
