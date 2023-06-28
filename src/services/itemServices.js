@@ -165,13 +165,13 @@ export async function getSearchMatches(searchText) {
     const Movie = Parse.Object.extend("Movie");
     const movieQuery = new Parse.Query(Movie);
     movieQuery.select("name", "objectId", "image", "type");
-    movieQuery.startsWith("name", searchText, 'i');
+    movieQuery.matches("name", searchText, 'i');
     movieQuery.limit(6);
 
     const Series = Parse.Object.extend("Show");
     const seriesQuery = new Parse.Query(Series);
     seriesQuery.select("name", "objectId", "image", "type");
-    seriesQuery.startsWith("name", searchText, 'i');
+    seriesQuery.matches("name", searchText, 'i');
     seriesQuery.limit(6);
 
     const [movieData, seriesData] = await Promise.all([

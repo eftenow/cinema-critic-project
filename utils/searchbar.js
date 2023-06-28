@@ -6,9 +6,10 @@ export async function searchHandler(ev, ctx) {
     ev.preventDefault();
     const searchForm = new FormData(ev.target);
     const searchText = searchForm.get('search-text');
-    console.log(searchText);
-    ctx.redirect(`/dashboard/search?match=${encodeURIComponent(searchText)}`);
-    ev.target.reset();
+    if (searchText) {
+      ctx.redirect(`/dashboard/search?match=${encodeURIComponent(searchText)}`);
+      ev.target.reset();
+    }
 };
 
 export async function searchedMoviesPage(ctx) {
