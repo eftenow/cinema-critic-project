@@ -116,6 +116,7 @@ export const moviesTemplate = (movies, ctx, currentPage = 1, pagesCount = 1) => 
             </div>
         </section>
             <div class="movies-list">
+            <h2 id='no-movies-msg'>No matches found.</h2>
             ${movies.length == 0
         ? html`<h2 id='no-movies-msg'>No matches found.</h2>`
         : html`${movies.map(m => movieTemplate(m))}`}

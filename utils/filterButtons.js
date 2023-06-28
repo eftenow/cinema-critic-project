@@ -60,9 +60,17 @@ export async function filterHandler(ev, ctx) {
       filteredItems = content;
       totalItems = totalContent;
     }
+    
     const pagesCount = Math.ceil(totalItems / PAGE_SIZE);
     const matches = moviesTemplate(filteredItems, ctx, currentPage, pagesCount);
     ctx.render(matches);
+    const noMatchesEl = document.getElementById('no-movies-msg')
+    
+    if (filteredItems.length == 0) {
+      noMatchesEl.style.display = 'block'
+    } else{
+      noMatchesEl.style.display = 'none'
+    }
     const searchParams2 = new URLSearchParams(window.location.search);
     searchParams2.set('genre', selectedGenres.join(','));
     searchParams2.set('type', type);
