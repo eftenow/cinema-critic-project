@@ -37,13 +37,11 @@
   text-decoration: none;
   display: inline-flex;
   align-items: center;
-  height: 50px;
   background-color: #fff;
   color: #fff;
   border-radius: 6px;
   border: 2.5px solid #8e47f8;
-  padding: 10px 24px;
-  font-size: 14px;
+  padding: 7px 14px;
 }
 
 
@@ -142,20 +140,19 @@
 .links {
   display: flex;
   align-items: center;
-  margin: 20px 0;
+  margin: 22px 0;
 }
 
 .links a {
   text-decoration: none;
   display: inline-flex;
   align-items: center;
-  height: 50px;
   background-color: #8e47f8;
   color: #fff;
   border-radius: 6px;
   border: 2px solid #8e47f8;
-  padding: 10px 20px;
-  margin-right: 20px;
+  padding: 10px 18px;
+  margin-right: 22px;
   font-size: 15px;
 }
 
@@ -171,7 +168,7 @@
 
 .edit-account * {
   color: #8e47f8;
-  font-size: 18px;
+  font-size: 16px;
 
 }
 
@@ -273,6 +270,7 @@
   resize: vertical;
   font-size: 1rem;
   line-height: 1.5;
+  padding: 1% 1.5%;
 }
 
 #description:hover,

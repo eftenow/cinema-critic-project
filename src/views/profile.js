@@ -21,7 +21,9 @@ export const profileTemplate = (ctx, user, userReviews, isProfileGuest) => html`
             <h4>User Reviews: <span><b>${userReviews.length}</b></span></h4>
             <p>${user.description}</p>
             <ul>
-                <li><i class="fa-solid fa-location-dot"></i> ${user.city}, ${user.country}</li>
+            ${user.city || user.country ?
+                html`<li><i class="fa-solid fa-location-dot"></i> ${user.city} ${user.country}</li>` :
+                    ''}
             </ul>
             <div class="links">
                 <a @click="${(e) => renderUserReviews(ctx, e, user, userReviews, isProfileGuest)}" href="${ctx.path}/reviews" id='show-reviews' class="button">Show Reviews</a>
