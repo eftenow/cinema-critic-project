@@ -9,7 +9,6 @@ export function truncateTextByChars(text, maxChars) {
   } else if (screenWidth <= 800) {
     maxChars = maxChars * 0.7
   }
-  console.log(maxChars);
   if (text.length > maxChars) {
     return text.substring(0, maxChars) + "...";
   }

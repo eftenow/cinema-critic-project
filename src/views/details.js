@@ -21,9 +21,9 @@ ${currentUser?.username == review.username && !isProfileGuest
     : ''}
     <h3 class="review-title-details">${review.reviewTitle}</h3>
     <div class="review-header">
-    <img src="${review.profileImg}" onclick="location.href='user/${review.username}'" alt="Avatar" onerror="this.onerror=null; this.src='../../images/default-user.png';">
+    <a href='user/${review.username}'><img src="${review.profileImg}" alt="Avatar" onerror="this.onerror=null; this.src='../../images/default-user.png';"></a>
       <div class="review-info">
-        <p class="reviewer-name">${review.username}</p>
+        <a href='user/${review.username}' class="reviewer-name">${review.username}</a>
         <p class="movie-score reviewer-rating">Rating: ${review.reviewRating} <i id="star-review" class="fa-solid fa-star"></i></p>
       </div>
     </div>

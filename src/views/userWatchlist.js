@@ -37,7 +37,7 @@ export const userWatchlist = (user, watchlist, isProfileGuest) => html`
   <h2 class="watchlist-heading">${user.username}'s watchlist</h2>
   <div class="watchlist-container">
   ${watchlist.length == 0
-    ? html`<h2 id='no-watchlist-msg'>Your watchlist is empty.</h2>`
+    ? html`<h2 id='no-watchlist-msg'>Watchlist is empty.</h2>`
     : html`${watchlist.map(m => watchlistMovieTemplate(m, isProfileGuest))}`}
     </div>
   </div>
@@ -49,7 +49,6 @@ export async function renderUserWatchlist(ev, user, isProfileGuest) {
   ev.preventDefault();
   const watchlistSection = document.querySelector(".watchlist-section");
   const userWatchlistedMovies = await getUserWatchlist(user.objectId);
-  console.log(userWatchlistedMovies);
   const myWatchlist = userWatchlist(user, userWatchlistedMovies, isProfileGuest);
   render(myWatchlist, watchlistSection)
 

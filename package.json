@@ -7,12 +7,12 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "lite-server",
     "deploy": "npx webpack && xcopy /E /I images dist\\images && xcopy /E /I styles dist\\styles && firebase deploy"
-
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "firebase": "^9.23.0",
     "lit-html": "^2.6.1",
     "lite-server": "^2.6.1",
     "page": "^1.11.6",
