@@ -34,10 +34,10 @@ const watchlistMovieTemplate = (movie, isProfileGuest) => html`
 
 export const userWatchlist = (user, watchlist, isProfileGuest) => html`
 
-  <h2 class="watchlist-heading">${user.username}'s watchlist</h2>
+  <h2 class="watchlist-heading">${user.username}'s watchlist:</h2>
   <div class="watchlist-container">
   ${watchlist.length == 0
-    ? html`<h2 id='no-watchlist-msg'>Watchlist is empty.</h2>`
+    ? html`<h2 id='no-watchlist-msg'>${isProfileGuest ? `${user.username}'s watchlist is emtpy.` : 'Your watchlist is empty.'}</h2>`
     : html`${watchlist.map(m => watchlistMovieTemplate(m, isProfileGuest))}`}
     </div>
   </div>

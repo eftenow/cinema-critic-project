@@ -3,10 +3,10 @@ import { reviewTemplate } from './details.js';
 
 export const userReviews = (ctx, user, reviews, isProfileGuest) => html`
 
-  <h2 class="myReviews-heading">${user.username}'s reviews</h2>
+  <h2 class="myReviews-heading">${user.username}'s reviews:</h2>
   <div class="user-reviews">
   ${reviews.length == 0
-        ? html`<h2 id='no-movies-msg'>No reviews yet.</h2>`
+        ? html`<h2 id='no-movies-msg'>${isProfileGuest ? `${user.username} has no reviews yet.` : 'You have no reviews yet.'}</h2>`
         : html`${reviews.map(rev => reviewTemplate(ctx, rev, user, isProfileGuest))}`}
   </div>
 `
