@@ -2,7 +2,7 @@
 
 <h1><font color="#8e47f8"><a href="https://cinema-critics.web.app/">Cinema Critic</a></font></h1>
 
-<p>This is my first personal project. The front-end is built entirely with Vanilla JS, HTML, and CSS, while the back-end is implemented using back4app. I plan to migrate it to Python/Django for the back-end and use PostgreSQL for the database in the near future.</p>
+<p>Cinema Critic my first personal project, it is a Single-page application, its front-end is built entirely with Vanilla JS, HTML, and CSS, while the back-end utilizes back4app's backend services. I plan to migrate it to Python/Django for the back-end and use PostgreSQL for the database in the near future.</p>
 
 <hr>
 
@@ -23,6 +23,24 @@
 </ul>
 
 <hr>
+
+<h2>Technology Stack</h2>
+<p>The main client application is built using Vanilla JS, utilizing limited external libraries for routing, templating, bundling. This approach allowed us to practice and apply core JavaScript concepts effectively.</p>
+<ul>
+    <li><b>Templating engine</li>
+    <p>I used lit-html as the templating engine due to its lightweight, simplicity, and speed. Having prior experience with the library made it a comfortable choice.</p>
+
+    <li>Routing</li>
+    <p>For client-side routing in the Single Page Application, I selected a simple and straightforward router that fulfilled the requirement.</p>
+
+    <li>Bundler</li>
+    <p>Webpack served as the primary bundler, although I utilized it at a basic level, employing "npx webpack" for the job.</p>
+
+    <li>Deployment</li>
+    <p>To deploy the client, I leveraged Firebase for its user-friendly interface and ease of use.</p>
+</ul>
+
+
 
 <h2><font color="#8e47f8">Description</font></h2>
 
