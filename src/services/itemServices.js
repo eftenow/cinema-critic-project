@@ -6,16 +6,12 @@ Parse.serverURL = 'https://parseapi.back4app.com/';
 export let PAGE_SIZE = 12;
 
 const endpoints = {
-    allMovies: '/classes/Movie',
-    allSeries: '/classes/Show',
-    createMovie: '/classes/Movie',
-    createSerie: '/classes/Show',
-    create: '/data/shoes',
-    movieDetails: '/classes/Movie/',
-    seriesDetails: '/classes/Show/',
-    like: '/data/likes',
-    editSeries: (id)=> `/classes/Show/${id}`,
-    editMovie: (id)=> `/classes/Movie/${id}`,
+    allMovies: '/content/movies/',
+    allSeries: '/content/series/',
+    createMovie: '/content/movies/',
+    createSerie: '/content/series/',
+    detailsMovie: (id)=> `/movies/${id}`,
+    detailsSeries: (id)=> `/series/${id}`,
 };
 
 
@@ -48,21 +44,16 @@ export async function createNewMovie(newMovie) {
 
 
 export async function editExistingMovie(id, editedItem) {
-    return put(endpoints.movieDetails + id, editedItem);
-
-}
+    return put(endpoints.detailsMovie(id) + '/', editedItem);
+};
 
 export async function getMovieDetails(id) {
-    return get(endpoints.movieDetails + id);
-
+    return get(endpoints.detailsMovie(id) + '/');
 };
 
-export async function updateMovie(id, updatedMovieData) {
-    return put(endpoints.editMovie(id), updatedMovieData);
-};
 
 export async function deleteMovie(id) {
-    return del(endpoints.movieDetails + id);
+    return del(endpoints.detailsMovie(id) + '/');
 };
 
 
@@ -91,16 +82,15 @@ export async function createNewSeire(newSeries) {
 };
 
 export async function updateSeries(id, updatedSeriesData) {
-    return put(endpoints.editSeries(id), updatedSeriesData);
+    return put(endpoints.detailsSeries(id) + '/', updatedSeriesData);
 };
 
 export async function getSeriesDetails(id) {
-    const currentSeries =  get(endpoints.seriesDetails + id);
-    return currentSeries;
+    return get(endpoints.detailsSeries(id) + '/');
 };
 
 export async function deleteSeries(id) {
-    return del(endpoints.seriesDetails + id);
+    return del(endpoints.detailsSeries(id) + '/');
 };
 
 //ALL

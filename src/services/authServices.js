@@ -5,9 +5,9 @@ Parse.initialize(APP_ID, JS_KEY);
 Parse.serverURL = 'https://parseapi.back4app.com/';
 
 const endpoints = {
-  'login': '/login',
-  'logout': '/logout',
-  'register': '/users',
+  'login': '/account//login',
+  'logout': '/account/logout',
+  'register': '/account/register',
   'edit': (userId) => `/users/${userId}`,
   'users': '/users'
 }
@@ -18,27 +18,37 @@ export async function getUsersCount() {
 };
 
 export async function loginUser(username, password) {
-  const data = await post(endpoints.login, { username, password });
-  const sessionToken = data.sessionToken;
-  Parse.User.become(sessionToken);
-  localStorage.setItem('user', JSON.stringify(data));
+  const response = await post(endpoints.login, { username, password });
+  localStorage.setItem('user', JSON.stringify(response.data));
 };
 
 export async function registerUser(password, username, emailAddress) {
-  const parseUser = new Parse.User();
-  parseUser.setUsername(username);
-  parseUser.setPassword(password);
-  parseUser.setEmail(emailAddress);
-  parseUser.set('emailAddress', emailAddress);
-
+  const user = {
+    username: username,
+    password: password,
+    email: emailAddress
+  };
+  
   try {
-    await parseUser.signUp();
-    console.log(`email:${emailAddress}, username: ${username}, password: ${password}`);
-    localStorage.setItem('user', JSON.stringify(parseUser.toJSON()));
+    const response = await post(endpoints.register, user);
+    localStorage.setItem('user', JSON.stringify(response.data));
   } catch (error) {
     throw error;
   }
 }
+
+export async function logoutUser() {
+  localStorage.clear();
+  await post(endpoints.logout)  // This might need to be a delete or get request depending on how your API is set up
+};
+
+export async function editUserInfo(userId, editedUserData) {
+  try {
+    await put(endpoints.edit(userId), editedUserData);
+    updateLocalStorage(editedUserData)
+  } catch (error) {
+    console.error('Error updating user data:', error);
+  }}
 
 export function getUserBookmarks() {
   const currentUser = Parse.User.current();
@@ -54,11 +64,6 @@ export function getUserBookmarks() {
   return null;
 }
 
-export async function logoutUser() {
-  localStorage.clear();
-  await post(endpoints.logout)
-
-};
 
 export function getUser() {
   return JSON.parse(localStorage.getItem('user'));
