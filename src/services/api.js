@@ -1,4 +1,4 @@
-const BASE_URL = 'http://localhost:8000'; // Replace with your Django server's URL.
+export const BASE_URL = 'http://localhost:8000'; 
 
 export async function request(method, endpoint, data) {
     try {

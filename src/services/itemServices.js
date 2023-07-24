@@ -6,7 +6,7 @@ Parse.serverURL = 'https://parseapi.back4app.com/';
 export let PAGE_SIZE = 12;
 
 const endpoints = {
-    content: (page) => `/content/?page=${page}`,
+    content: (page) => `/content/all/?page=${page}`,
     allMovies: '/content/movies/',
     allSeries: '/content/series/',
     createMovie: '/content/movies/',

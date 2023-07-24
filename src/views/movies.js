@@ -80,8 +80,8 @@ export const moviesTemplate = (movies, ctx, currentPage = 1, pagesCount, pagesNe
                 </a>
                 <div class="category-menu" @click="${(e) => sortHandler(ctx, movies, e)}">
                     <span class="subject">Sort by rating</span>
-                    <a data-id="asc" data-specific='best' id='rating' class="menu-item">Best rated </a>
-                    <a data-id="desc" data-specific='worst' id='rating'class="menu-item">Worst rated</a>
+                    <a data-id="highest_rating" data-specific='best' id='rating' class="menu-item">Best rated </a>
+                    <a data-id="lowest_rating" data-specific='worst' id='rating'class="menu-item">Worst rated</a>
                     
                 </div>
             </div>
@@ -92,8 +92,8 @@ export const moviesTemplate = (movies, ctx, currentPage = 1, pagesCount, pagesNe
                 </a>
                 <div class="category-menu">
                     <span class="subject">Sort by year</span>
-                    <a data-id="asc" data-specific='newest' id='year' class="menu-item">Newest to oldest</a>
-                    <a data-id="desc" data-specific='oldest' id='year' class="menu-item">Oldest to newest</a>
+                    <a data-id="newest" data-specific='newest' id='year' class="menu-item">Newest to oldest</a>
+                    <a data-id="oldest" data-specific='oldest' id='year' class="menu-item">Oldest to newest</a>
                     
                 </div>
             </div>
@@ -104,7 +104,7 @@ export const moviesTemplate = (movies, ctx, currentPage = 1, pagesCount, pagesNe
                 </a>
                 <div class="category-menu" @click="${(e) => filterHandler(e, ctx)}">
                     <span class="subject">Sort by type</span>
-                    <a data-type="movie" class="menu-item menu-item-type">Movies</a>
+                    <a data-type="movies" class="menu-item menu-item-type">Movies</a>
                     <a data-type="series" class="menu-item menu-item-type">Series</a>
                     <a href="/dashboard" data-type="all" class="menu-item menu-item-type">All</a>
                     
@@ -117,7 +117,7 @@ export const moviesTemplate = (movies, ctx, currentPage = 1, pagesCount, pagesNe
             </div>
         </section>
             <div class="movies-list">
-              
+
             ${movies.length == 0
     ? html`<div class="movies-list">
               <h2 id='no-movies-msg'>No matches found.</h2>
