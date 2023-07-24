@@ -6,12 +6,13 @@ Parse.serverURL = 'https://parseapi.back4app.com/';
 export let PAGE_SIZE = 12;
 
 const endpoints = {
+    content: (page) => `/content/?page=${page}`,
     allMovies: '/content/movies/',
     allSeries: '/content/series/',
     createMovie: '/content/movies/',
     createSerie: '/content/series/',
-    detailsMovie: (id)=> `/movies/${id}`,
-    detailsSeries: (id)=> `/series/${id}`,
+    detailsMovie: (id) => `/movies/${id}`,
+    detailsSeries: (id) => `/series/${id}`,
 };
 
 
@@ -94,20 +95,12 @@ export async function deleteSeries(id) {
 };
 
 //ALL
-export async function getMoviesAndSeries(page = 1, pageSize = PAGE_SIZE) {
-    const offset = (page - 1) * pageSize;
-    const promises = Promise.all([
-      get(`${endpoints.allMovies}?keys=genres,objectId,type,image,rating,name,createdAt&order=-createdAt`),
-      get(`${endpoints.allSeries}?keys=genres,objectId,type,image,rating,name,createdAt&order=-createdAt`),
-    ]);
-    const [movies, series] = await promises;
-    const sortedMovies = movies.results;
-    const sortedSeries = series.results;
-  
-    const results = sortedMovies.concat(sortedSeries);
-    return results.slice(offset, offset + pageSize);
-  };
+export async function getMoviesAndSeries(currentPage=1) {
+    const content = await get(endpoints.content(currentPage));
 
+    const contentFound = content;
+    return contentFound;
+};
 export async function getAllContentData() {
     const promises = Promise.all([
         get(`${endpoints.allMovies}?keys=genres,objectId,type,image,rating,name`),
@@ -121,13 +114,10 @@ export async function getAllContentData() {
 }
 
 export async function getMoviesAndSeriesCount() {
-    const [moviesCount, seriesCount] = await Promise.all([
-        getMoviesCount(),
-        getSeriesCount()
-    ]);
-
-    return moviesCount + seriesCount;
+    const response = await get(endpoints.content);
+    return response.count;
 };
+
 
 ////SEARCH
 

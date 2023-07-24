@@ -85,21 +85,6 @@ export function getUserId() {
   }
 };
 
-export async function editUserInfo(userId, editedUserData) {
-  const User = Parse.Object.extend('User');
-  const query = new Parse.Query(User);
-
-  try {
-    const user = await query.get(userId);
-    Object.keys(editedUserData).forEach(key => {
-      user.set(key, editedUserData[key]);
-    });
-    updateLocalStorage(editedUserData)
-    await user.save();
-  } catch (error) {
-    console.error('Error updating user data:', error);
-  }
-}
 
 function updateLocalStorage(updatedData) {
   let user = JSON.parse(localStorage.getItem('user'));

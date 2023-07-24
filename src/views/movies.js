@@ -6,7 +6,8 @@ import { scrollToTop } from '../../utils/backToTopBtn.js';
 import { updateRating } from '../services/reviewServices.js';
 
 const movieTemplate = (movie) => html`
-<div class="movie-card" data-category="${movie.genres}" id="${movie.objectId}" data-type="${movie.type}">
+${console.log(movie)}
+<div class="movie-card" data-category="${movie.genres.join(', ')}" id="${movie.objectId}" data-type="${movie.type}">
                     <div class="movie-image">
                         <img src="${movie.image}" alt="Movie Poster">
                         <div class="movie-rating">${movie.rating}</div>
@@ -16,7 +17,7 @@ const movieTemplate = (movie) => html`
                 </div>
 `
 
-export const moviesTemplate = (movies, ctx, currentPage = 1, pagesCount = 1) => html`
+export const moviesTemplate = (movies, ctx, currentPage = 1, pagesCount, pagesNext, pagesPrevious) => html`
         <section class="movies-section">
             <h2>Our suggestions</h2>
             
@@ -118,43 +119,54 @@ export const moviesTemplate = (movies, ctx, currentPage = 1, pagesCount = 1) => 
             <div class="movies-list">
               
             ${movies.length == 0
-        ? html`<div class="movies-list">
+    ? html`<div class="movies-list">
               <h2 id='no-movies-msg'>No matches found.</h2>
               <img id='no-matches-img' src="../../images/no-matches-found.gif">
           <div class='no-matches-found'>`
-        : html`${movies.map(m => movieTemplate(m))}`}
+    : html`${movies.map(m => movieTemplate(m))}`}
 
             </div>
             <ul class="pagination">
-        ${currentPage > 1
-        ? html`<li class="page-item action"><a @click='${scrollToTop}' href="/dashboard?page=${currentPage - 1}" class="page-link"><i id = 'prev-page' class="fa-solid fa-caret-left"></i></a></li>`
-        : ''}
-        ${displayPages(currentPage, pagesCount).map(pageNumber => html`
-        <li class="page-item action ${pageNumber === currentPage ? 'active' : ''}"><a @click='${scrollToTop}' href="/dashboard?page=${pageNumber}" class="page-link">${pageNumber}</a></li>`)}
-        ${currentPage < pagesCount
-        ? html`<li class="page-item action"><a @click='${scrollToTop}' href="/dashboard?page=${currentPage + 1}" class="page-link"><i id='next-page' class="fa-solid fa-caret-right"></i></a></li>`
-        : ''}
+    ${currentPage > 1
+    ? html`<li class="page-item action"><a @click='${scrollToTop}' href="/dashboard?page=${currentPage - 1}" class="page-link"><i id = 'prev-page' class="fa-solid fa-caret-left"></i></a></li>`
+    : ''}
+    ${displayPages(currentPage, pagesCount).map(pageNumber => html`
+    <li class="page-item action ${pageNumber === currentPage ? 'active' : ''}"><a @click='${scrollToTop}' href="/dashboard?page=${pageNumber}" class="page-link">${pageNumber}</a></li>`)}
+    ${currentPage < pagesCount
+    ? html`<li class="page-item action"><a @click='${scrollToTop}' href="/dashboard?page=${currentPage + 1}" class="page-link"><i id='next-page' class="fa-solid fa-caret-right"></i></a></li>`
+    : ''}
+</ul>
         
-    </ul>
         </section>`
 
 
 
 export async function renderAllContent(ctx) {
-    let searchParams = new URLSearchParams(ctx.querystring);
-    let currentPage = Number(searchParams.get('page') || 1);
-    const seriensAndMovies = await getMoviesAndSeries(currentPage);
-    const totalCount = await getMoviesAndSeriesCount();
-    let pagesCount = Math.ceil(totalCount / PAGE_SIZE);
+  let searchParams = new URLSearchParams(ctx.querystring);
+  let currentPage = Number(searchParams.get('page') || 1);
+  console.log(`page: ${currentPage}`);
+  const response = await getMoviesAndSeries(currentPage);
+  const seriensAndMovies = response.results;
+  const responseData = response
+  const pagesCount = response.count
+  const pagesNext = response.next
+  const pagesPrevious = response.previous
+  console.log(responseData);
 
-    const movies = moviesTemplate(seriensAndMovies, ctx, currentPage, pagesCount);
+  const movies = moviesTemplate(seriensAndMovies, ctx, currentPage, pagesCount, pagesNext, pagesPrevious);
 
-    ctx.render(movies);
-    setTypeSelected();
+  ctx.render(movies);
+  setTypeSelected();
 };
 
 
 
 
 
-
+function extractPageNumber(url) {
+  if (url) {
+    const urlObj = new URL(url);
+    return urlObj.searchParams.get("page");
+  }
+  return null;
+}
