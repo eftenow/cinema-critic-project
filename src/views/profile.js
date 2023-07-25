@@ -21,9 +21,17 @@ export const profileTemplate = (ctx, user, userReviews, isProfileGuest) => html`
             <h4>User Reviews: <span><b>${userReviews.length}</b></span></h4>
             <p>${user.description}</p>
             <ul>
-            ${user.city || user.country ?
-                html`<li><i class="fa-solid fa-location-dot"></i> ${user.city} ${user.country}</li>` :
+            ${user.profile.first_name || user.profile.last_name ?
+                html`<li><i class="fa-solid fa-user"></i> ${user.profile.first_name} ${user.profile.last_name}</li>` :
                     ''}
+            ${user.profile.city || user.profile.country ?
+                html`<li><i class="fa-solid fa-location-dot"></i> ${user.profile.city} ${user.profile.country}</li>` :
+                    ''}
+            ${user.profile.gender
+            ?html`${user.profile.gender == 'Male' ?
+            html`<li><i class="fa-solid fa-mars-stroke"></i> ${user.profile.gender}</li>` :
+            html`<li><i class="fa-solid fa-venus"></i> ${user.profile.gender}</li>`
+                }` : ''}
             </ul>
             <div class="links">
                 <a @click="${(e) => renderUserReviews(ctx, e, user, userReviews, isProfileGuest)}" href="${ctx.path}/reviews" id='show-reviews' class="button">Show Reviews</a>
@@ -47,8 +55,14 @@ export const profileTemplate = (ctx, user, userReviews, isProfileGuest) => html`
 `
 
 export async function renderProfile(ctx) {
-    const user = getUser();
-    await displayUserProfile(ctx, user);
+    const user = await getUser();
+
+    if (user){
+        await displayUserProfile(ctx, user);
+    } else{
+        ctx.redirect('/login');
+    }
+    
 };
 
 

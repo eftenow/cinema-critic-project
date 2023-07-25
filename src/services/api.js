@@ -1,29 +1,49 @@
 export const BASE_URL = 'http://localhost:8000'; 
 
+export function getAccessTokenFromCookie() {
+    const cookies = document.cookie.split('; ');
+    const accessTokenCookie = cookies.find(row => row.startsWith('access'));
+    if (accessTokenCookie) {
+        const accessToken = accessTokenCookie.split('=')[1];
+        return accessToken;
+    }
+    return null;
+}
+
 export async function request(method, endpoint, data) {
     try {
         const url = `${BASE_URL}${endpoint}`;
+        const accessToken = getAccessTokenFromCookie();
         const options = {
             method,
-            credentials: 'include', // For sending and receiving cookies
+            credentials: 'include',
             headers: {
                 'Content-Type': 'application/json',
+                ...(accessToken && { 'Authorization': `Bearer ${accessToken}` })
             },
             body: JSON.stringify(data),
         };
 
         if (method === 'GET' || method === 'HEAD') {
-            delete options.body;  // Body should not be used with GET or HEAD requests
+            delete options.body;
         }
 
         const response = await fetch(url, options);
-        
-        if (!response.ok) {
-            throw new Error('HTTP error, status = ' + response.status);
+        let responseData;
+        if (response.headers.get("content-type").includes("application/json")) {
+            responseData = await response.json();
+        } else {
+            responseData = await response.text();
         }
 
-        const responseData = await response.json();
-        return responseData;
+        if (!response.ok) {
+            const error = new Error("An error occurred");
+            error.status = response.status;
+            error.data = responseData;
+            throw error;
+        }
+
+        return { status: response.status, data: responseData };
     } catch (error) {
         console.error(error);
         throw error;

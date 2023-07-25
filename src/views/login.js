@@ -20,9 +20,10 @@ const loginTemplate = (ctx) => html`
 </section>
 `;
 
-export function renderLogin(ctx) {
+export async function renderLogin(ctx) {
     const login = loginTemplate(ctx);
-    const userAlreadyLogged = getUser()
+    const userAlreadyLogged = await getUser()
+
     if (userAlreadyLogged) {
         ctx.redirect('/myProfile')
     } else {

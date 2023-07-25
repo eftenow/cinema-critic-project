@@ -116,8 +116,8 @@
 
 .info ul {
   display: flex;
-  align-items: center;
-  margin: 10px 0 30px 0;
+  flex-direction: column;
+  margin: 10px 0 30px 10px;
 
 }
 

@@ -54,7 +54,7 @@ const registerTemplate = (ctx, usernames, emails) => html`
 `
 
 export async function renderRegister(ctx) {
-    const userAlreadyLogged = getUser();
+    const userAlreadyLogged = await getUser();
     if (userAlreadyLogged) {
         ctx.redirect('/myProfile');
     } else {
@@ -74,12 +74,34 @@ export async function renderRegister(ctx) {
 async function onRegisterHandler(ev, ctx) {
     ev.preventDefault();
     let form = new FormData(ev.target);
+  
     let username = form.get('username');
     let emailAddress = form.get('email');
     let password = form.get('password');
+    let repeat_password = form.get('rePassword');
 
-    await registerUser(password, username, emailAddress);
-    ctx.redirect('/');
+    let errorDetails = await registerUser(username, emailAddress, password, repeat_password);
+
+    if (errorDetails) {
+        if (errorDetails.password) {
+            let errors = []
+            errorDetails.password.forEach(errorMsg => {
+                console.error('Password Error:', errorMsg);
+                errors.push(errorMsg)
+            });
+            const errorField = document.querySelector('.incorrect-password-msg');
+                const passwordField = document.querySelector('#password');
+
+                passwordField.classList.add('invalid');
+                passwordField.classList.remove('valid');
+                errorField.innerHTML = errors.join('<br>');
+        }else {
+            ctx.redirect('/');
+        }
+
+    } else {
+        ctx.redirect('/');
+    }
 }
 
 async function usernameInputHandler(ev, existingUsernames) {
@@ -137,8 +159,8 @@ function passwordInputHandler(ev) {
     const errorField = document.querySelector('.incorrect-password-msg');
     passwordsMatchHandler();
 
-    if (password.length < 4) {
-        errorField.textContent = 'Password must atleast 4 characters long.'
+    if (password.length < 8) {
+        errorField.textContent = 'Password must atleast 8 characters long.'
         inputField.classList.add('invalid');
         inputField.classList.remove('valid');
     } else {

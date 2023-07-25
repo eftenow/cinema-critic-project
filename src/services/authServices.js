@@ -5,11 +5,16 @@ Parse.initialize(APP_ID, JS_KEY);
 Parse.serverURL = 'https://parseapi.back4app.com/';
 
 const endpoints = {
-  'login': '/account//login',
-  'logout': '/account/logout',
-  'register': '/account/register',
-  'edit': (userId) => `/users/${userId}`,
-  'users': '/users'
+  'login': '/account/login/',
+  'logout': '/account/logout/',
+  'register': '/account/register/',
+  'myProfile': '/account/details/',
+  'is_authenticated': '/account/authenticated/',
+  edit: (userId) => `/account/edit/${userId}/`,
+  delete: (userId) => `/account/delete/${userId}/`,
+  details: (userId) => `/account/details/${userId}/`,
+
+  'users': '/account/allUsers/'
 }
 
 export async function getUsersCount() {
@@ -18,37 +23,44 @@ export async function getUsersCount() {
 };
 
 export async function loginUser(username, password) {
-  const response = await post(endpoints.login, { username, password });
-  localStorage.setItem('user', JSON.stringify(response.data));
+  await post(endpoints.login, { username, password });
 };
 
-export async function registerUser(password, username, emailAddress) {
+export async function registerUser(username, email, password, repeat_password) {
   const user = {
-    username: username,
-    password: password,
-    email: emailAddress
+      username: username,
+      email:  email,
+      password: password,
+      repeat_password: repeat_password
   };
-  
+
   try {
-    const response = await post(endpoints.register, user);
-    localStorage.setItem('user', JSON.stringify(response.data));
+      console.log(user);
+      await post(endpoints.register, user);
+      const userData = await getUser();
+      return userData;
   } catch (error) {
-    throw error;
+      console.error(error);
+      console.log(error.status);
+      console.log(error.data);  // This should contain the password error messages
+      return error.data; // return server error details to the user
   }
 }
 
 export async function logoutUser() {
-  localStorage.clear();
-  await post(endpoints.logout)  // This might need to be a delete or get request depending on how your API is set up
+  await post(endpoints.logout);
 };
+
 
 export async function editUserInfo(userId, editedUserData) {
   try {
     await put(endpoints.edit(userId), editedUserData);
-    updateLocalStorage(editedUserData)
+    const userData = await getUser();
+    return userData;
   } catch (error) {
     console.error('Error updating user data:', error);
-  }}
+  }
+}
 
 export function getUserBookmarks() {
   const currentUser = Parse.User.current();
@@ -63,74 +75,81 @@ export function getUserBookmarks() {
   }
   return null;
 }
+export async function checkAuthenticated() {
+  const response = await get(endpoints.is_authenticated);
 
+  return response.data.isAuthenticated;
+}
 
-export function getUser() {
-  return JSON.parse(localStorage.getItem('user'));
-};
+export async function getUser(id = null) {
+  const isAuthenticated = await checkAuthenticated();
+  if (!isAuthenticated) {
+    return null;
+  }
 
-
-export function getCurrentSessionToken() {
-  let user = getUser();
-  return user.sessionToken;
+  try {
+    let response;
+    if (id) {
+      response = await get(endpoints.details(id));
+    } else {
+      response = await get(endpoints.myProfile)
+    }
+    console.log(response.data);
+    return response.data;
+  } catch (error) {
+    return null;
+  }
 };
 
 
 export function getUserId() {
   let user = getUser();
   try {
-    return user.objectId;
+    return user.id;
   } catch (error) {
     return;
   }
 };
 
 
-function updateLocalStorage(updatedData) {
-  let user = JSON.parse(localStorage.getItem('user'));
-  Object.entries(updatedData).map(([key, value]) => user[key] = value);
-  localStorage.setItem('user', JSON.stringify(user));
-};
-
 export async function getAllUsernames() {
-  const response = await get('/classes/_User', { keys: 'username' });
-  const results = response.results;
-  const username = results.map(result => result.username);
+  const users = await get(endpoints.users);
 
-  return username;
+  const usernames = users.data.map(user => user.username)
+  return usernames
 };
 
 export async function getAllUsers() {
-  const User = Parse.Object.extend('User');
-  const query = new Parse.Query(User);
-  query.ascending('role');
-  const results = await query.find();
-
-  return results.map(result => result.toJSON());
+  const users = await get(endpoints.users);
+  return users
 }
 
 
 export async function getAllEmails() {
-  const response = await get('/classes/_User', { keys: 'emailAddress' });
-  const results = response.results;
-  const emailAddresses = results.map(result => result.emailAddress);
+  const users = await get(endpoints.users);
 
-  return emailAddresses;
+  const emails = users.data.map(user => user.email)
+  return emails
 };
 
 
 export async function deleteUserById(objectId) {
-  const User = Parse.Object.extend('_User');
-  const query = new Parse.Query(User);
-  const user = await query.get(objectId);
-  await user.destroy();
+  await post(endpoints.logout);
+  await post(endpoints.delete(objectId)) 
 }
 
 export async function getUserByUsername(username) {
-  const User = Parse.Object.extend('_User');
-  const query = new Parse.Query(User);
-  query.equalTo('username', username);
-  query.limit(1);
-  const user = await query.first();
-  return user ? user.toJSON() : null;
+  try {
+    const response = await get(endpoints.users);
+
+    if (response.status !== 200) {
+      throw new Error(`HTTP error, status = ${response.status}`);
+    }
+    
+    const user = response.data.find(user => user.username === username);
+    return user || null;
+  } catch (error) {
+    console.error(error);
+    return null;
+  }
 }

@@ -117,7 +117,7 @@ export const moviesTemplate = (movies, ctx, currentPage = 1, pagesCount, pagesNe
             </div>
         </section>
             <div class="movies-list">
-
+            ${console.log(movies.results)}
             ${movies.length == 0
     ? html`<div class="movies-list">
               <h2 id='no-movies-msg'>No matches found.</h2>
@@ -144,14 +144,13 @@ export const moviesTemplate = (movies, ctx, currentPage = 1, pagesCount, pagesNe
 export async function renderAllContent(ctx) {
   let searchParams = new URLSearchParams(ctx.querystring);
   let currentPage = Number(searchParams.get('page') || 1);
-  console.log(`page: ${currentPage}`);
+
   const response = await getMoviesAndSeries(currentPage);
-  const seriensAndMovies = response.results;
+  const seriensAndMovies = response.data.results;
   const responseData = response
   const pagesCount = response.count
   const pagesNext = response.next
   const pagesPrevious = response.previous
-  console.log(responseData);
 
   const movies = moviesTemplate(seriensAndMovies, ctx, currentPage, pagesCount, pagesNext, pagesPrevious);
 

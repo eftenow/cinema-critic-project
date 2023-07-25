@@ -132,9 +132,10 @@ const navTemplate = (isAuthorized, user, ctx) => html`
     </footer>
 `;
 
-export function showNavigation(ctx) {
-    const isAuthorized = getUser() !== null;
-    const user = getUser();
+export function showNavigation(ctx, user) {
+    const isAuthorized = user !== null
+    console.log(isAuthorized);
+
     const nav = navTemplate(isAuthorized, user, ctx);
 
     render(nav, document.querySelector('body'));
