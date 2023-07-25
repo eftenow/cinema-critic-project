@@ -1,4 +1,5 @@
 import { html } from '../../node_modules/lit-html/lit-html.js';
+import { selectOption, showHideOptions } from '../../utils/dropdowns.js';
 import { hideModal } from '../../utils/reviewOperations.js';
 import { editUserInfo, getUser, getUserId } from '../services/authServices.js';
 import { hideUserReviews, renderUserReviews } from './userReviews.js';
@@ -7,38 +8,62 @@ export const profileTemplate = (ctx, user) => html`
 <div class="user-container">
 <div class="edit-profile">
     <h2>Edit Profile</h2>
+    ${console.log(user)}
     <div class="info" id='edit-pic-container'>
-        <img class="edit-avatar" src="${user.profileImg}"
+        <img class="edit-avatar" src="${user.profile.profile_picture}"
             onerror="this.onerror=null;this.src='../../images/default-user.png';">
         <i class="fa-solid fa-camera"></i>
-        <input type='text' placeholder="Avatar image url" id="new-avatar-url" value="${user.profileImg}">
+        <input type='text' placeholder="Avatar image url" id="new-avatar-url" value="${user.profile.profile_picture}">
 
     </div>
-    <form @submit ="${(e) => saveChangesHandler(e, ctx, '/myProfile')}">
+    <form @submit ="${(e) => saveChangesHandler(e, ctx, '/myProfile', user.id)}">
         <div class="input-group ">
             <div class="input-group">
                 <label for="username">Username:</label>
                 <input type="text" id="username" name="username" value="${user.username}">
             </div>
-
+            <div class="input-group">
+                <label for="fname">First name:</label>
+                <input type="text" id="fname" name="fname" value="${user.profile.first_name}">
+            </div>
+            <div class="input-group">
+                <label for="lname">Last name:</label>
+                <input type="text" id="lname" name="lname" value="${user.profile.last_name}">
+            </div>
             <div class="input-group">
                 <label for="email">Email:</label>
-                <input type="email" id="email" name="email" value="${user.emailAddress}">
+                <input type="email" id="email" name="email" value="${user.email}">
             </div>
+
+            <div class="select-menu specific-form-group">
+                <label for="select-rating">Gender: </label>
+                <div id='select-rating' class="select" @click="${showHideOptions}">
+            <span>${user.profile.gender}</span>  
+            <i class="fas fa-angle-down"></i>
+          </div>
+          <input type='hidden' id="review-rating-input" name="review-rating">
+          <div id='choose-gender' class="options-list" @click="${selectOption}" name='review-rating'>
+            <div class="option">Male</i></div>
+            <div class="option">Female</div>
+            <div class="option">Do not show</div>
+          </div>
+        </div>
+
+            
 
             <div class="input-group">
                 <label for="country">Country: </label>
-                <input type="text" id="country" name="country" value="${user.country}">
+                <input type="text" id="country" name="country" value="${user.profile.country}">
             </div>
 
             <div class="input-group">
                 <label for="city">City: </label>
-                <input type="text" id="city" name="city" value="${user.city}">
+                <input type="text" id="city" name="city" value="${user.profile.city}">
             </div>
 
             <div class="input-group">
                 <label for="description">Description:</label>
-                <textarea id="description" name="description" rows="5" required>${user.description}</textarea>
+                <textarea id="description" name="description" rows="5">${user.profile.description}</textarea>
             </div>
 
 
@@ -54,7 +79,7 @@ export const profileTemplate = (ctx, user) => html`
 
 
 export async function renderEdit(ctx) {
-    const currentUser = getUser();
+    const currentUser = await getUser();
 
     const editProfile = profileTemplate(ctx, currentUser);
 
@@ -63,16 +88,32 @@ export async function renderEdit(ctx) {
 
 export async function saveChangesHandler(ev, ctx, redirectLocation, userId) {
     ev.preventDefault();
-    const profileImg = document.getElementById('new-avatar-url').value;
+    const profile_picture = document.getElementById('new-avatar-url').value;
+    const gender = document.querySelector('#select-rating span').textContent;
     const form = new FormData(ev.target);
     const username = form.get('username');
-    const emailAddress = form.get('email');
+    const email = form.get('email');
+
+    const first_name = form.get('fname');
+    const last_name = form.get('lname');
     const country = form.get('country');
     const city = form.get('city');
     const description = form.get('description');
     userId = userId == null ? getUserId() : userId;
+
+    const profile = {
+        first_name,
+        last_name,
+        country,
+        city,
+        description,
+        gender,
+        profile_picture
+    }
     
-    const editedUserData = { username, emailAddress, country, city, description, profileImg };
+    
+    const editedUserData = { username, email, profile};
+    console.log(editedUserData);
     await editUserInfo(userId, editedUserData);
 
     ctx.redirect(redirectLocation);

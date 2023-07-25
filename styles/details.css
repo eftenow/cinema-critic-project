@@ -109,6 +109,10 @@
   width: 83%;
 }
 
+#choose-gender {
+  max-height: 119px;
+}
+
 .trailer-section {
   margin: 2% auto;
   width: 1024px;

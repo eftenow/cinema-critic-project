@@ -7,7 +7,7 @@ import { hideUserWatchlist, renderUserWatchlist } from './userWatchlist.js';
 export const profileTemplate = (ctx, user, userReviews, isProfileGuest) => html`
 <div class="user-container">
     <div class="user-card">
-        <img class="profile-img" src="${user.profileImg}"
+        <img class="profile-img" src="${user.profile.profile_picture}"
             onerror="this.onerror=null;this.src='../../images/default-user.png';">
 
         <div class="info">
@@ -19,20 +19,22 @@ export const profileTemplate = (ctx, user, userReviews, isProfileGuest) => html`
   </span>
 ` : ''}
             <h4>User Reviews: <span><b>${userReviews.length}</b></span></h4>
-            <p>${user.description}</p>
+            
             <ul>
             ${user.profile.first_name || user.profile.last_name ?
                 html`<li><i class="fa-solid fa-user"></i> ${user.profile.first_name} ${user.profile.last_name}</li>` :
                     ''}
+            ${user.profile.gender == 'Male' || user.profile.gender == 'Female'
+                ?html`${user.profile.gender == 'Male' ?
+                html`<li><i class="fa-solid fa-mars-stroke"></i> ${user.profile.gender}</li>` :
+                html`<li><i class="fa-solid fa-venus"></i> ${user.profile.gender}</li>`
+                    }` : ''}
             ${user.profile.city || user.profile.country ?
                 html`<li><i class="fa-solid fa-location-dot"></i> ${user.profile.city} ${user.profile.country}</li>` :
                     ''}
-            ${user.profile.gender
-            ?html`${user.profile.gender == 'Male' ?
-            html`<li><i class="fa-solid fa-mars-stroke"></i> ${user.profile.gender}</li>` :
-            html`<li><i class="fa-solid fa-venus"></i> ${user.profile.gender}</li>`
-                }` : ''}
+            
             </ul>
+            <p margin-left:"10px">${user.profile.description}</p>
             <div class="links">
                 <a @click="${(e) => renderUserReviews(ctx, e, user, userReviews, isProfileGuest)}" href="${ctx.path}/reviews" id='show-reviews' class="button">Show Reviews</a>
                 <a @click="${hideUserReviews}" href="${ctx.path}" class="hidden button" id='hide-reviews'>Hide Reviews</a>
