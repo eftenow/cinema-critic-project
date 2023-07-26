@@ -64,7 +64,6 @@ export async function renderRegister(ctx) {
             const registerPage = registerTemplate(ctx, usernames, emails);
             ctx.render(registerPage);
         } catch (error) {
-
             console.error(error);
         }
     }

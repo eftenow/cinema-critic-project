@@ -55,10 +55,12 @@ export async function logoutUser() {
 export async function editUserInfo(userId, editedUserData) {
   try {
     await put(endpoints.edit(userId), editedUserData);
-    const userData = await getUser();
-    return userData;
+    return;
   } catch (error) {
     console.error('Error updating user data:', error);
+    console.log(error.status);
+    console.log(error.data);  // This should contain error messages
+    return error.data; // return server error details to the user
   }
 }
 

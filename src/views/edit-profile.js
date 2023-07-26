@@ -1,5 +1,6 @@
 import { html } from '../../node_modules/lit-html/lit-html.js';
 import { selectOption, showHideOptions } from '../../utils/dropdowns.js';
+import { raiseProfileEditErrors } from '../../utils/editProfileValidator.js';
 import { hideModal } from '../../utils/reviewOperations.js';
 import { editUserInfo, getUser, getUserId } from '../services/authServices.js';
 import { hideUserReviews, renderUserReviews } from './userReviews.js';
@@ -20,19 +21,23 @@ export const profileTemplate = (ctx, user) => html`
         <div class="input-group ">
             <div class="input-group">
                 <label for="username">Username:</label>
-                <input type="text" id="username" name="username" value="${user.username}">
+                <input class='edit-input' type="text" id="username" name="username" value="${user.username}">
+                <p class='incorrect-username-msg incorrect-edit'></p>
             </div>
             <div class="input-group">
                 <label for="fname">First name:</label>
-                <input type="text" id="fname" name="fname" value="${user.profile.first_name}">
+                <input class='edit-input' type="text" id="fname" name="fname" value="${user.profile.first_name}">
+                <p class='incorrect-fname-msg incorrect-edit'></p>
             </div>
             <div class="input-group">
                 <label for="lname">Last name:</label>
-                <input type="text" id="lname" name="lname" value="${user.profile.last_name}">
+                <input class='edit-input' type="text" id="lname" name="lname" value="${user.profile.last_name}">
+                <p class='incorrect-lname-msg incorrect-edit'></p>
             </div>
             <div class="input-group">
                 <label for="email">Email:</label>
-                <input type="email" id="email" name="email" value="${user.email}">
+                <input class='edit-input' type="email" id="email" name="email" value="${user.email}">
+                <p class='incorrect-email-msg incorrect-edit'></p>
             </div>
 
             <div class="select-menu specific-form-group">
@@ -53,17 +58,20 @@ export const profileTemplate = (ctx, user) => html`
 
             <div class="input-group">
                 <label for="country">Country: </label>
-                <input type="text" id="country" name="country" value="${user.profile.country}">
+                <input class='edit-input' type="text" id="country" name="country" value="${user.profile.country}">
+                <p class='incorrect-country-msg incorrect-edit'></p>
             </div>
 
             <div class="input-group">
                 <label for="city">City: </label>
-                <input type="text" id="city" name="city" value="${user.profile.city}">
+                <input class='edit-input' type="text" id="city" name="city" value="${user.profile.city}">
+                <p class='incorrect-city-msg incorrect-edit'></p>
             </div>
 
             <div class="input-group">
                 <label for="description">Description:</label>
-                <textarea id="description" name="description" rows="5">${user.profile.description}</textarea>
+                <textarea class='edit-input' id="description" name="description" rows="5">${user.profile.description}</textarea>
+                <p class='incorrect-description-msg incorrect-edit'></p>
             </div>
 
 
@@ -80,10 +88,13 @@ export const profileTemplate = (ctx, user) => html`
 
 export async function renderEdit(ctx) {
     const currentUser = await getUser();
-
-    const editProfile = profileTemplate(ctx, currentUser);
-
-    ctx.render(editProfile);
+    if (currentUser){
+        const editProfile = profileTemplate(ctx, currentUser);
+        ctx.render(editProfile);
+    } else{
+        ctx.redirect('/login');
+    }
+    
 }
 
 export async function saveChangesHandler(ev, ctx, redirectLocation, userId) {
@@ -110,14 +121,17 @@ export async function saveChangesHandler(ev, ctx, redirectLocation, userId) {
         gender,
         profile_picture
     }
-    
-    
-    const editedUserData = { username, email, profile};
-    console.log(editedUserData);
-    await editUserInfo(userId, editedUserData);
 
-    ctx.redirect(redirectLocation);
-    hideModal();
+    const editedUserData = { username, email, profile };
+
+    const errorDetails = await editUserInfo(userId, editedUserData);
+
+    if (errorDetails) {
+        raiseProfileEditErrors(errorDetails)
+    } else {
+        ctx.redirect(redirectLocation);
+        hideModal();
+    }
 }
 
 
