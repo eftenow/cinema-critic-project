@@ -35,15 +35,11 @@ export async function registerUser(username, email, password, repeat_password) {
   };
 
   try {
-      console.log(user);
       await post(endpoints.register, user);
       const userData = await getUser();
       return userData;
   } catch (error) {
-      console.error(error);
-      console.log(error.status);
-      console.log(error.data);  // This should contain the password error messages
-      return error.data; // return server error details to the user
+      return error.data; 
   }
 }
 
@@ -57,10 +53,7 @@ export async function editUserInfo(userId, editedUserData) {
     await put(endpoints.edit(userId), editedUserData);
     return;
   } catch (error) {
-    console.error('Error updating user data:', error);
-    console.log(error.status);
-    console.log(error.data);  // This should contain error messages
-    return error.data; // return server error details to the user
+    return error.data;
   }
 }
 
@@ -96,7 +89,6 @@ export async function getUser(id = null) {
     } else {
       response = await get(endpoints.myProfile)
     }
-    console.log(response.data);
     return response.data;
   } catch (error) {
     return null;
@@ -151,7 +143,6 @@ export async function getUserByUsername(username) {
     const user = response.data.find(user => user.username === username);
     return user || null;
   } catch (error) {
-    console.error(error);
     return null;
   }
 }

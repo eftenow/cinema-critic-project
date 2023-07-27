@@ -107,3 +107,99 @@
 .sub-menu-link:hover p {
     font-weight: 600;
 }
+
+.container-genre-select{
+    position: relative;
+    max-width: 320px;
+    width: 100%;
+}
+.select-btn-genre{
+    display: flex;
+    height: 44px;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 12px;
+    border-radius: 2px;
+    cursor: pointer;
+    background-color: #fff;
+    border: #ccc 2px solid;
+}
+
+.select-btn-genre:hover{
+    border: #8e47f8 2px solid;
+    outline: none;
+}
+.select-btn-genre .btn-text-genre{
+    font-size: 14px;
+    font-weight: 400;
+    color: rgb(162, 161, 161);
+}
+.select-btn-genre .arrow-dwn-genre{
+    display: flex;
+    height: 21px;
+    width: 21px;
+    color: #fff;
+    font-size: 14px;
+    border-radius: 50%;
+    background: #8e47f8;
+    align-items: center;
+    justify-content: center;
+    transition: 0.3s;
+}
+.select-btn-genre.open-genre .arrow-dwn-genre{
+    transform: rotate(-180deg);
+}
+.list-items-genre{
+    position: relative;
+    margin-top: 15px;
+    border-radius: 8px;
+    padding: 16px;
+    background-color: #fff;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+    display: none;
+}
+.select-btn-genre.open-genre ~ .list-items-genre{
+    display: block;
+}
+.list-items-genre .item-genre{
+    display: flex;
+    align-items: center;
+    list-style: none;
+    height: 50px;
+    cursor: pointer;
+    transition: 0.3s;
+    padding: 0 15px;
+    border-radius: 8px;
+}
+.list-items-genre .item-genre:hover{
+    background-color: #e7edfe;
+}
+.item-genre .item-text-genre{
+    font-size: 16px;
+    font-weight: 400;
+    color: #333;
+}
+.item-genre .checkbox-genre{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 16px;
+    width: 16px;
+    border-radius: 4px;
+    margin-right: 12px;
+    border: 1.5px solid #c0c0c0;
+    transition: all 0.3s ease-in-out;
+}
+.item-genre.checked-genre .checkbox-genre{
+    background-color: #4070f4;
+    border-color: #4070f4;
+}
+.checkbox-genre .check-icon-genre{
+    color: #fff;
+    font-size: 11px;
+    transform: scale(0);
+    transition: all 0.2s ease-in-out;
+}
+.item-genre.checked-genre .check-icon-genre{
+    transform: scale(1);
+}

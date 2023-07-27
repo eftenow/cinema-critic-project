@@ -1,5 +1,6 @@
 import { html } from '../../node_modules/lit-html/lit-html.js';
 import { getUser, getUserByUsername } from '../services/authServices.js';
+import { getAllGenres } from '../services/itemServices.js';
 import { getUserReviews } from '../services/reviewServices.js';
 import { hideUserReviews, renderUserReviews } from './userReviews.js';
 import { hideUserWatchlist, renderUserWatchlist } from './userWatchlist.js';
@@ -58,6 +59,8 @@ export const profileTemplate = (ctx, user, userReviews, isProfileGuest) => html`
 
 export async function renderProfile(ctx) {
     const user = await getUser();
+    const genres = await getAllGenres();
+    console.log(genres);
 
     if (user){
         await displayUserProfile(ctx, user);

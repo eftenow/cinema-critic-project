@@ -13,6 +13,7 @@ const endpoints = {
     createSerie: '/content/series/',
     detailsMovie: (id) => `/movies/${id}`,
     detailsSeries: (id) => `/series/${id}`,
+    genres: '/genres/'
 };
 
 
@@ -40,7 +41,12 @@ export async function getMoviesCount() {
 };
 
 export async function createNewMovie(newMovie) {
-    return post(endpoints.createMovie, newMovie);
+    try {
+        await post(endpoints.createMovie, newMovie);
+        return;
+    } catch (error) {
+        return error.data;
+    }
 };
 
 
@@ -140,6 +146,11 @@ export async function getSearchedMovies(searchMovie) {
 };
 
 // additional
+
+export async function getAllGenres() {
+    const genres = await get(endpoints.genres)
+    return genres.data.map(item => item.name);
+}
 
 export async function getSearchMatches(searchText) {
     const Movie = Parse.Object.extend("Movie");

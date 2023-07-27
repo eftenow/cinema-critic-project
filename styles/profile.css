@@ -310,13 +310,14 @@
   margin: 2% auto !important;
 }
 
-.incorrect-edit {
+.incorrect-edit, .incorrect-create{
   color: #fc2b2bcf !important;
   font-size: 13px;
   font-weight: bold;
   margin: 3px 0 3px 1px;
   padding-left: 2px;
 }
+
 .edit-input.invalid{
   border-top: none !important;
   border-left: none !important;

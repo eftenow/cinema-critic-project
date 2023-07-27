@@ -1,3 +1,5 @@
+import { handleValidationError, handleValidationSuccess } from "./handleValidationOutcome.js";
+
 export function raiseProfileEditErrors(errorDetails) {
     validateUsername(errorDetails.username);
     validateEmail(errorDetails.email);
@@ -86,21 +88,4 @@ function validateDescription(descriptionErrors) {
 }
 
 
-///////////////////////////
 
-function handleValidationError(errorDetails, errorField, inputField, errorMsgPrefix) {
-    let errors = [];
-    console.log(errorDetails);
-    errorDetails.forEach(errorMsg => {
-        console.error(`${errorMsgPrefix} ${errorMsg}`);
-        errors.push(errorMsg)
-    });
-
-    inputField.classList.add('invalid');
-    errorField.innerHTML = errors.join('<br>');
-}
-
-function handleValidationSuccess(errorField, inputField) {
-    inputField.classList.remove('invalid');
-    errorField.innerHTML = '';
-}

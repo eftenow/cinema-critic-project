@@ -1,8 +1,8 @@
 import { html } from '../../node_modules/lit-html/lit-html.js';
 import { selectOption, showHideOptions } from '../../utils/dropdowns.js';
-import { raiseProfileEditErrors } from '../../utils/editProfileValidator.js';
 import { hideModal } from '../../utils/reviewOperations.js';
 import { editUserInfo, getUser, getUserId } from '../services/authServices.js';
+import { raiseProfileEditErrors } from '../validators/editProfileValidator.js';
 import { hideUserReviews, renderUserReviews } from './userReviews.js';
 
 export const profileTemplate = (ctx, user) => html`
@@ -88,13 +88,10 @@ export const profileTemplate = (ctx, user) => html`
 
 export async function renderEdit(ctx) {
     const currentUser = await getUser();
-    if (currentUser){
-        const editProfile = profileTemplate(ctx, currentUser);
-        ctx.render(editProfile);
-    } else{
-        ctx.redirect('/login');
-    }
-    
+
+    const editProfile = profileTemplate(ctx, currentUser);
+    ctx.render(editProfile);
+
 }
 
 export async function saveChangesHandler(ev, ctx, redirectLocation, userId) {

@@ -1,8 +1,8 @@
 import { getUser } from "../services/authServices.js";
 import { showNotification } from "../services/reviewServices.js";
 
-export function requireAuth(ctx, next) {
-    const currentUser = getUser();
+export async function requireAuth(ctx, next) {
+    const currentUser = await getUser();
 
     if (!currentUser) {
       ctx.redirect('/login');

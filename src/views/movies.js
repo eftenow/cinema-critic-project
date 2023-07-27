@@ -117,7 +117,6 @@ export const moviesTemplate = (movies, ctx, currentPage = 1, pagesCount, pagesNe
             </div>
         </section>
             <div class="movies-list">
-            ${console.log(movies.results)}
             ${movies.length == 0
     ? html`<div class="movies-list">
               <h2 id='no-movies-msg'>No matches found.</h2>
