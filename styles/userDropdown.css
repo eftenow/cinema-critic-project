@@ -110,16 +110,16 @@
 
 .container-genre-select{
     position: relative;
-    max-width: 320px;
+    max-width: 305px;
     width: 100%;
 }
 .select-btn-genre{
     display: flex;
-    height: 44px;
+    height: 43px;
     align-items: center;
     justify-content: space-between;
-    padding: 0 12px;
-    border-radius: 2px;
+    padding: 0 10px;
+    border-radius: 4px;
     cursor: pointer;
     background-color: #fff;
     border: #ccc 2px solid;
@@ -130,49 +130,58 @@
     outline: none;
 }
 .select-btn-genre .btn-text-genre{
-    font-size: 14px;
+    font-size: 13px;
     font-weight: 400;
     color: rgb(162, 161, 161);
 }
 .select-btn-genre .arrow-dwn-genre{
     display: flex;
-    height: 21px;
-    width: 21px;
+    height: 19px;
+    width: 19px;
     color: #fff;
-    font-size: 14px;
+    font-size: 13px;
     border-radius: 50%;
     background: #8e47f8;
     align-items: center;
     justify-content: center;
-    transition: 0.3s;
+    transition: 0.4s;
 }
-.select-btn-genre.open-genre .arrow-dwn-genre{
+.select-btn-genre.open .arrow-dwn-genre{
     transform: rotate(-180deg);
 }
 .list-items-genre{
     position: relative;
-    margin-top: 15px;
     border-radius: 8px;
-    padding: 16px;
     background-color: #fff;
     box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
-    display: none;
-}
-.select-btn-genre.open-genre ~ .list-items-genre{
     display: block;
+    max-height: 0;
+    overflow: auto;
+    transition: max-height 0.3s ease-in-out; /* Add this line */
+}
+
+.select-btn-genre.open ~ .list-items-genre{
+    max-height: 262px; /* Add this line */
+    margin-top: 4px;
+    padding: 4px 12px;
 }
 .list-items-genre .item-genre{
     display: flex;
     align-items: center;
     list-style: none;
-    height: 50px;
+    height: 40px;
     cursor: pointer;
     transition: 0.3s;
-    padding: 0 15px;
+    padding: 0 12px;
+    margin: 2px 0;
     border-radius: 8px;
+    font-size: 14px;
+    color: #959595;
 }
 .list-items-genre .item-genre:hover{
-    background-color: #e7edfe;
+    background-color: #e6dff3ea;
+    color: #616161;
+    font-weight: bolder;
 }
 .item-genre .item-text-genre{
     font-size: 16px;
@@ -190,7 +199,7 @@
     border: 1.5px solid #c0c0c0;
     transition: all 0.3s ease-in-out;
 }
-.item-genre.checked-genre .checkbox-genre{
+.item-genre.checked .checkbox-genre{
     background-color: #4070f4;
     border-color: #4070f4;
 }
@@ -200,6 +209,13 @@
     transform: scale(0);
     transition: all 0.2s ease-in-out;
 }
-.item-genre.checked-genre .check-icon-genre{
+.item-genre.checked .check-icon-genre{
     transform: scale(1);
+}
+
+.item-genre.checked-genre {
+    /* Add your styles for selected genres here. For example: */
+    background: #8e47f8 !important;
+    color: #eaeaea !important;
+    font-weight: bolder;
 }

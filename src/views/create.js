@@ -1,7 +1,7 @@
 import { html } from '../../node_modules/lit-html/lit-html.js';
+import { handleGenreSelection, removeGenreSelectionHandlers } from '../../utils/dropdowns.js';
 import { createNewMovie, createNewSeire, getAllGenres } from '../services/itemServices.js';
 import { raiseCreateErrors } from '../validators/createMovieSeriesValidator.js';
-
 
 
 const createTemplate = (ctx, type, genres) => html`
@@ -16,23 +16,20 @@ const createTemplate = (ctx, type, genres) => html`
   </div>
 
   <div class="create-form-group">
+  <label for="create-genres-field">Genres (up to 4):</label>
   <div class="container-genre-select">
   <div class="select-btn-genre">
-    <span class="btn-text-genre">Select Genre</span>
-    <span class="arrow-dwn-genre">
-      <i class="fa-solid fa-chevron-down"></i>
-    </span>
-  </div>
-  <ul class="list-items-genre">
-    ${genres.map(genre => html`
-      <li class="item-genre">
-        <span class="checkbox-genre">
-          <i class="fa-solid fa-check check-icon-genre"></i>
-        </span>
-        <span class="item-text-genre">${genre}</span>
-      </li>
-    `)}
-  </ul>
+  <span id='genres-selected' class="btn-text-genre" >Select Genre</span>
+  <span class="arrow-dwn-genre">
+    <i class="fa-solid fa-chevron-down"></i>
+  </span>
+</div>
+<ul class="list-items-genre">
+${genres.map(genre => html`
+  <li class="item-genre">${genre}</li>
+`)}
+</ul>
+</div>
 </div>
     <p class='incorrect-genre-msg incorrect-create'></p>
   </div>
@@ -95,6 +92,7 @@ export async function renderCreateMovie(ctx) {
   const type = 'movie';
   const create = createTemplate(ctx, type, genres);
   ctx.render(create);
+  handleGenreSelection()
 };
 
 export async function renderCreateSeries(ctx) {
@@ -114,12 +112,12 @@ async function createHandler(ev, ctx, type) {
   let image = form.get('create-imageUrl');
   let description = form.get('create-description');
   let director = form.get('create-director');
-  let genres = form.get('create-genre').split(', ');
+  let genres = document.getElementById('genres-selected').textContent;
   let stars = form.get('create-stars');
   let trailer = form.get('create-trailer');
   let length =  form.get('create-length');
 
-
+  genres = genres.split(', ');
   let newItem = { name,  year, director, stars, genres, trailer, image, length, description }
   console.log(newItem);
 
@@ -133,14 +131,10 @@ async function createHandler(ev, ctx, type) {
     } else{
         createdItem = await createNewMovie(newItem);
     };
-
     const hasErrors = raiseCreateErrors(createdItem);
-    console.log(hasErrors);
-
+    
     if (!hasErrors) {
         ctx.redirect('/dashboard');
     }
-
+    removeGenreSelectionHandlers()
 };
-
-
