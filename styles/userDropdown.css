@@ -132,7 +132,7 @@
 .select-btn-genre .btn-text-genre{
     font-size: 13px;
     font-weight: 400;
-    color: rgb(162, 161, 161);
+    color: rgb(88 83 83);
 }
 .select-btn-genre .arrow-dwn-genre{
     display: flex;
@@ -141,7 +141,7 @@
     color: #fff;
     font-size: 13px;
     border-radius: 50%;
-    background: #8e47f8;
+    background: #8e47f8bd;
     align-items: center;
     justify-content: center;
     transition: 0.4s;

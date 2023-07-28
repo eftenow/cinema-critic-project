@@ -10,7 +10,7 @@ const endpoints = {
     allMovies: '/content/movies/',
     allSeries: '/content/series/',
     createMovie: '/content/movies/',
-    createSerie: '/content/series/',
+    createSeries: '/content/series/',
     detailsMovie: (id) => `/movies/${id}`,
     detailsSeries: (id) => `/series/${id}`,
     genres: '/genres/'
@@ -43,7 +43,7 @@ export async function getMoviesCount() {
 export async function createNewMovie(newMovie) {
     try {
         await post(endpoints.createMovie, newMovie);
-        return;
+        return { status: "success", message: "Movie created successfully." };
     } catch (error) {
         return error.data;
     }
@@ -85,7 +85,12 @@ export async function getSeriesCount() {
 }
 
 export async function createNewSeire(newSeries) {
-    return post(endpoints.createSerie, newSeries);
+    try {
+        await post(endpoints.createSeries, newSeries);
+        return { status: "success", message: "New series created successfully." };
+    } catch (error) {
+        return error.data;
+    }
 };
 
 export async function updateSeries(id, updatedSeriesData) {

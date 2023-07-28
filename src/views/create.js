@@ -19,7 +19,7 @@ const createTemplate = (ctx, type, genres) => html`
   <label for="create-genres-field">Genres (up to 4):</label>
   <div class="container-genre-select">
   <div class="select-btn-genre">
-  <span id='genres-selected' class="btn-text-genre" >Select Genre</span>
+  <span  id='genres-selected' class="btn-text-genre" >Select Genre</span>
   <span class="arrow-dwn-genre">
     <i class="fa-solid fa-chevron-down"></i>
   </span>
@@ -30,10 +30,9 @@ ${genres.map(genre => html`
 `)}
 </ul>
 </div>
+<p class='incorrect-genre-msg incorrect-create'></p>
 </div>
-    <p class='incorrect-genre-msg incorrect-create'></p>
-  </div>
-
+   
   <div class="create-form-group">
     <label for="create-imageUrl">Image url:</label>
     <input type="text" id="create-imageUrl" name="create-imageUrl" class="create-form-control create-imageUrl">
@@ -63,7 +62,7 @@ ${genres.map(genre => html`
    : ''}
 
   <div class="create-form-group">
-    <label for="create-length">Length:</label>
+    <label for="create-length">${type=='series' ? 'Episode length:' : 'Movie length:'}</label>
     <input type="text" id="create-length" name="create-length" class="create-form-control create-length">
     <p class='incorrect-length-msg incorrect-create'></p>
   </div>
@@ -100,6 +99,7 @@ export async function renderCreateSeries(ctx) {
   const type = 'series';
   const create = createTemplate(ctx, type, genres);
   ctx.render(create);
+  handleGenreSelection()
 };
 
 async function createHandler(ev, ctx, type) {
@@ -108,8 +108,8 @@ async function createHandler(ev, ctx, type) {
   let form = new FormData(ev.target);
   let name = form.get('create-title-field');
   let year = Number(form.get('create-year'));
-  let rating;
   let image = form.get('create-imageUrl');
+  console.log(image);
   let description = form.get('create-description');
   let director = form.get('create-director');
   let genres = document.getElementById('genres-selected').textContent;
@@ -123,18 +123,22 @@ async function createHandler(ev, ctx, type) {
 
 
   let createdItem;
+  let isSeries = false
 
     if(type == 'series'){
         newItem['episodes'] = Number(form.get('create-episodes'));
         newItem['seasons'] = Number(form.get('create-seasons'));
+        isSeries = true
         createdItem = await createNewSeire(newItem);
     } else{
         createdItem = await createNewMovie(newItem);
     };
-    const hasErrors = raiseCreateErrors(createdItem);
-    
+
+    const hasErrors = raiseCreateErrors(createdItem, isSeries);
+    console.log(createdItem);
+
     if (!hasErrors) {
         ctx.redirect('/dashboard');
     }
-    removeGenreSelectionHandlers()
+    
 };

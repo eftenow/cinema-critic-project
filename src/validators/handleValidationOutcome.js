@@ -2,7 +2,6 @@ export function handleValidationError(errorDetails, errorField, inputField, erro
     let errors = [];
     console.log(errorDetails);
     errorDetails.forEach(errorMsg => {
-        console.error(`${errorMsgPrefix} ${errorMsg}`);
         errors.push(errorMsg)
     });
 

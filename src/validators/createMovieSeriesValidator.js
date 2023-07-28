@@ -1,19 +1,19 @@
 import { handleValidationError, handleValidationSuccess } from "./handleValidationOutcome.js";
 
-export function raiseCreateErrors(errorDetails) {
+export function raiseCreateErrors(errorDetails, isSeries) {
     let hasErrors = false;
     
     hasErrors = validateTitle(errorDetails.name) || hasErrors;
     hasErrors = validateGenre(errorDetails.genre) || hasErrors;
-    hasErrors = validateImageUrl(errorDetails.imageUrl) || hasErrors;
+    hasErrors = validateImageUrl(errorDetails.image) || hasErrors;
     hasErrors = validateDirector(errorDetails.director) || hasErrors;
     hasErrors = validateStars(errorDetails.stars) || hasErrors;
     hasErrors = validateLength(errorDetails.length) || hasErrors;
     hasErrors = validateYear(errorDetails.year) || hasErrors;
     hasErrors = validateTrailer(errorDetails.trailer) || hasErrors;
     hasErrors = validateDescription(errorDetails.description) || hasErrors;
-    
-    if (errorDetails.type === 'series') {
+
+    if (isSeries) {
         hasErrors = validateSeasons(errorDetails.seasons) || hasErrors;
         hasErrors = validateEpisodes(errorDetails.episodes) || hasErrors;
     }
@@ -37,7 +37,12 @@ function validateTitle(titleErrors) {
 
 function validateGenre(genreErrors) {
     const errorField = document.querySelector('.incorrect-genre-msg');
-    const genreField = document.querySelector('#create-genre');
+    const selectedGenres = document.querySelector('#genres-selected');
+    const genreField = document.querySelector('.select-btn-genre');
+
+    if (selectedGenres.textContent == 'Select Genre'){
+        genreErrors = ['You must select atleast 1 genre.']
+    }
 
     if (genreErrors) {
         handleValidationError(genreErrors, errorField, genreField, 'Genre Error:');
