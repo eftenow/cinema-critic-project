@@ -1,4 +1,4 @@
-import { getSearchMatches, getSearchedMovies} from '../src/services/itemServices.js';
+import { getSearchMatches} from '../src/services/itemServices.js';
 import { moviesTemplate } from '../src/views/movies.js';
 import { truncateTextByChars, truncateTextByWords } from './stringModifiers.js';
 
@@ -16,10 +16,10 @@ export async function searchedMoviesPage(ctx) {
     const searchParams = new URLSearchParams(ctx.querystring);
     const searchText = searchParams.get('match');
     console.log(searchText);
-    const result = await getSearchedMovies(searchText);
-
-    const moviesFound = moviesTemplate(result);
-
+    const result = await getSearchMatches(searchText);
+    console.log(result);
+    const moviesFound = moviesTemplate(result, ctx);
+    
     ctx.render(moviesFound);
 };
 

@@ -6,7 +6,6 @@ import { scrollToTop } from '../../utils/backToTopBtn.js';
 import { updateRating } from '../services/reviewServices.js';
 
 const movieTemplate = (movie) => html`
-${console.log(movie)}
 <div class="movie-card" data-category="${movie.genres.join(', ')}" id="${movie.objectId}" data-type="${movie.type}">
                     <div class="movie-image">
                         <img src="${movie.image}" alt="Movie Poster">
@@ -126,12 +125,12 @@ export const moviesTemplate = (movies, ctx, currentPage = 1, pagesCount, pagesNe
 
             </div>
             <ul class="pagination">
-    ${currentPage > 1
+    ${pagesPrevious
     ? html`<li class="page-item action"><a @click='${scrollToTop}' href="/dashboard?page=${currentPage - 1}" class="page-link"><i id = 'prev-page' class="fa-solid fa-caret-left"></i></a></li>`
     : ''}
     ${displayPages(currentPage, pagesCount).map(pageNumber => html`
     <li class="page-item action ${pageNumber === currentPage ? 'active' : ''}"><a @click='${scrollToTop}' href="/dashboard?page=${pageNumber}" class="page-link">${pageNumber}</a></li>`)}
-    ${currentPage < pagesCount
+    ${pagesNext
     ? html`<li class="page-item action"><a @click='${scrollToTop}' href="/dashboard?page=${currentPage + 1}" class="page-link"><i id='next-page' class="fa-solid fa-caret-right"></i></a></li>`
     : ''}
 </ul>
@@ -146,11 +145,10 @@ export async function renderAllContent(ctx) {
 
   const response = await getMoviesAndSeries(currentPage);
   const seriensAndMovies = response.data.results;
-  const responseData = response
-  const pagesCount = response.count
-  const pagesNext = response.next
-  const pagesPrevious = response.previous
-
+  const pagesCount = Math.ceil(response.data.count / 12);
+  const pagesNext = response.data.next;
+  const pagesPrevious = response.data.previous;
+  console.log(pagesCount);
   const movies = moviesTemplate(seriensAndMovies, ctx, currentPage, pagesCount, pagesNext, pagesPrevious);
 
   ctx.render(movies);

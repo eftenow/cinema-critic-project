@@ -13,7 +13,8 @@ const endpoints = {
     createSeries: '/content/series/',
     detailsMovie: (id) => `/movies/${id}`,
     detailsSeries: (id) => `/series/${id}`,
-    genres: '/genres/'
+    genres: '/genres/',
+    search: (searchText) => `/content/search/?q=${searchText}`
 };
 
 
@@ -39,7 +40,6 @@ export async function getMoviesCount() {
     const response = await get(endpoints.allMovies, { count: 1 });
     return response.count;
 };
-
 export async function createNewMovie(newMovie) {
     try {
         await post(endpoints.createMovie, newMovie);
@@ -118,6 +118,7 @@ export async function getAllContentData() {
         get(`${endpoints.allSeries}?keys=genres,objectId,type,image,rating,name`)
     ]);
     const [movies, series] = await promises;
+ 
     const sortedMovies = movies.results;
     const sortedSeries = series.results;
     const results = sortedMovies.concat(sortedSeries);
@@ -131,63 +132,27 @@ export async function getMoviesAndSeriesCount() {
 
 
 ////SEARCH
-
-export async function getSearchedMovies(searchMovie) {
-    let queryStr = `?where={"name":{"$regex":"${searchMovie}", "$options":"i"}}`;
-
-    const movieMatches = endpoints.allMovies + queryStr;
-    const seriesMatches = endpoints.allSeries + queryStr;
-
-    const promises = Promise.all([
-        get(movieMatches),
-        get(seriesMatches)
-    ]);
-
-    const [moviesFound, seriesFound] = await promises;
-
-    let allMatches = [...moviesFound.results, ...seriesFound.results].sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
-
-    return allMatches
-};
-
-// additional
-
-export async function getAllGenres() {
-    const genres = await get(endpoints.genres)
-    return genres.data.map(item => item.name);
-}
-
 export async function getSearchMatches(searchText) {
-    const Movie = Parse.Object.extend("Movie");
-    const movieQuery = new Parse.Query(Movie);
-    movieQuery.select("name", "objectId", "image", "type");
-    movieQuery.matches("name", searchText, 'i');
-    movieQuery.limit(6);
+    try {
+        const response = await get(endpoints.search(searchText));
 
-    const Series = Parse.Object.extend("Show");
-    const seriesQuery = new Parse.Query(Series);
-    seriesQuery.select("name", "objectId", "image", "type");
-    seriesQuery.matches("name", searchText, 'i');
-    seriesQuery.limit(6);
-
-    const [movieData, seriesData] = await Promise.all([
-        movieQuery.find(),
-        seriesQuery.find(),
-    ]);
-
-    const data = [...movieData, ...seriesData];
-    const results = data
-        .slice(0, 6)
-        .map((item) => {
+        console.log(response);
+        const results = response.data.map((item) => {
             return {
-                name: item.get("name"),
+                name: item.name,
                 objectId: item.id,
-                image: item.get("image"),
-                type: item.get("type")
+                image: item.image,
+                type: item.type,
+                genres: item.genres,
+                rating: item.rating
             };
         });
 
-    return results;
+        return results;
+    } catch (error) {
+        console.error('Error:', error);
+        return [];
+    }
 };
 
 
@@ -224,3 +189,9 @@ export const getUserWatchlist = async (userId) => {
   
     return [...movies, ...shows];
   };
+
+
+  export async function getAllGenres() {
+    const genres = await get(endpoints.genres)
+    return genres.data.map(item => item.name);
+}

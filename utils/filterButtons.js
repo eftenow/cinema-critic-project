@@ -1,6 +1,6 @@
 import { BASE_URL } from "../src/services/api.js";
-import { PAGE_SIZE, getAllContentData, getAllMovies, getAllSeries, getMovieDetails, getMoviesAndSeries, getMoviesCount, getSeriesCount, getSeriesDetails } from "../src/services/itemServices.js";
-import { moviesTemplate, renderAllContent } from "../src/views/movies.js";
+import { PAGE_SIZE, getAllMovies, getAllSeries, getMoviesCount, getSeriesCount } from "../src/services/itemServices.js";
+import { moviesTemplate } from "../src/views/movies.js";
 
 export async function sortHandler(ctx, movies, e) {
   const searchParams = new URLSearchParams(ctx.querystring);
@@ -30,58 +30,67 @@ export async function filterHandler(ev, ctx) {
   ev.preventDefault();
   const target = ev.target;
   let validFilter = false, totalItems;
-  
+  let selectedType;
 
   if (target.tagName.toLowerCase() === 'label' || target.tagName.toLowerCase() === 'input') {
     const genreCheckbox = target.tagName.toLowerCase() === 'input' ? target : target.previousElementSibling;
     genreCheckbox.checked = !genreCheckbox.checked;
     target.closest('.genre-item').classList.toggle('selected-genre');
     validFilter = true;
+    
   } else {
     const categoryItems = document.querySelectorAll('.menu-item-type');
     categoryItems.forEach(item => item.classList.remove('selected-type'));
     ev.target.classList.add('selected-type');
-    const type = ev.target.getAttribute('data-type');
+    selectedType = ev.target.getAttribute('data-type') || 'all';
     const searchParams = new URLSearchParams(window.location.search);
-    searchParams.set('type', type);
+    searchParams.set('type', selectedType);
     window.history.replaceState({}, '', `${window.location.pathname}?${searchParams}`);
     validFilter = true;
   }
 
-  const type = document.querySelector('.selected-type').getAttribute('data-type');
+  if (!selectedType) {
+    selectedType = 'all';
+  }
+
   const selectedGenres = getSelectedGenres();
   const sortOption = getSortOption();  
 
   if (validFilter) {
     const searchParams = new URLSearchParams(ctx.querystring);
-    const currentPage = Number(searchParams.get('page') || 1);
+    const currentPage = 1;
 
     // URL now includes genres and sort
-    const url = `${BASE_URL}/content/${type}/?genres=${selectedGenres.join(',')}&sort=${sortOption}`;
+    const url = `${BASE_URL}/content/${selectedType}/?genres=${selectedGenres.join(',')}&sort=${sortOption}`;
 
     const response = await fetch(url);
-    const data = await response.json();
-    console.log(data);
-    const filteredItems = data.results || data;
-    const totalItems = data.count;
+    const dataMatches = await response.json();
+    console.log(dataMatches);
+    const filteredItems = dataMatches.results || dataMatches;
+    totalItems = dataMatches.count;
 
     const pagesCount = Math.ceil(totalItems / PAGE_SIZE);
-    const matches = moviesTemplate(filteredItems, ctx, currentPage, pagesCount);
+    const pagesNext = dataMatches.next;
+    const pagesPrevious = dataMatches.previous;
+    console.log(`aaa`, pagesCount, pagesNext, pagesPrevious);
+    console.log(url);
+    const matches = moviesTemplate(filteredItems, ctx, currentPage, pagesCount, pagesNext, pagesPrevious);
     ctx.render(matches);
 
     const noMatchesEl = document.querySelector('.no-matches-found');
 
-
+    searchParams.set('page', currentPage);
     searchParams.set('genre', selectedGenres.join(','));
-    searchParams.set('type', type);
+    searchParams.set('type', selectedType);
     searchParams.set('sort', sortOption);
     window.history.replaceState({}, '', `${window.location.pathname}?${searchParams}`);
 
-    // After successful filter operation, set the selected genre(s) and type
+    
     setCategorySelected(selectedGenres.join(','));
-    setTypeSelected(type);
+    setTypeSelected(selectedType);
   }
 }
+
 
 
 export function setCategorySelected(category) {
