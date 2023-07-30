@@ -5,7 +5,7 @@ import { getMovieDetails, getSeriesDetails, editExistingMovie, updateSeries } fr
 const editMovieTemplate = (movie, ctx) => html`
 <section class='create-section admin-edit-movie'>
     ${movie.type == 'series' ? html`<h2 class='create-title'>Edit Serie</h2>` : html`<h2 class='create-title'>Edit Movie</h2>`}
-<form data-type="${movie.type}" id='${movie.objectId}' class='create-form' @submit="${(e) => editHandler(e, ctx)}">
+<form data-type="${movie.type}" id='${movie.id}' class='create-form' @submit="${(e) => editHandler(e, ctx)}">
 
 <div class="create-form-group">
     <label for="create-title-field">Title:</label>

@@ -34,7 +34,7 @@ export async function searchSuggestionsHandler(e) {
       const suggestionsHTML = results
         .map(
           (item) => `
-        <a href="/${item.type}/${item.objectId}" class="suggestion">
+        <a href="/${item.type}/${item.id}" class="suggestion">
           <div id="s-image"><img src="${item.image}" alt="${item.name}" /></div>
           <span id="s-name">${truncateTextByChars(item.name, 24)}</span>
         </a>`

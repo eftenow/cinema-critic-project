@@ -97,7 +97,7 @@ const navTemplate = (isAuthorized, user, ctx) => html`
                     <p>Logout</p>
                     <span>></span>
                 </a>
-                ${user.objectId == adminId ? html`
+                ${user.id == adminId ? html`
                 <a href="/admin" class=sub-menu-link @click="${toggleMenu}">
                 <i class="fa-solid fa-wrench"></i>
                     <p>Admin Panel</p>

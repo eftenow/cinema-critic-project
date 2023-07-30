@@ -80,7 +80,7 @@ export async function renderUserProfile(ctx) {
 
 
 async function displayUserProfile(ctx, user, isProfileGuest) {
-    const userReviews = await getUserReviews(user.objectId);
+    const userReviews = await getUserReviews(user.id);
     userReviews.forEach((rev) => {
         rev.username = user.username,
             rev.profileImg = user.profileImg

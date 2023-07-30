@@ -4,8 +4,8 @@ import { addUserBookmark, removeUserBookmark } from '../../utils/bookmarkBtns.js
 import { selectOption, showHideOptions } from '../../utils/dropdowns.js';
 import { editReviewHandler, deleteReviewHandler } from '../../utils/reviewOperations.js';
 
-import { getUser, getUserBookmarks } from '../services/authServices.js';
-import { getMovieDetails, getSeriesDetails } from '../services/itemServices.js';
+import { getUser } from '../services/authServices.js';
+import { getMovieDetails, getSeriesDetails, getUserBookmarks } from '../services/itemServices.js';
 import { addNewReview, getReviewsForMovie, userAlreadyReviewed } from '../services/reviewServices.js';
 
 export const reviewTemplate = (ctx, review, currentUser, isProfileGuest) => html`
@@ -41,13 +41,13 @@ const detailsTemplate = (movie, ctx, type, currentUser, userBookmarks, reviews, 
     ? html`
             <div class="movie-watchlist">
               <button class="add-to-watchlist-details">
-                ${userBookmarks && userBookmarks.includes(movie.objectId) ? html`
-                <span id='to-add' class="fa-stack fa-2x" @click=${() => removeUserBookmark(ctx, movie.objectId, `/${movie.type}/${movie.objectId}`)}>
+                ${userBookmarks && userBookmarks.includes(movie.id) ? html`
+                <span id='to-add' class="fa-stack fa-2x" @click=${() => removeUserBookmark(ctx, movie.id, movie.type, `/${movie.type}/${movie.id}`)}>
                     <i id="details-bookmark-checked" class="fa-solid fa-bookmark fa-stack-2x"></i>
                     <i id='check' class="fa-solid fa-check fa-stack-1x"></i>
                   </span>
                 ` : html`
-                <span id='to-remove' class="fa-stack fa-2x" @click=${() => addUserBookmark(ctx, movie.objectId, `/${movie.type}/${movie.objectId}`)}>
+                <span id='to-remove' class="fa-stack fa-2x" @click=${() => addUserBookmark(ctx, movie.id, movie.type, `/${movie.type}/${movie.id}`)}>
                     <i id="details-bookmark-unchecked" class="fa-solid fa-bookmark fa-stack-2x"></i>
                     <i id="plus" class="fa-solid fa-plus fa-stack-1x"></i>
                   </span>
@@ -60,7 +60,7 @@ const detailsTemplate = (movie, ctx, type, currentUser, userBookmarks, reviews, 
   <div class="specific-movie-info">
     <h2 class="specific-movie-title details-movie-specifics">${movie.name}</h2>
     <p class="specific-movie-genre"><span class="details-movie-specifics">Rating: </span>${movie.rating} <i id ="star" class="fa-solid fa-star"></i></p>
-    <p class="specific-movie-genre"><span class="details-movie-specifics">Genre: </span>${movie.genres}</p>
+    <p class="specific-movie-genre"><span class="details-movie-specifics">Genre: </span>${movie.genres.join(', ')}</p>
     <p class="specific-movie-cast"> <span class="details-movie-specifics">Director: </span>${movie.director}</p>
     <p class="specific-movie-cast"> <span class="details-movie-specifics">Stars: </span>${movie.stars}</p>
     ${type == 'series'
@@ -142,32 +142,26 @@ export async function renderSeriesDetails(ctx) {
 
 export async function renderDetails(ctx, type, movieId) {
   let currentObj, userBookmarks, alreadyReviewed, reviews;
-  const currentUser = getUser();
-  
+  const currentUser = await getUser();
+
   if (type === 'movie') {
     [currentObj, userBookmarks, reviews, alreadyReviewed] = await Promise.all([
       getMovieDetails(movieId),
-      getUserBookmarks(),
+      getUserBookmarks(currentUser.id),
       getReviewsForMovie(movieId, 'Movie'),
-      currentUser !== null ? userAlreadyReviewed(currentUser.objectId, movieId, 'Movie') : false
+      currentUser !== null ? userAlreadyReviewed(currentUser.id, movieId, 'Movie') : false
     ]);
   } else if (type === 'series') {
     [currentObj, userBookmarks, reviews, alreadyReviewed] = await Promise.all([
       getSeriesDetails(movieId),
-      getUserBookmarks(),
+      getUserBookmarks(currentUser.id),
       getReviewsForMovie(movieId, 'Show'),
-      currentUser !== null ? userAlreadyReviewed(currentUser.objectId, movieId, 'Show') : false
+      currentUser !== null ? userAlreadyReviewed(currentUser.id, movieId, 'Show') : false
     ]);
   };
   
-  const Movie = Parse.Object.extend('Movie');
-  const Show = Parse.Object.extend('Show');
-  const obj = currentObj.type === 'movie' ? new Movie(currentObj) : new Show(currentObj);
-  
-  obj.increment('visits');
-  await obj.save();
-  
-  const details = detailsTemplate(currentObj, ctx, type, currentUser, userBookmarks, reviews, alreadyReviewed);
+  const bookmarks = userBookmarks.data.map(item => item.id);
+  const details = detailsTemplate(currentObj, ctx, type, currentUser, bookmarks, reviews, alreadyReviewed);
 
   ctx.render(details);
 };

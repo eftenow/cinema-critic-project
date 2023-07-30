@@ -12,7 +12,7 @@ const userTemplateAdmin = (user, ctx) => html`
       <td>${user.role}</td>
       <td>
         <button @click='${(e) => editUserData(ctx, e, user)}' class='edit-btn-admin'><i class="fas fa-edit"></i></button>
-        <button @click='${() => deleteUserById(user.objectId)}' class='delete-btn-admin'><i class="fas fa-trash"></i></button>
+        <button @click='${() => deleteUserById(user.id)}' class='delete-btn-admin'><i class="fas fa-trash"></i></button>
         <a @click=${scrollToTop} href="/user/${user.username}" class='forward-btn-admin'><i class="fa-solid fa-share-from-square"></i></a>
       </td>
     </tr>
@@ -65,7 +65,7 @@ const editUserFormTemplate = (user, ctx) => html`
         <input type='text'  id="new-avatar-url" value="${user.profileImg}">
 
     </div>
-    <form @submit ="${(e) => saveChangesHandler(e, ctx, '/admin/Users', user.objectId)}">
+    <form @submit ="${(e) => saveChangesHandler(e, ctx, '/admin/Users', user.id)}">
         <div class="input-group ">
             <div class="input-group">
                 <label for="username">Username:</label>

@@ -8,9 +8,9 @@ import { setActiveNavLink } from './adminNavigation.js';
 const reviewTemplateAdmin = (review, ctx) => {
   const path =
     review.target.className === 'Show'
-      ? `/series/${review.target.objectId}`
+      ? `/series/${review.target.id}`
       : review.target.className === 'Movie'
-      ? `/movie/${review.target.objectId}`
+      ? `/movie/${review.target.id}`
       : '';
 
   return html`
@@ -20,8 +20,8 @@ const reviewTemplateAdmin = (review, ctx) => {
       <td>${review.reviewRating}</td>
       <td>${review.title}</td>
       <td>
-        <button @click="${(e) => editAdminReviewHandler(ctx, e, review.objectId, review.target)}" class='edit-btn-admin'><i class="fas fa-edit"></i></button>
-        <button @click="${(e) => deleteReview(e, review.objectId, ctx, review.target)}" class='delete-btn-admin'><i class="fas fa-trash"></i></button>
+        <button @click="${(e) => editAdminReviewHandler(ctx, e, review.id, review.target)}" class='edit-btn-admin'><i class="fas fa-edit"></i></button>
+        <button @click="${(e) => deleteReview(e, review.id, ctx, review.target)}" class='delete-btn-admin'><i class="fas fa-trash"></i></button>
         <a href='${path}' @click="${(e) => scrollToBottom()}" class='forward-btn-admin'><i class="fa-solid fa-share-from-square"></i></a>
 
       </td>

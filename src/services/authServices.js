@@ -57,19 +57,7 @@ export async function editUserInfo(userId, editedUserData) {
   }
 }
 
-export function getUserBookmarks() {
-  const currentUser = Parse.User.current();
-  if (currentUser) {
-    const query = new Parse.Query(Parse.User);
-    query.include('userBookmarks');
-    return query.get(currentUser.id)
-      .then(user => {
-        return user.get('userBookmarks');
-      })
-      .catch(error => console.error(error));
-  }
-  return null;
-}
+
 export async function checkAuthenticated() {
   const response = await get(endpoints.is_authenticated);
 

@@ -1,4 +1,5 @@
 import { getUser } from "../src/services/authServices.js";
+import { addBookmark, removeBookmark } from "../src/services/itemServices.js";
 
 export function toggleBookmarkIcon(ev) {
     ev.preventDefault();
@@ -12,29 +13,17 @@ export function toggleBookmarkIcon(ev) {
 
 };
 
-export async function addUserBookmark(ctx, movieId, toSection) {
-    const currentUser = getUser();
-    const User = Parse.Object.extend('User');
-    const query = new Parse.Query(User);
-    const user = await query.get(currentUser.objectId);
-    const userBookmarks = user.get('userBookmarks') || [];
-    userBookmarks.push(movieId);
-    user.set('userBookmarks', userBookmarks);
+export async function addUserBookmark(ctx, movieId, contentType, toSection) {
+    await addBookmark(contentType, movieId)
 
-    await user.save();
     if (toSection) {
         ctx.redirect(toSection);
     }
 };
 
-export async function removeUserBookmark(ctx, movieId, toSection) {
-    const currentUser = getUser();
-    const User = Parse.Object.extend('User');
-    const query = new Parse.Query(User);
-    const user = await query.get(currentUser.objectId);
-    user.remove('userBookmarks', movieId);
+export async function removeUserBookmark(ctx, movieId,contentType, toSection) {
+    await removeBookmark(contentType, movieId)
 
-    await user.save();
     if (toSection) {
         ctx.redirect(toSection);
     }

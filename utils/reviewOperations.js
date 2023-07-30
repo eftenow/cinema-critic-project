@@ -17,7 +17,7 @@ export function editReviewHandler(ctx, ev, review) {
     const deleteReviewForm = document.querySelector('.modal-content');
     modal.style.display = 'block';
     deleteReviewForm ? deleteReviewForm.classList.add('small-modal') : null;
-    render(deleteReviewFormTemplate(review.reviewId || review.objectId, ctx), deleteReviewForm);
+    render(deleteReviewFormTemplate(review.reviewId || review.id, ctx), deleteReviewForm);
   }
   
   const deleteReviewFormTemplate = (reviewId, ctx) => html`

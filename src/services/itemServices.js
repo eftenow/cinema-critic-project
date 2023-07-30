@@ -11,15 +11,17 @@ const endpoints = {
     allSeries: '/content/series/',
     createMovie: '/content/movies/',
     createSeries: '/content/series/',
-    detailsMovie: (id) => `/movies/${id}`,
-    detailsSeries: (id) => `/series/${id}`,
+    detailsMovie: (id) => `/content/movies/${id}`,
+    detailsSeries: (id) => `/content/series/${id}`,
     genres: '/genres/',
-    search: (searchText) => `/content/search/?q=${searchText}`
+    search: (searchText) => `/content/search/?q=${searchText}`,
+    userBookmarks: (id) => `/bookmarks/${id}/`,
+    contentBookmark: (contentType, contentId) => `/bookmarks/${contentType}/${contentId}/`
 };
 
 
 export async function getAllMovies() {
-    const movies = await get(endpoints.allMovies, { keys: 'genres,objectId,type,image,rating,name,visits' });
+    const movies = await get(endpoints.allMovies);
     const moviesFound = movies.results;
     return moviesFound;
 };
@@ -51,11 +53,13 @@ export async function createNewMovie(newMovie) {
 
 
 export async function editExistingMovie(id, editedItem) {
-    return put(endpoints.detailsMovie(id) + '/', editedItem);
+    return await put(endpoints.detailsMovie(id) + '/', editedItem);
 };
 
 export async function getMovieDetails(id) {
-    return get(endpoints.detailsMovie(id) + '/');
+    let movie =  await get(endpoints.detailsMovie(id) + '/');
+
+    return movie.data
 };
 
 
@@ -66,7 +70,7 @@ export async function deleteMovie(id) {
 
 ////SERIES
 export async function getAllSeries() {
-    const series = await get(endpoints.allSeries, { keys: 'genres,objectId,type,image,rating,name,visits' });
+    const series = await get(endpoints.allSeries);
     const seriesFound = series.results;
     return seriesFound;
 };
@@ -94,15 +98,16 @@ export async function createNewSeire(newSeries) {
 };
 
 export async function updateSeries(id, updatedSeriesData) {
-    return put(endpoints.detailsSeries(id) + '/', updatedSeriesData);
+    return await put(endpoints.detailsSeries(id) + '/', updatedSeriesData);
 };
 
 export async function getSeriesDetails(id) {
-    return get(endpoints.detailsSeries(id) + '/');
+    const series =  await get(endpoints.detailsSeries(id) + '/');
+    return series.data
 };
 
 export async function deleteSeries(id) {
-    return del(endpoints.detailsSeries(id) + '/');
+    return await del(endpoints.detailsSeries(id) + '/');
 };
 
 //ALL
@@ -140,7 +145,7 @@ export async function getSearchMatches(searchText) {
         const results = response.data.map((item) => {
             return {
                 name: item.name,
-                objectId: item.id,
+                id: item.id,
                 image: item.image,
                 type: item.type,
                 genres: item.genres,
@@ -195,3 +200,17 @@ export const getUserWatchlist = async (userId) => {
     const genres = await get(endpoints.genres)
     return genres.data.map(item => item.name);
 }
+
+export async function getUserBookmarks(id) {
+    const bookmarks = await get(endpoints.userBookmarks(id));
+    return bookmarks;
+};
+
+
+export async function addBookmark(contentType, contentId) {
+        await post(endpoints.contentBookmark(contentType, contentId));
+};
+
+export async function removeBookmark(contentType, contentId) {
+    await del(endpoints.contentBookmark(contentType, contentId));
+};

@@ -11,9 +11,9 @@ const seriesTemplateAdmin = (series, ctx) => html`
       <td>${series.rating}</td>
       <td>${series.visits}</td>
       <td>
-        <button @click='${(e) => renderEditMovieAdmin(e, series.objectId, ctx, 'series')}' class='edit-btn-admin'><i class="fas fa-edit"></i></button>
-        <button @click='${() => deleteSeries(series.objectId)}' class='delete-btn-admin'><i class="fas fa-trash"></i></button>
-        <a @click=${scrollToTop} href="/${series.type}/${series.objectId}" class='forward-btn-admin'><i class="fa-solid fa-share-from-square"></i></a>
+        <button @click='${(e) => renderEditMovieAdmin(e, series.id, ctx, 'series')}' class='edit-btn-admin'><i class="fas fa-edit"></i></button>
+        <button @click='${() => deleteSeries(series.id)}' class='delete-btn-admin'><i class="fas fa-trash"></i></button>
+        <a @click=${scrollToTop} href="/${series.type}/${series.id}" class='forward-btn-admin'><i class="fa-solid fa-share-from-square"></i></a>
       </td>
     </tr>
 `
