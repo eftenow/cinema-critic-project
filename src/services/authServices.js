@@ -120,6 +120,18 @@ export async function deleteUserById(objectId) {
   await post(endpoints.delete(objectId)) 
 }
 
+
+export async function getUserById(id) {
+  try {
+    const response = await get(endpoints.details(id));
+    return response.data;
+  } catch (error) {
+    console.error('Error fetching user data:', error);
+    return null;
+  }
+}
+
+
 export async function getUserByUsername(username) {
   try {
     const response = await get(endpoints.users);

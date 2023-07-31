@@ -38,10 +38,10 @@ const editReviewFormTemplate = (review, ctx) => html`
         <div class="select-menu specific-form-group">
           <label for="select-rating">Rating: </label>
           <div id='select-rating' class="select" @click="${showHideOptions}">
-            <span>${review.reviewRating} <i class="fa-solid fa-star"></i></span>
+            <span>${review.rating} <i class="fa-solid fa-star"></i></span>
             <i class="fas fa-angle-down"></i>
           </div>
-          <input value='${review.reviewRating}'type='hidden' id="review-rating-input" name="review-rating">
+          <input value='${review.rating}'type='hidden' id="review-rating-input" name="review-rating">
           <div class="options-list" @click="${selectOption}" name='review-rating'>
             <div class="option">1 <i class="fa-solid fa-star"></i></div>
             <div class="option">2 <i class="fa-solid fa-star"></i></div>
@@ -57,11 +57,11 @@ const editReviewFormTemplate = (review, ctx) => html`
         </div>
         <div class="specific-form-group">
           <label for="reviewer-review-text">Review Title:</label>
-          <input value="${review.reviewTitle}" id="review-edit-title" name="reviewer-review-text">
+          <input value="${review.review_title}" id="review-edit-title" name="reviewer-review-text">
         </div>
         <div class="specific-form-group">
           <label for="reviewer-review">Review Description:</label>
-          <textarea id="reviewer-review" name="reviewer-review">${review.reviewDescription}</textarea>
+          <textarea id="reviewer-review" name="reviewer-review">${review.content}</textarea>
         </div>
         <div class="specific-form-group submit-review-btn-wrapper">
           <button class="submit-review-btn" type="submit">Submit Changes</button>

@@ -9,26 +9,27 @@ import { deleteMovie, deleteSeries, getMovieDetails, getSeriesDetails, getUserBo
 import { addNewReview, getReviewsForMovie, showNotification, userAlreadyReviewed } from '../services/reviewServices.js';
 
 export const reviewTemplate = (ctx, review, currentUser, isProfileGuest) => html`
+${console.log(review)}
 <div class="review">
-${currentUser?.username == review.username && !isProfileGuest
+${currentUser && currentUser.id == review.user.id && !isProfileGuest
     ? html`
   <section class='user-review-btns'>
   <button @click="${(e) => editReviewHandler(ctx, e, review)}" class='edit-review-btn' data-review-id="${review.reviewId}"><i class="fa-regular fa-pen-to-square"></i></button>
   <button @click="${(e) => deleteReviewHandler(ctx, e, review)}" class='delete-review-btn' data-review-id="${review.reviewId}"><i class="fa-solid fa-trash-can"></i></button>
-  ${review.targetId ? html`<a href='${review.targetType}/${review.targetId}' @click="${(e) => scrollToBottom()}" class='redirect-review-btn' data-review-id="${review.reviewId}"><i class="fa-solid fa-share-from-square"></i></a>` : ''}
+  ${review.targetId ? html`<a href='${review.content_type}/${review.targetId}' @click="${(e) => scrollToBottom()}" class='redirect-review-btn' data-review-id="${review.reviewId}"><i class="fa-solid fa-share-from-square"></i></a>` : ''}
   
   </section>`
     : ''}
-    <h3 class="review-title-details">${review.reviewTitle}</h3>
+    <h3 class="review-title-details">${review.review_title}</h3>
     <div class="review-header">
-    <a href='user/${review.username}'><img src="${review.profileImg}" alt="Avatar" onerror="this.onerror=null; this.src='../../images/default-user.png';"></a>
+    <a href='user/${review.user.username}'><img src="${review.user.profile.profile_picture}" alt="Avatar" onerror="this.onerror=null; this.src='../../images/default-user.png';"></a>
       <div class="review-info">
-        <a href='user/${review.username}' class="reviewer-name">${review.username}</a>
-        <p class="movie-score reviewer-rating">Rating: ${review.reviewRating} <i id="star-review" class="fa-solid fa-star"></i></p>
+        <a href='user/${review.user.username}' class="reviewer-name">${review.user.username}</a>
+        <p class="movie-score reviewer-rating">Rating: ${review.rating} <i id="star-review" class="fa-solid fa-star"></i></p>
       </div>
     </div>
     <div class="review-body">
-      <p>${review.reviewDescription}</p>
+      <p>${review.content}</p>
     </div>
   </div>`
 
@@ -69,7 +70,7 @@ const detailsTemplate = (movie, ctx, type, currentUser, userBookmarks, reviews, 
   <div class="specific-movie-info">
 
     <h2 class="specific-movie-title details-movie-specifics">${movie.name}</h2>
-    <p class="specific-movie-genre"><span class="details-movie-specifics">Rating: </span>${movie.rating} <i id ="star" class="fa-solid fa-star"></i></p>
+    <p class="specific-movie-rating"><span class="details-movie-specifics">Rating: </span>${movie.rating == 10 ? html`10` : movie.rating} <i id ="star" class="fa-solid fa-star"></i></p>
     <p class="specific-movie-genre"><span class="details-movie-specifics">Genre: </span>${movie.genres.join(', ')}</p>
     <p class="specific-movie-cast"> <span class="details-movie-specifics">Director: </span>${movie.director}</p>
     <p class="specific-movie-cast"> <span class="details-movie-specifics">Stars: </span>${movie.stars}</p>
@@ -77,7 +78,7 @@ const detailsTemplate = (movie, ctx, type, currentUser, userBookmarks, reviews, 
     ? html`<p class="specific-movie-runtime"> <span class="details-movie-specifics">Seasons: </span>${movie.seasons}</p>
     <p class="specific-movie-runtime"> <span class="details-movie-specifics">Total Episodes: </span>${movie.episodes}</p>
     <p class="specific-movie-runtime"> <span class="details-movie-specifics">Episode length: </span>${movie.movieLength} minutes</p>`
-    : html`<p class="specific-movie-runtime"> <span class="details-movie-specifics">Movie runtime: </span>${movie.movieLength}</p>`}
+    : html`<p class="specific-movie-runtime"> <span class="details-movie-specifics">Movie runtime: </span>${movie.length}</p>`}
     
     <p class="specific-movie-release-year"><span class="details-movie-specifics">Release year:</span> ${movie.year}</p>
     <p class="specific-movie-description"><span class="details-movie-specifics">Description: </span> ${movie.description}</p>
@@ -158,15 +159,15 @@ export async function renderDetails(ctx, type, movieId) {
     [currentObj, userBookmarks, reviews, alreadyReviewed] = await Promise.all([
       getMovieDetails(movieId),
       currentUser !== null ? getUserBookmarks(currentUser.id) : null,
-      getReviewsForMovie(movieId, 'Movie'),
-      currentUser !== null ? userAlreadyReviewed(currentUser.id, movieId, 'Movie') : false
+      getReviewsForMovie(movieId, 'movie'),
+      currentUser !== null ? userAlreadyReviewed(currentUser.id, movieId, 'movie') : false
     ]);
   } else if (type === 'series') {
     [currentObj, userBookmarks, reviews, alreadyReviewed] = await Promise.all([
       getSeriesDetails(movieId),
       currentUser !== null ? getUserBookmarks(currentUser.id) : null,
-      getReviewsForMovie(movieId, 'Show'),
-      currentUser !== null ? userAlreadyReviewed(currentUser.id, movieId, 'Show') : false
+      getReviewsForMovie(movieId, 'series'),
+      currentUser !== null ? userAlreadyReviewed(currentUser.id, movieId, 'series') : false
     ]);
   };
   
