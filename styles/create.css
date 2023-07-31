@@ -109,6 +109,11 @@
     width: 31%;
 }
 
+#edit-movie-name{
+    font-size: 1.6rem;
+    color: #9656f5;
+}
+
 
 
 @media only screen and (max-width: 1080px){

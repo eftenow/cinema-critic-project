@@ -52,9 +52,15 @@ export async function createNewMovie(newMovie) {
 };
 
 
-export async function editExistingMovie(id, editedItem) {
-    return await put(endpoints.detailsMovie(id) + '/', editedItem);
+export async function editExistingMovie(movieId, updatedMovie) {
+    try {
+        await put(endpoints.detailsMovie(movieId) + '/', updatedMovie);
+        return { status: "success", message: "Movie updated successfully." };
+    } catch (error) {
+        return error.data;
+    }
 };
+
 
 export async function getMovieDetails(id) {
     let movie =  await get(endpoints.detailsMovie(id) + '/');
@@ -97,8 +103,14 @@ export async function createNewSeire(newSeries) {
     }
 };
 
-export async function updateSeries(id, updatedSeriesData) {
-    return await put(endpoints.detailsSeries(id) + '/', updatedSeriesData);
+
+export async function editExistingSeries(seriesId, updatedSeries) {
+    try {
+        await put(endpoints.detailsSeries(seriesId) + '/', updatedSeries);
+        return { status: "success", message: "Series updated successfully." };
+    } catch (error) {
+        return error.data;
+    }
 };
 
 export async function getSeriesDetails(id) {
@@ -160,42 +172,6 @@ export async function getSearchMatches(searchText) {
     }
 };
 
-
-export const getUserWatchlist = async (userId) => {
-    const userQuery = new Parse.Query("User");
-    userQuery.equalTo("objectId", userId);
-    userQuery.include("userBookmarks");
-    const user = await userQuery.first();
-  
-    const bookmarkedMoviesIds = user.get("userBookmarks");
-  
-    const movieQuery = new Parse.Query('Movie');
-    movieQuery.containedIn('objectId', bookmarkedMoviesIds);
-  
-    const showQuery = new Parse.Query('Show');
-    showQuery.containedIn('objectId', bookmarkedMoviesIds);
-  
-    const movieResults = await movieQuery.find();
-    const showResults = await showQuery.find();
-  
-    const movies = movieResults.map(movie => {
-      const movieData = movie.toJSON();
-      movieData.objectId = movie.id;
-      movieData.type = 'movie';
-      return movieData;
-    });
-  
-    const shows = showResults.map(show => {
-      const showData = show.toJSON();
-      showData.objectId = show.id;
-      showData.type = 'show';
-      return showData;
-    });
-  
-    return [...movies, ...shows];
-  };
-
-
   export async function getAllGenres() {
     const genres = await get(endpoints.genres)
     return genres.data.map(item => item.name);
@@ -203,7 +179,7 @@ export const getUserWatchlist = async (userId) => {
 
 export async function getUserBookmarks(id) {
     const bookmarks = await get(endpoints.userBookmarks(id));
-    return bookmarks;
+    return bookmarks.data;
 };
 
 

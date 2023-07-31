@@ -22,13 +22,14 @@
   margin-right: 3%;
   margin-left: -1%;
   margin-top: 2%;
+    border-radius: 6px;
 }
 
 .movie-poster img {
   display: block;
   width: 100%;
   height: auto;
-  border-radius: 10px;
+  border-radius: 4px;
 
 }
 
@@ -384,6 +385,40 @@
   font-weight: bold;
   text-align: center;
   color: #e10808;
+}
+.del-movie-btn{
+  background: none;
+    border: none;
+}
+.confirm-del-movie-text{
+  text-align: center;
+}
+.edit-movie-icon{
+  border-radius: 50%;
+    padding: 10px;
+    margin: 9px 4px;
+    color: #fff;
+    opacity: 1 !important;
+}
+
+.edit-movie-icon:hover{
+  color: rgb(16, 15, 15);
+  cursor: pointer;
+  background-color: #8e47f8;
+
+}
+
+.fa-trash{
+  background-color: #fb3e05;
+}
+
+.fa-wrench{
+  background-color: #fbbc05;
+}
+
+.edit-icons-section{
+  display: flex;
+  justify-content: center;
 }
 
 

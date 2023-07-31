@@ -15,6 +15,7 @@ import { renderUsersAdmin } from './views/admin-views/adminUsers.js';
 import { renderCreateMovie, renderCreateSeries } from './views/create.js';
 import { renderMovieDetails, renderSeriesDetails } from './views/details.js';
 import { renderEdit } from './views/edit-profile.js';
+import { renderEditMovie, renderEditSeries } from './views/editMovieSeries.js';
 
 import { renderHome } from './views/home.js';
 import { renderLogin } from './views/login.js';
@@ -49,6 +50,8 @@ page('/user/:id', requireAuth, renderUserProfile);
 page('/settings', requireAuth, renderEdit);
 page('/movie/:id', renderMovieDetails);
 page('/series/:id', renderSeriesDetails);
+page('/movie/:id/edit', renderEditMovie);
+page('/series/:id/edit', renderEditSeries);
 page('/dashboard/search', searchedMoviesPage);
 page('/sort/:sortBy', sortHandler);
 

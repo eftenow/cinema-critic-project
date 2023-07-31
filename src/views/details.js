@@ -1,12 +1,12 @@
-import { html } from '../../node_modules/lit-html/lit-html.js';
+import { html, render } from '../../node_modules/lit-html/lit-html.js';
 import { scrollToBottom } from '../../utils/backToTopBtn.js';
 import { addUserBookmark, removeUserBookmark } from '../../utils/bookmarkBtns.js';
 import { selectOption, showHideOptions } from '../../utils/dropdowns.js';
-import { editReviewHandler, deleteReviewHandler } from '../../utils/reviewOperations.js';
+import { editReviewHandler, deleteReviewHandler, hideModal } from '../../utils/reviewOperations.js';
 
 import { getUser } from '../services/authServices.js';
-import { getMovieDetails, getSeriesDetails, getUserBookmarks } from '../services/itemServices.js';
-import { addNewReview, getReviewsForMovie, userAlreadyReviewed } from '../services/reviewServices.js';
+import { deleteMovie, deleteSeries, getMovieDetails, getSeriesDetails, getUserBookmarks } from '../services/itemServices.js';
+import { addNewReview, getReviewsForMovie, showNotification, userAlreadyReviewed } from '../services/reviewServices.js';
 
 export const reviewTemplate = (ctx, review, currentUser, isProfileGuest) => html`
 <div class="review">
@@ -37,8 +37,16 @@ const detailsTemplate = (movie, ctx, type, currentUser, userBookmarks, reviews, 
   <div class='details-header'>
   <div class="movie-poster">
     <img src="${movie.image}" alt="Movie Poster">
+    
     ${currentUser
     ? html`
+    ${movie.creator == currentUser.id 
+      ? html `<div class='edit-icons-section'>
+      <a href='${movie.type}/${movie.id}/edit'><i class="fa-solid fa-wrench edit-movie-icon"></i></a>
+      <button class="del-movie-btn" @click="${(e) => deleteMovieHandler(ctx, e, movie)}"><i class="fa-solid fa-trash edit-movie-icon"></i></div></button>
+    </div>`
+    : ''
+      }
             <div class="movie-watchlist">
               <button class="add-to-watchlist-details">
                 ${userBookmarks && userBookmarks.includes(movie.id) ? html`
@@ -56,8 +64,10 @@ const detailsTemplate = (movie, ctx, type, currentUser, userBookmarks, reviews, 
             </div>
           `
     : html``}
-  </div>
+    
+    </div>
   <div class="specific-movie-info">
+
     <h2 class="specific-movie-title details-movie-specifics">${movie.name}</h2>
     <p class="specific-movie-genre"><span class="details-movie-specifics">Rating: </span>${movie.rating} <i id ="star" class="fa-solid fa-star"></i></p>
     <p class="specific-movie-genre"><span class="details-movie-specifics">Genre: </span>${movie.genres.join(', ')}</p>
@@ -147,21 +157,53 @@ export async function renderDetails(ctx, type, movieId) {
   if (type === 'movie') {
     [currentObj, userBookmarks, reviews, alreadyReviewed] = await Promise.all([
       getMovieDetails(movieId),
-      getUserBookmarks(currentUser.id),
+      currentUser !== null ? getUserBookmarks(currentUser.id) : null,
       getReviewsForMovie(movieId, 'Movie'),
       currentUser !== null ? userAlreadyReviewed(currentUser.id, movieId, 'Movie') : false
     ]);
   } else if (type === 'series') {
     [currentObj, userBookmarks, reviews, alreadyReviewed] = await Promise.all([
       getSeriesDetails(movieId),
-      getUserBookmarks(currentUser.id),
+      currentUser !== null ? getUserBookmarks(currentUser.id) : null,
       getReviewsForMovie(movieId, 'Show'),
       currentUser !== null ? userAlreadyReviewed(currentUser.id, movieId, 'Show') : false
     ]);
   };
   
-  const bookmarks = userBookmarks.data.map(item => item.id);
+  const bookmarks = userBookmarks ? userBookmarks.map(item => item.id) : '';
   const details = detailsTemplate(currentObj, ctx, type, currentUser, bookmarks, reviews, alreadyReviewed);
 
   ctx.render(details);
+};
+
+
+
+export function deleteMovieHandler(ctx, ev, movie) {
+  const modal = document.querySelector('.modal');
+  const deleteMovieForm = document.querySelector('.modal-content');
+  modal.style.display = 'block';
+  deleteMovieForm ? deleteMovieForm.classList.add('small-modal') : null;
+  render(deleteMovieFormTemplate(movie , ctx), deleteMovieForm);
+}
+
+const deleteMovieFormTemplate = (movie, ctx) => html`
+  <form class="delete-review-form" @submit="${(e) => confirmDeleteMovie(e, movie, ctx)}">
+    <h3>Delete Review</h3>
+    <p class='confirm-del-movie-text'>Are you sure you want to delete this ${movie.type}?</p>
+    <div class="delete-form-group">
+      <button @click="${hideModal}" class="confirm-delete-review-btn" type="submit">Delete</button>
+      <button @click="${hideModal}" class="cancel-delete-review-btn" type="button" >Cancel</button>
+    </div>
+  </form>
+`;
+
+export async function confirmDeleteMovie(ev, movie, ctx) {
+  ev.preventDefault();
+  if (movie.type == 'movie'){
+    deleteMovie(movie.id);
+  } else{
+    deleteSeries(movie.id);
+  }
+  showNotification(`Successfully deleted "${movie.name}".`, 'green')
+  ctx.redirect('/dashboard');
 };

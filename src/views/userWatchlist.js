@@ -2,13 +2,13 @@ import { html, render } from '../../node_modules/lit-html/lit-html.js';
 import { scrollToTop } from '../../utils/backToTopBtn.js';
 import { addUserBookmark, removeUserBookmark, toggleBookmarkIcon } from '../../utils/bookmarkBtns.js';
 import { truncateTextByChars, truncateTextByWords, truncateTextByWordsWatchlist } from '../../utils/stringModifiers.js';
-import { getUserWatchlist } from '../services/itemServices.js';
+import { getUserBookmarks } from '../services/itemServices.js';
 
 const watchlistMovieTemplate = (movie, isProfileGuest) => html`
 <div class="review-container">
     <div class="review-movie">
       <img class="movie-img" src="${movie.image}" alt="Movie Image">
-      <h3 class="movie-title">${movie.rating}/10 <i class="fa-solid fa-star"></i></h3>
+      <h3 class="movie-title">${movie.rating ? html`${movie.rating}/10 <i class="fa-solid fa-star"></i>` : ''} </h3>
     </div>
     <div class="review-content">
       <a href="/${movie.type}/${movie.id}"><h3 class="review-title">${truncateTextByWordsWatchlist(movie.name)}</h3></a>
@@ -47,7 +47,7 @@ export const userWatchlist = (user, watchlist, isProfileGuest) => html`
 export async function renderUserWatchlist(ev, user, isProfileGuest) {
   ev.preventDefault();
   const watchlistSection = document.querySelector(".watchlist-section");
-  const userWatchlistedMovies = await getUserWatchlist(user.id);
+  const userWatchlistedMovies = await getUserBookmarks(user.id);
   const myWatchlist = userWatchlist(user, userWatchlistedMovies, isProfileGuest);
   render(myWatchlist, watchlistSection)
 

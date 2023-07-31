@@ -1,6 +1,6 @@
 import { html, render } from '../../../node_modules/lit-html/lit-html.js';
 import { hideModal } from '../../../utils/reviewOperations.js';
-import { getMovieDetails, getSeriesDetails, editExistingMovie, updateSeries } from "../../services/itemServices.js";
+import { getMovieDetails, getSeriesDetails, editExistingMovie, editExistingSeries } from "../../services/itemServices.js";
 
 const editMovieTemplate = (movie, ctx) => html`
 <section class='create-section admin-edit-movie'>
@@ -106,7 +106,7 @@ async function editHandler(ev, ctx) {
   if (type === 'series') {
     updatedItem['episodes'] = Number(form.get('edit-episodes'));
     updatedItem['seasons'] = Number(form.get('edit-seasons'));
-    await updateSeries(id, updatedItem);
+    await editExistingSeries(id, updatedItem);
   } else {
     await editExistingMovie(id, updatedItem);
   }
