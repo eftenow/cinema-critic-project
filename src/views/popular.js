@@ -16,7 +16,7 @@ const movieContainerTemplate = (ctx, movie, rank, currentUser, userBookmarks) =>
             <a class='title-anchor' href="/${movie.type}/${movie.id}" @click=${scrollToTop}>
             <h4 class="popular-movie-title"> <span>${rank+1}. </span>${truncateTextByWords(movie.name, 6)}</h4>
           </a>
-            <p class="movie-meta">${movie.movieLength} | ${movie.genres}</p>
+            <p class="movie-meta">${movie.length} | ${movie.genres.join(', ')}</p>
             <div class="popular-movie-rating">
               <p class="movie-score"><i id='popular-rating-star' class="fa-solid fa-star"></i> ${movie.rating}</p>
               <a href="/${movie.type}/${movie.id}" class="rate-button" id="rate-button" @click=${scrollToBottom}>Rate</a>
@@ -32,12 +32,12 @@ const movieContainerTemplate = (ctx, movie, rank, currentUser, userBookmarks) =>
             <div class="movie-watchlist">
               <button class="add-to-watchlist">
                 ${userBookmarks && userBookmarks.includes(movie.id) ? html`
-                  <span id='to-add' class="fa-stack fa-2x" @click=${() => removeUserBookmark(ctx, movie.id , '/popular')}>
+                  <span id='to-add' class="fa-stack fa-2x" @click=${() => removeUserBookmark(ctx, movie.id , movie.type, '/popular')}>
                     <i id="bookmark-checked" class="fa-solid fa-bookmark fa-stack-2x"></i>
                     <i id='check' class="fa-solid fa-check fa-stack-1x"></i>
                   </span>
                 ` : html`
-                  <span id='to-remove' class="fa-stack fa-2x" @click=${() => addUserBookmark(ctx, movie.id, '/popular')}>
+                  <span id='to-remove' class="fa-stack fa-2x" @click=${() => addUserBookmark(ctx, movie.id, movie.type, '/popular')}>
                     <i id="bookmark" class="fa-solid fa-bookmark fa-stack-2x"></i>
                     <i id="plus" class="fa-solid fa-plus fa-stack-1x"></i>
                   </span>
@@ -60,11 +60,13 @@ const popularMoviesTemplate = (ctx, popularMovies, currentUser, userBookmarks) =
 `;
 
 export async function renderPopular(ctx) {
-    const [popularMovies, currentUser, userBookmarks] = await Promise.all([
+  const currentUser = await getUser();
+    let [popularMovies, userBookmarks] = await Promise.all([
       getTopMovies(),
-      getUser(),
-      getUserBookmarks(currentUser.id),
+      getUserBookmarks(currentUser ? currentUser.id : null),
     ]);
+
+    userBookmarks = userBookmarks.map(bookmark => bookmark.id);
 
     const popular = popularMoviesTemplate(ctx, popularMovies, currentUser, userBookmarks);
     ctx.render(popular);

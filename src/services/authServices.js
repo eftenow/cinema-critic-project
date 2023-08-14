@@ -96,7 +96,6 @@ export async function getUserId() {
 
 export async function isProfileOwner(profileId) {
   const currentUserId = await getUserId();
-  console.log(`Target profile id: ${profileId} ...  current user id: ${currentUserId}`);
   return currentUserId === profileId;
 }
 

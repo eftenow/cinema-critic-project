@@ -7,6 +7,7 @@ export let PAGE_SIZE = 12;
 
 const endpoints = {
     content: (page) => `/content/all/?page=${page}`,
+    popularContent: '/content/popular/',
     allMovies: '/content/movies/',
     allSeries: '/content/series/',
     createMovie: '/content/movies/',
@@ -27,17 +28,10 @@ export async function getAllMovies() {
 };
 
 export async function getTopMovies() {
-    try {
-      const Movie = Parse.Object.extend('Movie');
-      const query = new Parse.Query(Movie);
-      query.limit(5);
-      query.descending('visits');
-      const movies = await query.find();
-      return movies.map(movie => movie.toJSON());
-    } catch (err) {
-      console.error(err);
-    }
+    const popular = await get(endpoints.popularContent);
+    return popular.data;
   }
+
 export async function getMoviesCount() {
     const response = await get(endpoints.allMovies, { count: 1 });
     return response.count;
@@ -81,13 +75,6 @@ export async function getAllSeries() {
     return seriesFound;
 };
 
-export async function getTopSeries() {
-    const series = await get(`${endpoints.allSeries}?limit=5&sort=-views`, {
-        keys: "genres,objectId,image,rating,name",
-    });
-    const topSeries = series.results;
-    return topSeries;
-}
 
 export async function getSeriesCount() {
     const response = await get(endpoints.allSeries, { count: 1 });
@@ -177,6 +164,9 @@ export async function getSearchMatches(searchText) {
 }
 
 export async function getUserBookmarks(id) {
+    if (!id) {
+        return
+    }
     const bookmarks = await get(endpoints.userBookmarks(id));
     return bookmarks.data;
 };
