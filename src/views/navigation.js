@@ -134,7 +134,6 @@ const navTemplate = (isAuthorized, user, ctx) => html`
 
 export function showNavigation(ctx, user) {
     const isAuthorized = user !== null
-    console.log(isAuthorized);
 
     const nav = navTemplate(isAuthorized, user, ctx);
 

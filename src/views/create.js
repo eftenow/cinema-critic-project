@@ -109,7 +109,6 @@ async function createHandler(ev, ctx, type) {
   let name = form.get('create-title-field');
   let year = Number(form.get('create-year'));
   let image = form.get('create-imageUrl');
-  console.log(image);
   let description = form.get('create-description');
   let director = form.get('create-director');
   let genres = document.getElementById('genres-selected').textContent;
@@ -119,7 +118,6 @@ async function createHandler(ev, ctx, type) {
 
   genres = genres.split(', ');
   let newItem = { name,  year, director, stars, genres, trailer, image, length, description }
-  console.log(newItem);
 
 
   let createdItem;
@@ -135,7 +133,6 @@ async function createHandler(ev, ctx, type) {
     };
 
     const hasErrors = raiseCreateErrors(createdItem, isSeries);
-    console.log(createdItem);
 
     if (!hasErrors) {
         ctx.redirect('/dashboard');

@@ -9,7 +9,6 @@ import { deleteMovie, deleteSeries, getMovieDetails, getSeriesDetails, getUserBo
 import { addNewReview, getReviewsForMovie, showNotification, userAlreadyReviewed } from '../services/reviewServices.js';
 
 export const reviewTemplate = (ctx, review, currentUser, isProfileGuest) => html`
-${console.log(review)}
 <div class="review">
 ${currentUser && currentUser.id == review.user.id && !isProfileGuest
     ? html`
@@ -22,9 +21,10 @@ ${currentUser && currentUser.id == review.user.id && !isProfileGuest
     : ''}
     <h3 class="review-title-details">${review.review_title}</h3>
     <div class="review-header">
-    <a href='user/${review.user.username}'><img src="${review.user.profile.profile_picture}" alt="Avatar" onerror="this.onerror=null; this.src='../../images/default-user.png';"></a>
+
+    <a href='user/${review.username}'><img src="${currentUser.profile.profile_picture}" alt="Avatar" onerror="this.onerror=null; this.src='../../images/default-user.png';"></a>
       <div class="review-info">
-        <a href='user/${review.user.username}' class="reviewer-name">${review.user.username}</a>
+        <a href='user/${review.username}' class="reviewer-name">${review.username}</a>
         <p class="movie-score reviewer-rating">Rating: ${review.rating} <i id="star-review" class="fa-solid fa-star"></i></p>
       </div>
     </div>

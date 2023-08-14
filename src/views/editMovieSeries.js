@@ -5,7 +5,6 @@ import { raiseCreateErrors } from '../validators/createMovieSeriesValidator.js';
 
 
 const editTemplate = (movie, ctx, type, genres, id) => html`
-${console.log(movie)}
 <section class='create-section'>
     ${type == 'series' ? html`<h2 class='create-title'>Create Serie</h2>` : html`<h2 class='create-title'>Edit ${movie.type}</h2>`}
 <form id="${type}" class='create-form' @submit="${(e) => editHandler(e, ctx, type, id)}">
@@ -92,7 +91,6 @@ export async function renderEditMovie(ctx) {
   const genres = await getAllGenres();
   const movie = await getMovieDetails(movieId);
 
-  console.log(movieId);
   const type = 'movie';
   const create = editTemplate(movie, ctx, type, genres, movieId);
   ctx.render(create);
@@ -141,7 +139,6 @@ async function editHandler(ev, ctx, type, id) {
     };
 
     const hasErrors = raiseCreateErrors(createdItem, isSeries);
-    console.log(createdItem);
 
     if (!hasErrors) {
         ctx.redirect(`/${type}/${id}`);

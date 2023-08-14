@@ -65,15 +65,12 @@ export async function filterHandler(ev, ctx) {
 
     const response = await fetch(url);
     const dataMatches = await response.json();
-    console.log(dataMatches);
     const filteredItems = dataMatches.results || dataMatches;
     totalItems = dataMatches.count;
 
     const pagesCount = Math.ceil(totalItems / PAGE_SIZE);
     const pagesNext = dataMatches.next;
     const pagesPrevious = dataMatches.previous;
-    console.log(`aaa`, pagesCount, pagesNext, pagesPrevious);
-    console.log(url);
     const matches = moviesTemplate(filteredItems, ctx, currentPage, pagesCount, pagesNext, pagesPrevious);
     ctx.render(matches);
 

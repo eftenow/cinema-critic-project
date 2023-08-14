@@ -3,12 +3,13 @@ import { scrollToTop } from '../../utils/backToTopBtn.js';
 import { addUserBookmark, removeUserBookmark, toggleBookmarkIcon } from '../../utils/bookmarkBtns.js';
 import { truncateTextByChars, truncateTextByWords, truncateTextByWordsWatchlist } from '../../utils/stringModifiers.js';
 import { getUserBookmarks } from '../services/itemServices.js';
+import displayRating from '../../utils/displayRating.js';
 
 const watchlistMovieTemplate = (movie, isProfileGuest) => html`
 <div class="review-container">
     <div class="review-movie">
       <img class="movie-img" src="${movie.image}" alt="Movie Image">
-      <h3 class="movie-title">${movie.rating ? html`${movie.rating}/10 <i class="fa-solid fa-star"></i>` : ''} </h3>
+      <h3 class="movie-title">${movie.rating ? html`${displayRating(movie.rating)}/10 <i class="fa-solid fa-star"></i>` : ''} </h3>
     </div>
     <div class="review-content">
       <a href="/${movie.type}/${movie.id}"><h3 class="review-title">${truncateTextByWordsWatchlist(movie.name)}</h3></a>

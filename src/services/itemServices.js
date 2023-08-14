@@ -153,7 +153,6 @@ export async function getSearchMatches(searchText) {
     try {
         const response = await get(endpoints.search(searchText));
 
-        console.log(response);
         const results = response.data.map((item) => {
             return {
                 name: item.name,

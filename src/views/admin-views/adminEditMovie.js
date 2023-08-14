@@ -83,8 +83,6 @@ async function editHandler(ev, ctx) {
   ev.preventDefault();
   const id = ev.target.id;
   const type = ev.target.getAttribute("data-type");
-  console.log(id);
-  console.log(type);
   const form = new FormData(ev.target);
   const name = form.get('create-title-field');
   const year = Number(form.get('create-year'));
@@ -98,7 +96,6 @@ async function editHandler(ev, ctx) {
   const movieLength =  form.get('create-length');
 
   const updatedItem = { name, type, year, rating, image, description, stars, director, genres, trailer, movieLength };
-  console.log(updatedItem);
   if (Object.values(updatedItem).some((x) => !x && x != rating)) {
     return alert('All fields must be filled!');
   }

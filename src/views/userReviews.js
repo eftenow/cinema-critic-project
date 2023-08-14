@@ -2,7 +2,6 @@ import { html, render } from '../../node_modules/lit-html/lit-html.js';
 import { reviewTemplate } from './details.js';
 
 export const userReviews = (ctx, user, reviews, isProfileGuest) => html`
-
   <h2 class="myReviews-heading">${user.username}'s reviews:</h2>
   <div class="user-reviews">
   ${reviews.length == 0

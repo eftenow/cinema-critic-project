@@ -4,7 +4,6 @@ import { selectOption, showHideOptions } from "../../../utils/dropdowns.js";
 import { editExistingReview, getReviewById } from "../../services/reviewServices.js";
 
 const editReviewAdminTemplate = (review, ctx) => html`
-      ${console.log(review)}
       <form class="edit-review-form admin-review"  @submit='${(e) => editExistingReview(e, review, ctx, review.seriesTarget || review.target)}'>
       <span @click="${hideModal}" class="close">&times;</span>
         <h3 class='admin-rev-header'>Edit Review</h3>

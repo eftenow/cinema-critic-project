@@ -37,7 +37,6 @@ const adminUsersTemplate = (ctx, users) => html`
 
 export async function renderUsersAdmin(ctx) {
   const users = await getAllUsers();
-  console.log(users);
 
   const siteUsers = adminUsersTemplate(ctx, users);
   setActiveNavLink('/admin/users');

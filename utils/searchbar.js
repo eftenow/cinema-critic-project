@@ -15,9 +15,7 @@ export async function searchHandler(ev, ctx) {
 export async function searchedMoviesPage(ctx) {
     const searchParams = new URLSearchParams(ctx.querystring);
     const searchText = searchParams.get('match');
-    console.log(searchText);
     const result = await getSearchMatches(searchText);
-    console.log(result);
     const moviesFound = moviesTemplate(result, ctx);
     
     ctx.render(moviesFound);

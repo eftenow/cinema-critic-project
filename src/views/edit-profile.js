@@ -9,7 +9,6 @@ export const profileTemplate = (ctx, user) => html`
 <div class="user-container">
 <div class="edit-profile">
     <h2>Edit Profile</h2>
-    ${console.log(user)}
     <div class="info" id='edit-pic-container'>
         <img class="edit-avatar" src="${user.profile.profile_picture}"
             onerror="this.onerror=null;this.src='../../images/default-user.png';">

@@ -1,15 +1,11 @@
 import { post, put, del, get } from './api.js';
 import { APP_ID, JS_KEY } from "../../secrets.js";
-import { hideModal } from '../../utils/reviewOperations.js';
 import { getUserById } from './authServices.js';
 
-Parse.initialize(APP_ID, JS_KEY);
-Parse.serverURL = 'https://parseapi.back4app.com/';
-let REVIEW_PAGE_SIZE = 6;
 
 const endpoints = {
   allReviews: '/reviews/',
-  userReviews: (userId) => `/reviews/user/${userId}/`,
+  specificUserReviews: (userId) => `/reviews/user/${userId}/`,
   reviewDetails: (reviewId) => `/reviews/${reviewId}`,
   specificMovieReviews: (movieId) => `/reviews/movie/${movieId}/`,
   specificSeriesReviews: (seriesId) => `/reviews/series/${seriesId}`
@@ -147,7 +143,6 @@ export async function editExistingReview(ev, review, ctx, target) {
     "user": review.user.id
   }
   let editReviewReq = await put(endpoints.reviewDetails(review.id) + '/', editedReview);
-  console.log(editReviewReq);
   const modal = document.querySelector('.modal');
   modal.style.display = 'none';
   ctx.redirect(ctx.path);
@@ -168,25 +163,8 @@ export async function deleteReview(ev, reviewId, ctx, target) {
 };
 
 export async function getUserReviews(userId) {
-  const Review = Parse.Object.extend('Review');
-  const query = new Parse.Query(Review);
-  query.equalTo('user', { __type: 'Pointer', className: '_User', objectId: userId });
-  query.include('target');
-  query.include('seriesTarget');
-  const results = await query.find();
-
-  const reviews = results.map((review) => {
-    const target = review.get('target') || review.get('seriesTarget');
-
-    return {
-      reviewId: review.id,
-      reviewRating: review.get('reviewRating'),
-      reviewTitle: review.get('reviewTitle'),
-      reviewDescription: review.get('reviewDescription'),
-      targetId: target.id,
-      targetType: target.className == 'Movie' ? 'movie' : 'series',
-    };
-  });
-  return reviews;
+  const reviews = await get(endpoints.specificUserReviews(userId));
+  return reviews.data;
+  
 }
 

@@ -10,7 +10,7 @@ const movieTemplate = (movie) => html`
 <div class="movie-card" data-category="${movie.genres.join(', ')}" id="${movie.id}" data-type="${movie.type}">
                     <div class="movie-image">
                         <img src="${movie.image}" alt="Movie Poster">
-                        <div class="movie-rating">${displayRating(movie.rating)}</div>
+                        <div class="movie-rating">${movie.rating ? displayRating(movie.rating) : ''}</div>
                     </div>
                     <h3 class="movie-card-title">${movie.name}</h3>
                     <a @click='${scrollToTop}' href="/${movie.type}/${movie.id}" class="movie-details-button">Details</a>
@@ -149,7 +149,6 @@ export async function renderAllContent(ctx) {
   const pagesCount = Math.ceil(response.data.count / 12);
   const pagesNext = response.data.next;
   const pagesPrevious = response.data.previous;
-  console.log(pagesCount);
   const movies = moviesTemplate(seriensAndMovies, ctx, currentPage, pagesCount, pagesNext, pagesPrevious);
 
   ctx.render(movies);

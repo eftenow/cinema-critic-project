@@ -59,8 +59,6 @@ export const profileTemplate = (ctx, user, userReviews, isProfileGuest) => html`
 
 export async function renderProfile(ctx) {
     const user = await getUser();
-    const genres = await getAllGenres();
-    console.log(genres);
 
     if (user){
         await displayUserProfile(ctx, user);
