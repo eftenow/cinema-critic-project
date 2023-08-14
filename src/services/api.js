@@ -1,4 +1,4 @@
-export const BASE_URL = 'http://localhost:8000'; 
+export const BASE_URL = 'http://localhost:8000';
 
 export function getAccessTokenFromCookie() {
     const cookies = document.cookie.split('; ');
@@ -30,11 +30,12 @@ export async function request(method, endpoint, data) {
 
         const response = await fetch(url, options);
         let responseData;
-        if (response.headers.get("content-type").includes("application/json")) {
+        if (response.headers.get("content-type") && response.headers.get("content-type").includes("application/json")) {
             responseData = await response.json();
         } else {
             responseData = await response.text();
         }
+
 
         if (!response.ok) {
             const error = new Error("An error occurred");

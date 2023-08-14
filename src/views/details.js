@@ -14,9 +14,9 @@ ${console.log(review)}
 ${currentUser && currentUser.id == review.user.id && !isProfileGuest
     ? html`
   <section class='user-review-btns'>
-  <button @click="${(e) => editReviewHandler(ctx, e, review)}" class='edit-review-btn' data-review-id="${review.reviewId}"><i class="fa-regular fa-pen-to-square"></i></button>
-  <button @click="${(e) => deleteReviewHandler(ctx, e, review)}" class='delete-review-btn' data-review-id="${review.reviewId}"><i class="fa-solid fa-trash-can"></i></button>
-  ${review.targetId ? html`<a href='${review.content_type}/${review.targetId}' @click="${(e) => scrollToBottom()}" class='redirect-review-btn' data-review-id="${review.reviewId}"><i class="fa-solid fa-share-from-square"></i></a>` : ''}
+  <button @click="${(e) => editReviewHandler(ctx, e, review)}" class='edit-review-btn' data-review-id="${review.id}"><i class="fa-regular fa-pen-to-square"></i></button>
+  <button @click="${(e) => deleteReviewHandler(ctx, e, review)}" class='delete-review-btn' data-review-id="${review.id}"><i class="fa-solid fa-trash-can"></i></button>
+  ${review.targetId ? html`<a href='${review.content_type}/${review.targetId}' @click="${(e) => scrollToBottom()}" class='redirect-review-btn' data-review-id="${review.id}"><i class="fa-solid fa-share-from-square"></i></a>` : ''}
   
   </section>`
     : ''}

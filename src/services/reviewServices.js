@@ -12,9 +12,7 @@ const endpoints = {
   userReviews: (userId) => `/reviews/user/${userId}/`,
   reviewDetails: (reviewId) => `/reviews/${reviewId}`,
   specificMovieReviews: (movieId) => `/reviews/movie/${movieId}/`,
-  specificSeriesReviews: (seriesId) => `/reviews/series/${seriesId}`,
-  delReview: (reviewId) => `/classes/Review/${reviewId}`,
-
+  specificSeriesReviews: (seriesId) => `/reviews/series/${seriesId}`
 };
 
 export async function getReviewById(id) {
@@ -158,18 +156,15 @@ export async function editExistingReview(ev, review, ctx, target) {
 
 export async function deleteReview(ev, reviewId, ctx, target) {
   ev.preventDefault();
-  let type;
-  let currentId;
-  await del(endpoints.delReview(reviewId));
-  if (target) {
-    type = target.className == 'Movie' ? 'movie' : 'series';
-    currentId = target.objectId;
-  } else {
-    [, type, currentId] = ctx.path.split('/');
-  }
-  await updateRating(currentId, type);
+  const reviewForm = document.querySelector('.add-review-form') || null;
+  
+  
+  await del(endpoints.reviewDetails(reviewId) + '/');
+  
   showNotification('Review deleted successfully');
+  reviewForm ? reviewForm.reset() : null;
   ctx.redirect(ctx.path);
+
 };
 
 export async function getUserReviews(userId) {

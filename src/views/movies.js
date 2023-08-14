@@ -3,13 +3,14 @@ import { filterHandler, sortHandler, setTypeSelected, resetAllFilters } from '..
 import { PAGE_SIZE, getMoviesAndSeries } from '../services/itemServices.js';
 import { displayPages } from '../../utils/pagination.js';
 import { scrollToTop } from '../../utils/backToTopBtn.js';
+import displayRating from '../../utils/displayRating.js';
 
 
 const movieTemplate = (movie) => html`
 <div class="movie-card" data-category="${movie.genres.join(', ')}" id="${movie.id}" data-type="${movie.type}">
                     <div class="movie-image">
                         <img src="${movie.image}" alt="Movie Poster">
-                        <div class="movie-rating">${movie.rating}</div>
+                        <div class="movie-rating">${displayRating(movie.rating)}</div>
                     </div>
                     <h3 class="movie-card-title">${movie.name}</h3>
                     <a @click='${scrollToTop}' href="/${movie.type}/${movie.id}" class="movie-details-button">Details</a>
