@@ -47,6 +47,7 @@
     color: #fff;
     font-size: 1.3em;
     padding-bottom: 4px;
+    margin: 0px 10px;
 }
 
 .not-found .not-found-content a{
@@ -72,3 +73,24 @@
     background: linear-gradient(45deg, #8c00ff, #5186f8);
     height: 91.5vh;
 }
+
+
+
+
+
+
+@media only screen and (max-width: 500px) {
+    .not-found .not-found-content h4{
+        font-size: 1.25em;
+        margin-bottom: 15px;
+        padding: 8px 16px;
+    }
+    
+    .not-found .not-found-content p{
+        font-size: 1em;
+    }
+
+    .not-found .not-found-content a {
+        padding: 10px 18px;
+    }
+  }
