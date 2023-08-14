@@ -1,21 +1,24 @@
 import { html, render } from '../../node_modules/lit-html/lit-html.js';
+import { isProfileOwner } from '../services/authServices.js';
 import { reviewTemplate } from './details.js';
 
-export const userReviews = (ctx, user, reviews, isProfileGuest) => html`
+export const userReviews = (ctx, user, reviews, isProfileOwner) => html`
+${console.log(`is guest: ${isProfileOwner}`)}
   <h2 class="myReviews-heading">${user.username}'s reviews:</h2>
   <div class="user-reviews">
   ${reviews.length == 0
         ? html`<h2 id='no-movies-msg'>${isProfileGuest ? `${user.username} has no reviews yet.` : 'You have no reviews yet.'}</h2>`
-        : html`${reviews.map(rev => reviewTemplate(ctx, rev, user, isProfileGuest))}`}
+        : html`${reviews.map(rev => reviewTemplate(ctx, rev, user, isProfileOwner))}`}
   </div>
 `
 
 
 
-export async function renderUserReviews(ctx, ev, user, reviews, isProfileGuest) {
+export async function renderUserReviews(ctx, ev, user, reviews) {
   ev.preventDefault();
   const reviewSection = document.querySelector(".review-section");
-  const myReviews = userReviews(ctx, user, reviews, isProfileGuest);
+  const profileOwner = await isProfileOwner(user.id)
+  const myReviews = userReviews(ctx, user, reviews, profileOwner);
   const action = 'show';
   
   render(myReviews, reviewSection);

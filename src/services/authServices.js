@@ -84,14 +84,21 @@ export async function getUser(id = null) {
 };
 
 
-export function getUserId() {
-  let user = getUser();
+export async function getUserId() {
+  let user = await getUser();
+
   try {
     return user.id;
   } catch (error) {
     return;
   }
 };
+
+export async function isProfileOwner(profileId) {
+  const currentUserId = await getUserId();
+  console.log(`Target profile id: ${profileId} ...  current user id: ${currentUserId}`);
+  return currentUserId === profileId;
+}
 
 
 export async function getAllUsernames() {
