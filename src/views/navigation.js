@@ -74,11 +74,11 @@ const navTemplate = (isAuthorized, user, ctx) => html`
 
         ${isAuthorized ?
         html`
-        <li id='user-photo-wrapper' @click="${toggleMenu}" ><img class="user-pic" src="${user.profileImg}" onerror="this.onerror=null;this.src='../../images/default-user.png';"></li>
+        <li id='user-photo-wrapper' @click="${toggleMenu}" ><img class="user-pic" src="${user.profile.profile_picture}" onerror="this.onerror=null;this.src='../../images/default-user.png';"></li>
         <li  class="sub-menu-wrap" id="subMenu">
             <div  class="sub-menu">
                 <div class="user-info">
-                <img src="${user.profileImg}" onerror="this.onerror=null;this.src='../../images/default-user.png';">
+                <img src="${user.profile.profile_picture}" onerror="this.onerror=null;this.src='../../images/default-user.png';">
                     <h3>${user.username}</h3>
                 </div>
                 <hr>

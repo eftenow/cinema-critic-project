@@ -66,9 +66,8 @@ export async function renderPopular(ctx) {
       getUserBookmarks(currentUser ? currentUser.id : null),
     ]);
 
-    userBookmarks = userBookmarks.map(bookmark => bookmark.id);
-
-    const popular = popularMoviesTemplate(ctx, popularMovies, currentUser, userBookmarks);
+    userBookmarks = userBookmarks ? userBookmarks.map(bookmark => bookmark.id): '';
+    console.log(popularMovies);    const popular = popularMoviesTemplate(ctx, popularMovies, currentUser, userBookmarks);
     ctx.render(popular);
 };
 
