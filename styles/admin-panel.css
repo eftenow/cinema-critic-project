@@ -140,6 +140,10 @@
     font-size: 1.5rem;
 }
 
+.staff-role{
+    color: #8e47f8;
+}
+
 .search-wrapper-admin input{
     height: 100%;
     padding: 0.4rem 3rem 0.4rem 0.7rem;

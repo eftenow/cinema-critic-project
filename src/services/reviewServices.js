@@ -19,7 +19,8 @@ export async function getReviewById(id) {
 
 export async function getAllReviews() {
   const reviews = await get(endpoints.allReviews);
-  const reviewsFound = movies.results;
+  const reviewsFound = reviews.data;
+  console.log(reviewsFound);
   return reviewsFound;
 }
 

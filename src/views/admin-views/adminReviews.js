@@ -6,19 +6,20 @@ import { editAdminReviewHandler } from './adminEditReview.js';
 import { setActiveNavLink } from './adminNavigation.js';
 
 const reviewTemplateAdmin = (review, ctx) => {
+  console.log(review);
   const path =
-    review.target.className === 'Show'
-      ? `/series/${review.target.id}`
-      : review.target.className === 'Movie'
-      ? `/movie/${review.target.id}`
+    review.content_type === 'show'
+      ? `/series/${review.object_id}`
+      : review.content_type === 'movie'
+      ? `/movie/${review.object_id}`
       : '';
 
   return html`
     <tr>  
-      <td>${review.reviewTitle}</td>
-      <td>${review.creator}</td>
-      <td>${review.reviewRating}</td>
-      <td>${review.title}</td>
+      <td>${review.review_title}</td>
+      <td>${review.user}</td>
+      <td>${review.rating}</td>
+      <td>${review.content_type}</td>
       <td>
         <button @click="${(e) => editAdminReviewHandler(ctx, e, review.id, review.target)}" class='edit-btn-admin'><i class="fas fa-edit"></i></button>
         <button @click="${(e) => deleteReview(e, review.id, ctx, review.target)}" class='delete-btn-admin'><i class="fas fa-trash"></i></button>

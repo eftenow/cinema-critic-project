@@ -23,8 +23,7 @@ const endpoints = {
 
 export async function getAllMovies() {
     const movies = await get(endpoints.allMovies);
-    const moviesFound = movies.results;
-    return moviesFound;
+    return movies.data.results;
 };
 
 export async function getTopMovies() {
@@ -71,8 +70,7 @@ export async function deleteMovie(id) {
 ////SERIES
 export async function getAllSeries() {
     const series = await get(endpoints.allSeries);
-    const seriesFound = series.results;
-    return seriesFound;
+    return series.data;
 };
 
 

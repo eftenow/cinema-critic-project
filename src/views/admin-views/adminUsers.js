@@ -10,7 +10,8 @@ const userTemplateAdmin = (user, ctx) => html`
 <tr>
       <td>${user.username}</td>
       <td>${user.email}</td>
-      <td>${user.role}</td>
+      <td>${user.role == 'Administrator' || user.role == 'Moderator' ? html`<strong class='staff-role' >${user.role}</strong>` : user.role}</td>
+
       <td>
         <button @click='${(e) => editUserData(ctx, e, user)}' class='edit-btn-admin'><i class="fas fa-edit"></i></button>
         <button @click='${() => deleteUserById(user.id)}' class='delete-btn-admin'><i class="fas fa-trash"></i></button>
