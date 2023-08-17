@@ -1,4 +1,4 @@
-import { get, post, put, request } from './api.js';
+import { del, get, post, put, request } from './api.js';
 
 
 const endpoints = {
@@ -119,9 +119,11 @@ export async function getAllEmails() {
 };
 
 
-export async function deleteUserById(objectId) {
-  await post(endpoints.logout);
-  await post(endpoints.delete(objectId)) 
+export async function deleteUserById(objectId, ctx) {
+  // await post(endpoints.logout);
+  await del(endpoints.delete(objectId)) ;
+  ctx.redirect('/admin/users')
+  return null;
 }
 
 
@@ -144,9 +146,24 @@ export async function getUserByUsername(username) {
       throw new Error(`HTTP error, status = ${response.status}`);
     }
     
-    const user = response.data.find(user => user.username === username);
-    return user || null;
+    const user = response.data.find(u => u.username === username);
+    
+    if (!user) {
+      console.error('User not found');
+      return null;
+    }
+
+    const userDetailResponse = await get(endpoints.details(user.id));
+    
+    if (userDetailResponse.status !== 200) {
+      throw new Error(`HTTP error while fetching user details, status = ${userDetailResponse.status}`);
+    }
+
+    return userDetailResponse.data || null;
+
   } catch (error) {
+    console.error('Error fetching user:', error);
     return null;
   }
 }
+

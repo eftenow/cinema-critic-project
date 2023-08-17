@@ -15,7 +15,7 @@ const userTemplateAdmin = (user, ctx) => html`
 
       <td>
         <button @click='${(e) => editUserData(ctx, e, user)}' class='edit-btn-admin'><i class="fas fa-edit"></i></button>
-        <button @click='${() => deleteUserById(user.id)}' class='delete-btn-admin'><i class="fas fa-trash"></i></button>
+        <button @click='${() => deleteUserById(user.id, ctx)}' class='delete-btn-admin'><i class="fas fa-trash"></i></button>
         <a @click=${scrollToTop} href="/user/${user.username}" class='forward-btn-admin'><i class="fa-solid fa-share-from-square"></i></a>
       </td>
     </tr>
@@ -49,7 +49,6 @@ export async function renderUsersAdmin(ctx) {
 
 
 export async function editUserData(ctx, ev, user) {
-  console.log(user);
   ev.preventDefault();
 
   const modal = document.querySelector('.modal');
@@ -57,8 +56,7 @@ export async function editUserData(ctx, ev, user) {
 
   const editReviewForm = document.querySelector('.modal');
   const userToEdit = await getUser(user.id)
-  console.log(user.id);
-  console.log(userToEdit);
+
   render(editUserFormTemplate(userToEdit, ctx), editReviewForm);
 };
 

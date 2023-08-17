@@ -36,7 +36,7 @@ const adminNavTemplate = (user, ctx) => html`
         </nav>
     </div>
 </section>
-<section class="navigation-admin"> <!-- main-content -->
+<section class="navigation-admin"> 
     <header class="admin-header">
         <h2>
             <label for="nav-toggle">
@@ -45,12 +45,13 @@ const adminNavTemplate = (user, ctx) => html`
             Dashboard
         </h2>
 
-        <div class="search-wrapper-admin"> <!-- search-wrapper -->
+        <div class="search-wrapper-admin"> 
             <span class=""></span>
             <input type="search" placeholder="Search...">
         </div>
 
-        <div class="user-wrapper-admin"> <!-- user-wrapper -->
+        <div class="user-wrapper-admin"> 
+            ${console.log(user)}
             <img width="40px" height="40px" src="${user.profile.profile_picture}" onerror="this.onerror=null;this.src='../../../images/default-user.png';">
             <div>
             <h4>${user.username}</h4>
