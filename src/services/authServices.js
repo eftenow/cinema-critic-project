@@ -1,8 +1,5 @@
 import { get, post, put, request } from './api.js';
-import { APP_ID, JS_KEY } from "../../secrets.js";
 
-Parse.initialize(APP_ID, JS_KEY);
-Parse.serverURL = 'https://parseapi.back4app.com/';
 
 const endpoints = {
   'login': '/account/login/',
@@ -18,8 +15,9 @@ const endpoints = {
 }
 
 export async function getUsersCount() {
-  const response = await get(endpoints.users, { count: 1 });
-  return response.count;
+  const response = await get(endpoints.users);
+
+  return response.data.length;
 };
 
 export async function loginUser(username, password) {

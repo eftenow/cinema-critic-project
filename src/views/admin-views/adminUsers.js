@@ -1,6 +1,7 @@
 import { html, render } from '../../../node_modules/lit-html/lit-html.js';
 import { scrollToTop } from '../../../utils/backToTopBtn.js';
 import { hideModal } from '../../../utils/reviewOperations.js';
+import { getAllUsersAdmin } from '../../services/adminServices.js';
 import { deleteUserById, getAllUsernames, getAllUsers } from '../../services/authServices.js';
 import { cancelChangesHandler, saveChangesHandler } from '../edit-profile.js';
 import { setActiveNavLink } from './adminNavigation.js';
@@ -8,7 +9,7 @@ import { setActiveNavLink } from './adminNavigation.js';
 const userTemplateAdmin = (user, ctx) => html`
 <tr>
       <td>${user.username}</td>
-      <td>${user.emailAddress}</td>
+      <td>${user.email}</td>
       <td>${user.role}</td>
       <td>
         <button @click='${(e) => editUserData(ctx, e, user)}' class='edit-btn-admin'><i class="fas fa-edit"></i></button>
@@ -36,7 +37,7 @@ const adminUsersTemplate = (ctx, users) => html`
 `
 
 export async function renderUsersAdmin(ctx) {
-  const users = await getAllUsers();
+  const users = await getAllUsersAdmin();
 
   const siteUsers = adminUsersTemplate(ctx, users);
   setActiveNavLink('/admin/users');

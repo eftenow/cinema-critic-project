@@ -24,8 +24,8 @@ export async function getAllReviews() {
 }
 
 export async function getReviewsCount() {
-  const response = await get(endpoints.allReviews, { count: 1 });
-  return response.count;
+  const response = await get(endpoints.allReviews);
+  return response.data.length;
 };
 
 export async function sendReviewRequest(review) {

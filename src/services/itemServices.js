@@ -33,8 +33,8 @@ export async function getTopMovies() {
   }
 
 export async function getMoviesCount() {
-    const response = await get(endpoints.allMovies, { count: 1 });
-    return response.count;
+    const response = await get(endpoints.allMovies);
+    return response.data.results.length;
 };
 export async function createNewMovie(newMovie) {
     try {
@@ -77,8 +77,9 @@ export async function getAllSeries() {
 
 
 export async function getSeriesCount() {
-    const response = await get(endpoints.allSeries, { count: 1 });
-    return response.count;
+    const response = await get(endpoints.allSeries);
+
+    return response.data.length;
 }
 
 export async function createNewSeire(newSeries) {
