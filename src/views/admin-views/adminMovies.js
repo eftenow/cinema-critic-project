@@ -25,7 +25,7 @@ const adminMoviesTemplate = (ctx, movies) => html`
 const movieTemplateAdmin = (movie, ctx) => html`
 <tr>  
       <td>${movie.name}</td>
-      <td>${movie.genres}</td>
+      <td>${movie.genres.join(', ')}</td>
       <td>${movie.rating}</td>
       <td>${movie.visits}</td>
       <td>

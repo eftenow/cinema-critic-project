@@ -51,10 +51,10 @@ const adminNavTemplate = (user, ctx) => html`
         </div>
 
         <div class="user-wrapper-admin"> <!-- user-wrapper -->
-            <img width="40px" height="40px" src="${user.profileImg}" onerror="this.onerror=null;this.src='../../../images/default-user.png';">
+            <img width="40px" height="40px" src="${user.profile.profile_picture}" onerror="this.onerror=null;this.src='../../../images/default-user.png';">
             <div>
             <h4>${user.username}</h4>
-            <small>Administrator</small>
+            <small>${user.role}</small>
             </div>
         </div>
     </header>
@@ -69,9 +69,9 @@ const adminNavTemplate = (user, ctx) => html`
 
 `;
 
-export function showAdminNavigation(ctx) {
+export async function showAdminNavigation(ctx) {
     const isAuthorized = getUser() !== null;
-    const user = getUser();
+    const user = await getUser();
     const adminNav = adminNavTemplate(user, ctx);
     const body = document.querySelector('body');
 

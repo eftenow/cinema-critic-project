@@ -7,7 +7,7 @@ import { setActiveNavLink } from './adminNavigation.js';
 const seriesTemplateAdmin = (series, ctx) => html`
 <tr>  
       <td>${series.name}</td>
-      <td>${series.genres}</td>
+      <td>${series.genres.join(', ')}</td>
       <td>${series.rating}</td>
       <td>${series.visits}</td>
       <td>

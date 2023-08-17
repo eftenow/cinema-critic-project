@@ -14,6 +14,7 @@ export const profileTemplate = (ctx, user) => html`
             onerror="this.onerror=null;this.src='../../images/default-user.png';">
         <i class="fa-solid fa-camera"></i>
         <input type='text' placeholder="Avatar image url" id="new-avatar-url" value="${user.profile.profile_picture}">
+        
 
     </div>
     <form @submit ="${(e) => saveChangesHandler(e, ctx, '/myProfile', user.id)}">

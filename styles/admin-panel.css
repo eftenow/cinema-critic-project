@@ -161,10 +161,21 @@
     margin-right: 1rem;
 }
 
-.user-wrapper-admin small{
+.user-wrapper-admin small,
+.user-role{
     display: inline-block;
     color: var(--text-grey);
     margin-top: -10px !important;
+}
+
+.user-role-set{
+    background-color: #1D2231;
+    color: #fff;
+    text-align: center;
+    width: fit-content;
+    padding: 8px;
+    border-radius: 6px;
+    margin: 0 auto;
 }
 
 .main-section-admin{
