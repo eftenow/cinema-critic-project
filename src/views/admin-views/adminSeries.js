@@ -1,6 +1,6 @@
 import { html, render } from '../../../node_modules/lit-html/lit-html.js';
 import { scrollToTop } from '../../../utils/backToTopBtn.js';
-import { deleteSeries, getAllSeries } from '../../services/itemServices.js';
+import { deleteMovie, deleteSeries, getAllSeries } from '../../services/itemServices.js';
 import { renderEditMovieAdmin } from './adminEditMovie.js';
 import { setActiveNavLink } from './adminNavigation.js';
 
@@ -11,8 +11,8 @@ const seriesTemplateAdmin = (series, ctx) => html`
       <td>${series.rating}</td>
       <td>${series.visits}</td>
       <td>
-        <button @click='${(e) => renderEditMovieAdmin(e, series.id, ctx, 'series')}' class='edit-btn-admin'><i class="fas fa-edit"></i></button>
-        <button @click='${() => deleteSeries(series.id)}' class='delete-btn-admin'><i class="fas fa-trash"></i></button>
+        <button @click='${(e) => renderEditMovieAdmin(e, series.id, ctx, series.type)}' class='edit-btn-admin'><i class="fas fa-edit"></i></button>
+        <button @click='${() => handleDelete(series, ctx)}' class='delete-btn-admin'><i class="fas fa-trash"></i></button>
         <a @click=${scrollToTop} href="/${series.type}/${series.id}" class='forward-btn-admin'><i class="fa-solid fa-share-from-square"></i></a>
       </td>
     </tr>
@@ -43,3 +43,16 @@ export async function renderSeriesAdmin(ctx) {
     ctx.render(siteSeries);
 }
 
+
+
+export function handleDelete(content, ctx) {
+  if(content.type == 'movie'){
+    deleteMovie(content.id);
+  } else{
+    deleteSeries(content.id);
+  }
+  const targetLocation = window.location.pathname;
+  console.log(targetLocation);
+  console.log(ctx);
+  return ctx.redirect(targetLocation)
+} 

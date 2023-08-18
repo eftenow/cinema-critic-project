@@ -29,7 +29,7 @@ const movieTemplateAdmin = (movie, ctx) => html`
       <td>${movie.rating}</td>
       <td>${movie.visits}</td>
       <td>
-        <button @click='${(e) => renderEditMovieAdmin(e, movie.id, ctx)}' class='edit-btn-admin'><i class="fas fa-edit"></i></button>
+        <button @click='${(e) => renderEditMovieAdmin(e, movie.id, ctx, movie.type)}' class='edit-btn-admin'><i class="fas fa-edit"></i></button>
         <button @click='${() => deleteMovie(movie.id)}' class='delete-btn-admin'><i class="fas fa-trash"></i></button>
         <a @click=${scrollToTop} href="/${movie.type}/${movie.id}" class='forward-btn-admin'><i class="fa-solid fa-share-from-square"></i></a>
       </td>

@@ -79,6 +79,7 @@ ${genres.map(genre => html`
 
 export async function renderEditMovieAdmin(ev, movieId, ctx, type) {
   let movie;
+
   ev.preventDefault();
   if (type=='series'){
     movie = await getSeriesDetails(movieId);
@@ -90,8 +91,9 @@ export async function renderEditMovieAdmin(ev, movieId, ctx, type) {
   const genres = await getAllGenres();
 
   const editMovieForm = document.querySelector('.modal');
-  
-  render(editMovieTemplate(movie, ctx, genres), editMovieForm);
+  const editTemplate = editMovieTemplate(movie, ctx, genres);
+  console.log(editTemplate);
+  render(editTemplate, editMovieForm);
 }
 
 
