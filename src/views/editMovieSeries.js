@@ -59,10 +59,10 @@ ${genres.map(genre => html`
     <input value=${movie.episodes} type="number" id="create-episodes" name="create-episodes" class="create-form-control create-episodes">
     <p class='incorrect-episodes-msg incorrect-create'></p>
   </div>`
-   : ''}
+    : ''}
 
   <div class="create-form-group">
-    <label for="create-length">${type=='series' ? 'Episode length:' : 'Movie length:'}</label>
+    <label for="create-length">${type == 'series' ? 'Episode length:' : 'Movie length:'}</label>
     <input value=${movie.length} type="text" id="create-length" name="create-length" class="create-form-control create-length">
     <p class='incorrect-length-msg incorrect-create'></p>
   </div>
@@ -120,28 +120,28 @@ async function editHandler(ev, ctx, type, id) {
   let genres = document.getElementById('genres-selected').textContent;
   let stars = form.get('create-stars');
   let trailer = form.get('create-trailer');
-  let length =  form.get('create-length');
+  let length = form.get('create-length');
 
   genres = genres.split(', ');
-  let editedContent = {id, name,  year, director, stars, genres, trailer, image, length, description }
+  let editedContent = { id, name, year, director, stars, genres, trailer, image, length, description }
 
 
   let createdItem;
   let isSeries = false
 
-    if(type == 'series'){
-        editedContent['episodes'] = Number(form.get('create-episodes'));
-        editedContent['seasons'] = Number(form.get('create-seasons'));
-        isSeries = true
-        createdItem = await editExistingSeries(id, editedContent);
-    } else{
-        createdItem = await editExistingMovie(id, editedContent);
-    };
+  if (type == 'series') {
+    editedContent['episodes'] = Number(form.get('create-episodes'));
+    editedContent['seasons'] = Number(form.get('create-seasons'));
+    isSeries = true
+    createdItem = await editExistingSeries(id, editedContent);
+  } else {
+    createdItem = await editExistingMovie(id, editedContent);
+  };
 
-    const hasErrors = raiseCreateErrors(createdItem, isSeries);
+  const hasErrors = raiseCreateErrors(createdItem, isSeries);
 
-    if (!hasErrors) {
-        ctx.redirect(`/${type}/${id}`);
-    }
-    
+  if (!hasErrors) {
+    ctx.redirect(`/${type}/${id}`);
+  }
+
 };

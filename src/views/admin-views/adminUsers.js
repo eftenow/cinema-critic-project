@@ -64,7 +64,7 @@ const editUserFormTemplate = (user, ctx) => html`
      <div class="edit-profile admin-edit-modal">
     <div class="info" id='edit-pic-container'>
         <img class="edit-avatar" src="${user.profile.profile_picture}"
-            onerror="this.onerror=null;this.src='../../images/default-user.png';">
+            onerror="this.onerror=null;this.src='../../../images/default-user.png';">
         <i class="fa-solid fa-camera"></i>
         
         <input type='text'  id="new-avatar-url" value="${user.profile.profile_picture}">

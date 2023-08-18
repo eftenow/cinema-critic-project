@@ -1,20 +1,35 @@
 import { html, render } from '../../../node_modules/lit-html/lit-html.js';
 import { hideModal } from '../../../utils/reviewOperations.js';
-import { getMovieDetails, getSeriesDetails, editExistingMovie, editExistingSeries } from "../../services/itemServices.js";
+import { getMovieDetails, getSeriesDetails, editExistingMovie, editExistingSeries, getAllGenres } from "../../services/itemServices.js";
 
-const editMovieTemplate = (movie, ctx) => html`
+const editMovieTemplate = (movie, ctx, genres) => html`
 <section class='create-section admin-edit-movie'>
     ${movie.type == 'series' ? html`<h2 class='create-title'>Edit Serie</h2>` : html`<h2 class='create-title'>Edit Movie</h2>`}
-<form data-type="${movie.type}" id='${movie.id}' class='create-form' @submit="${(e) => editHandler(e, ctx)}">
+<form data-type="${movie.type}" id='${movie.id}' class='create-form' @submit="${(e) => editHandler(e, ctx, movie.type, movie.id)}">
 
 <div class="create-form-group">
     <label for="create-title-field">Title:</label>
-    <input value='${movie.name}' type="text" id="create-title-field" name="create-title-field" class="create-form-control create-title-field" required>
+    <input type="text" id="create-title-field" name="create-title-field" class="create-form-control create-title-field" value=${movie.name}>
+    <p class='incorrect-title-msg incorrect-create'></p>
   </div>
+
   <div class="create-form-group">
-    <label for="create-genre">Genre:</label>
-    <input value='${movie.genres}' type="text" id="create-genre" name="create-genre" class="create-form-control create-genre" required>
-  </div>
+  <label for="create-genres-field">Genres (up to 4):</label>
+  <div class="container-genre-select">
+  <div class="select-btn-genre">
+  <span  id='genres-selected' class="btn-text-genre">${movie.genres.join(', ')}</span>
+  <span class="arrow-dwn-genre">
+    <i class="fa-solid fa-chevron-down"></i>
+  </span>
+</div>
+<ul class="list-items-genre">
+${genres.map(genre => html`
+  <li class="${movie.genres.includes(genre) ? 'item-genre checked checked-genre' : 'item-genre'}">${genre}</li>
+`)}
+</ul>
+</div>
+<p class='incorrect-genre-msg incorrect-create'></p>
+</div>
   <div class="create-form-group">
     <label for="create-imageUrl">Image url:</label>
     <input value='${movie.image}' type="text" id="create-imageUrl" name="create-imageUrl" class="create-form-control create-imageUrl" required>
@@ -40,7 +55,7 @@ const editMovieTemplate = (movie, ctx) => html`
 
   <div class="create-form-group">
     <label for="create-length">Length:</label>
-    <input value='${movie.movieLength}' type="text" id="create-length" name="create-length" class="create-form-control create-length" required>
+    <input value='${movie.length}' type="text" id="create-length" name="create-length" class="create-form-control create-length" required>
   </div>
   <div class="create-form-group">
     <label for="create-year">Release Year:</label>
@@ -72,37 +87,41 @@ export async function renderEditMovieAdmin(ev, movieId, ctx, type) {
   }
   const modal = document.querySelector('.modal');
   modal.style.display = 'block';
+  const genres = await getAllGenres();
 
   const editMovieForm = document.querySelector('.modal');
-  render(editMovieTemplate(movie, ctx), editMovieForm);
+  
+  render(editMovieTemplate(movie, ctx, genres), editMovieForm);
 }
 
 
 
-async function editHandler(ev, ctx) {
+async function editHandler(ev, ctx, type, id) {
   ev.preventDefault();
-  const id = ev.target.id;
-  const type = ev.target.getAttribute("data-type");
-  const form = new FormData(ev.target);
-  const name = form.get('create-title-field');
-  const year = Number(form.get('create-year'));
-  let rating;
-  const image = form.get('create-imageUrl');
-  const description = form.get('create-description');
-  const director = form.get('create-director');
-  const genres = form.get('create-genre');
-  const stars = form.get('create-stars');
-  const trailer = form.get('create-trailer');
-  const movieLength =  form.get('create-length');
+  let form = new FormData(ev.target);
+  let name = form.get('create-title-field');
+  let year = Number(form.get('create-year'));
+  let image = form.get('create-imageUrl');
 
-  const updatedItem = { name, type, year, rating, image, description, stars, director, genres, trailer, movieLength };
+  let description = form.get('create-description');
+  let director = form.get('create-director');
+  let genres = document.getElementById('genres-selected').textContent;
+  let stars = form.get('create-stars');
+  let trailer = form.get('create-trailer');
+  let length = form.get('create-length');
+
+
+  genres = genres.split(', ');
+  let updatedItem = { id, name, year, director, stars, genres, trailer, image, length, description}
+
   if (Object.values(updatedItem).some((x) => !x && x != rating)) {
     return alert('All fields must be filled!');
   }
 
   if (type === 'series') {
-    updatedItem['episodes'] = Number(form.get('edit-episodes'));
-    updatedItem['seasons'] = Number(form.get('edit-seasons'));
+    updatedItem['episodes'] = Number(form.get('create-episodes'));
+    updatedItem['seasons'] = Number(form.get('create-seasons'));
+    console.log(updatedItem);
     await editExistingSeries(id, updatedItem);
   } else {
     await editExistingMovie(id, updatedItem);

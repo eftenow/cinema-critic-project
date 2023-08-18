@@ -51,7 +51,6 @@ const adminNavTemplate = (user, ctx) => html`
         </div>
 
         <div class="user-wrapper-admin"> 
-            ${console.log(user)}
             <img width="40px" height="40px" src="${user.profile.profile_picture}" onerror="this.onerror=null;this.src='../../../images/default-user.png';">
             <div>
             <h4>${user.username}</h4>
