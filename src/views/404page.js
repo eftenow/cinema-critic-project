@@ -1,6 +1,6 @@
 import { html } from '../../node_modules/lit-html/lit-html.js';
 
-const page404Template = () => html`
+export const page404Template = () => html`
  <div class='wrapper-404'>
  <section class="not-found">
         <div class='not-found-content'>

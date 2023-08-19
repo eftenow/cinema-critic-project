@@ -1,4 +1,4 @@
-import { html, render } from '../../../node_modules/lit-html/lit-html.js';
+import { html, render} from '../../../node_modules/lit-html/lit-html.js';
 import { getUser } from '../../services/authServices.js';
 
 
@@ -72,6 +72,10 @@ const adminNavTemplate = (user, ctx) => html`
 export async function showAdminNavigation(ctx) {
     const isAuthorized = getUser() !== null;
     const user = await getUser();
+
+    if (!user || user.role !== 'Administrator') {
+        ctx.redirect('/404')
+    }
     const adminNav = adminNavTemplate(user, ctx);
     const body = document.querySelector('body');
 
@@ -80,9 +84,17 @@ export async function showAdminNavigation(ctx) {
 
 
 export function setActiveNavLink(path) {
-    const selectedSection = document.querySelector(`a[href="${path}"]`);
- 
-    const navLinks = document.querySelectorAll('.sidebar-menu li a');
-    navLinks.forEach(link => link.classList.remove('active-admin'));
-    selectedSection.classList.add('active-admin');
+    setTimeout(() => {
+        console.log(path);
+        
+        const selectedSection = document.querySelector(`a[href="${path}"]`);
+        console.log(selectedSection);
+
+        const navLinks = document.querySelectorAll('.sidebar-menu li a');
+        navLinks.forEach(link => link.classList.remove('active-admin'));
+
+        if (selectedSection) {
+            selectedSection.classList.add('active-admin');
+        }
+    }, 0);
 }

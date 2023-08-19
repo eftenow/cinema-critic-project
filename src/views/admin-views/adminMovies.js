@@ -3,6 +3,7 @@ import { scrollToTop } from '../../../utils/backToTopBtn.js';
 import { deleteMovie, getAllMovies } from '../../services/itemServices.js';
 import { renderEditMovieAdmin } from './adminEditMovie.js';
 import { setActiveNavLink } from './adminNavigation.js';
+import { handleDelete } from './adminSeries.js';
 
 const adminMoviesTemplate = (ctx, movies) => html`
     <h2 class='admin-table-header'>Movies</h2>
@@ -30,7 +31,7 @@ const movieTemplateAdmin = (movie, ctx) => html`
       <td>${movie.visits}</td>
       <td>
         <button @click='${(e) => renderEditMovieAdmin(e, movie.id, ctx, movie.type)}' class='edit-btn-admin'><i class="fas fa-edit"></i></button>
-        <button @click='${() => deleteMovie(movie.id)}' class='delete-btn-admin'><i class="fas fa-trash"></i></button>
+        <button @click='${(e) => handleDelete(e, movie, ctx)}' class='delete-btn-admin'><i class="fas fa-trash"></i></button>
         <a @click=${scrollToTop} href="/${movie.type}/${movie.id}" class='forward-btn-admin'><i class="fa-solid fa-share-from-square"></i></a>
       </td>
     </tr>

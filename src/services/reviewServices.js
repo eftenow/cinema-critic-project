@@ -154,7 +154,6 @@ export async function deleteReview(ev, reviewId, ctx, target) {
   ev.preventDefault();
   const reviewForm = document.querySelector('.add-review-form') || null;
   
-  
   await del(endpoints.reviewDetails(reviewId) + '/');
   
   showNotification('Review deleted successfully');
