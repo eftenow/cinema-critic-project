@@ -14,7 +14,7 @@ const endpoints = {
 export async function getReviewById(id) {
   let review = await get(endpoints.reviewDetails(id) + '/');
 
-  return review;
+  return review.data;
 }
 
 export async function getAllReviews() {
