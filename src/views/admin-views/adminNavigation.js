@@ -85,10 +85,7 @@ export async function showAdminNavigation(ctx) {
 
 export function setActiveNavLink(path) {
     setTimeout(() => {
-        console.log(path);
-        
         const selectedSection = document.querySelector(`a[href="${path}"]`);
-        console.log(selectedSection);
 
         const navLinks = document.querySelectorAll('.sidebar-menu li a');
         navLinks.forEach(link => link.classList.remove('active-admin'));

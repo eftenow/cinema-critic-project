@@ -6,7 +6,6 @@ import { hideUserReviews, renderUserReviews } from './userReviews.js';
 import { hideUserWatchlist, renderUserWatchlist } from './userWatchlist.js';
 
 export const profileTemplate = (ctx, user, userReviews, isProfileGuest) => html`
-${console.log(user)}
 <div class="user-container">
     <div class="user-card">
         <img class="profile-img" src="${user.profile.profile_picture}"

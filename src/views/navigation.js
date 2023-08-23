@@ -25,11 +25,15 @@ const navTemplate = (isAuthorized, user, ctx) => html`
             </form>
         </li>
         <li id='navMoviesSeries'><a class='nav-btns' href="/dashboard">Movies and Shows</a></li>
-        ${isAuthorized
-        ? html`
+${console.log(user)}
+${isAuthorized && (user.role == 'Administrator' || user.role == 'Moderator')
+    ? html`
         <li><a class='nav-btns' href="/createMovie">Create Movie</a></li>
-        <li><a class='nav-btns' href="/createSerie">Create Series</a></li>` : ''}
-        <li><a class='nav-btns' href="/popular">Popular</a></li>
+        <li><a class='nav-btns' href="/createSerie">Create Series</a></li>`
+    : ''
+}
+<li><a class='nav-btns' href="/popular">Popular</a></li>
+
         <li id='burger-btn' @click="${toggleNavMenu}" ><span class="fa-solid fa-bars"></span></li>
         <li  class="sub-menu-options-wrap" id="subMenuOptions">
             <div  class="sub-menu-options">
@@ -51,6 +55,8 @@ const navTemplate = (isAuthorized, user, ctx) => html`
                     <p>Register</p>
                     <span>></span></a>`
         : html`
+                ${user.role == 'Administrator' || user.role == 'Moderator'
+                ?`
                 <a class=sub-menu-link href="/createMovie" @click="${toggleNavMenu}">
                     <p>Create Movie</p>
                     <span>></span></a>
@@ -60,6 +66,8 @@ const navTemplate = (isAuthorized, user, ctx) => html`
                     <span>></span>
                 </a>
                 `
+                : ""}
+        `
     }
                 <a class=sub-menu-link href="/dashboard" @click="${toggleNavMenu}">
                     <p>Movies and Shows</p>
@@ -97,7 +105,7 @@ const navTemplate = (isAuthorized, user, ctx) => html`
                     <p>Logout</p>
                     <span>></span>
                 </a>
-                ${user.id == adminId ? html`
+                ${user.role == 'Administrator' ? html`
                 <a href="/admin" class=sub-menu-link @click="${toggleMenu}">
                 <i class="fa-solid fa-wrench"></i>
                     <p>Admin Panel</p>

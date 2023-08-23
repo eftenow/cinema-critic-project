@@ -1,23 +1,23 @@
 import { html, render } from '../../../node_modules/lit-html/lit-html.js';
 import { scrollToBottom } from '../../../utils/backToTopBtn.js';
 import { deleteReviewHandler, editReviewHandler } from '../../../utils/reviewOperations.js';
+import { getUserById } from '../../services/authServices.js';
 import { deleteReview, getAllReviews } from '../../services/reviewServices.js';
 import { editAdminReviewHandler } from './adminEditReview.js';
 import { setActiveNavLink } from './adminNavigation.js';
 
-const reviewTemplateAdmin = (review, ctx) => {
-  console.log(review);
+const reviewTemplateAdmin = (review, ctx, username) => {
   const path =
     review.content_type === 'show'
       ? `/series/${review.object_id}`
       : review.content_type === 'movie'
-      ? `/movie/${review.object_id}`
-      : '';
+        ? `/movie/${review.object_id}`
+        : '';
 
   return html`
     <tr>  
       <td>${review.review_title}</td>
-      <td>${review.user}</td>
+      <td>${username}</td>
       <td>${review.rating}</td>
       <td>${review.content_type}</td>
       <td>
@@ -30,7 +30,7 @@ const reviewTemplateAdmin = (review, ctx) => {
   `;
 };
 
-const adminReviewsTemplate = (ctx, reviews) => html`
+const adminReviewsTemplate = (ctx, reviews, usernames) => html`
     <h2 class='admin-table-header'>Reviews</h2>
   <table class="movie-table">
   <thead>
@@ -43,7 +43,7 @@ const adminReviewsTemplate = (ctx, reviews) => html`
     </tr>
   </thead>
   <tbody>
-  ${reviews.map(review => reviewTemplateAdmin(review, ctx))}
+  ${reviews.map((review, index) => reviewTemplateAdmin(review, ctx, usernames[index]))}
   </tbody>
 </table>
 `
@@ -51,8 +51,18 @@ const adminReviewsTemplate = (ctx, reviews) => html`
 
 
 export async function renderReviewsAdmin(ctx) {
-    const reviews = await getAllReviews();
-    const siteReviews = adminReviewsTemplate(ctx, reviews);
-    setActiveNavLink('/admin/reviews');
-    ctx.render(siteReviews);
+  const reviews = await getAllReviews();
+  const usernames = [];
+
+  for (const review of reviews) {
+    const user = await getUserById(review.user);
+    if (user && user.username) {
+      usernames.push(user.username);
+    }
+  }
+
+
+  const siteReviews = adminReviewsTemplate(ctx, reviews, usernames);
+  setActiveNavLink('/admin/reviews');
+  ctx.render(siteReviews);
 }

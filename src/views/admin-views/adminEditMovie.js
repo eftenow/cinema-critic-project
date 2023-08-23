@@ -92,7 +92,6 @@ export async function renderEditMovieAdmin(ev, movieId, ctx, type) {
 
   const editMovieForm = document.querySelector('.modal');
   const editTemplate = editMovieTemplate(movie, ctx, genres);
-  console.log(editTemplate);
   render(editTemplate, editMovieForm);
 }
 
@@ -123,7 +122,6 @@ async function editHandler(ev, ctx, type, id) {
   if (type === 'series') {
     updatedItem['episodes'] = Number(form.get('create-episodes'));
     updatedItem['seasons'] = Number(form.get('create-seasons'));
-    console.log(updatedItem);
     await editExistingSeries(id, updatedItem);
   } else {
     await editExistingMovie(id, updatedItem);

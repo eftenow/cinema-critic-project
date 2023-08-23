@@ -3,7 +3,6 @@ import { isProfileOwner } from '../services/authServices.js';
 import { reviewTemplate } from './details.js';
 
 export const userReviews = (ctx, user, reviews, isProfileOwner) => html`
-${console.log(`is guest: ${isProfileOwner}`)}
   <h2 class="myReviews-heading">${user.username}'s reviews:</h2>
   <div class="user-reviews">
   ${reviews.length == 0

@@ -21,7 +21,6 @@ ${currentUser && (currentUser.id == review.user || review.user.id == currentUser
     : ''}
     <h3 class="review-title-details">${review.review_title}</h3>
     <div class="review-header">
-  ${console.log(review)}
     <a href='user/${review.username || review.user.username}'><img src="${isProfileOwner ? currentUser.profile.profile_picture : review.user.profile.profile_picture}" alt="Avatar" onerror="this.onerror=null; this.src='../../images/default-user.png';"></a>
       <div class="review-info">
         <a href='user/${review.username || review.user.username}' class="reviewer-name">${review.username || review.user.username}</a>
@@ -41,7 +40,7 @@ const detailsTemplate = (movie, ctx, type, currentUser, userBookmarks, reviews, 
     
     ${currentUser
     ? html`
-    ${movie.creator == currentUser.id 
+    ${movie.creator == currentUser.id || currentUser.role === 'Administrator'
       ? html `<div class='edit-icons-section'>
       <a href='${movie.type}/${movie.id}/edit'><i class="fa-solid fa-wrench edit-movie-icon"></i></a>
       <button class="del-movie-btn" @click="${(e) => deleteMovieHandler(ctx, e, movie)}"><i class="fa-solid fa-trash edit-movie-icon"></i></div></button>

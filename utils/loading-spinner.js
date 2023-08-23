@@ -7,9 +7,6 @@ export function showSpinner() {
   spinner.style.display = 'flex';
   spinner.classList.remove("loader--hidden");
 
-  redirectTimeout = setTimeout(() => {
-    page.redirect('/404');
-  }, 4000); 
 }
 
 export function hideSpinner() {
