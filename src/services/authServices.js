@@ -48,12 +48,25 @@ export async function logoutUser() {
 
 export async function editUserInfo(userId, editedUserData) {
   try {
-    await put(endpoints.edit(userId), editedUserData);
-    return;
+    const result = await put(endpoints.edit(userId), editedUserData);
+
+    if (result.status < 200 || result.status >= 300) {
+      throw new Error('Bad response from server');
+    }
+
+    return {
+      success: true,
+      data: result.data
+    };
   } catch (error) {
-    return error.data;
+    console.error("Error in editUserInfo:", error);
+    return {
+      success: false,
+      error: error.data || error.message
+    };
   }
 }
+
 
 
 export async function checkAuthenticated() {

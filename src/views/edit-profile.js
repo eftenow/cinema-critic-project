@@ -120,11 +120,11 @@ export async function saveChangesHandler(ev, ctx, redirectLocation, userId) {
     }
 
     const editedUserData = { username, email, profile };
+    const response = await editUserInfo(userId, editedUserData);
 
-    const errorDetails = await editUserInfo(userId, editedUserData);
-
-    if (errorDetails) {
-        raiseProfileEditErrors(errorDetails)
+    if (!response.success) {
+        console.log('errors');
+        raiseProfileEditErrors(response.error)
     } else {
         ctx.redirect(redirectLocation);
         hideModal();

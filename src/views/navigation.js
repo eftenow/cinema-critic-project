@@ -25,7 +25,6 @@ const navTemplate = (isAuthorized, user, ctx) => html`
             </form>
         </li>
         <li id='navMoviesSeries'><a class='nav-btns' href="/dashboard">Movies and Shows</a></li>
-${console.log(user)}
 ${isAuthorized && (user.role == 'Administrator' || user.role == 'Moderator')
     ? html`
         <li><a class='nav-btns' href="/createMovie">Create Movie</a></li>
