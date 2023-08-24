@@ -55,7 +55,8 @@ export async function editUserData(ctx, ev, user) {
   modal.style.display = 'block';
 
   const editReviewForm = document.querySelector('.modal');
-  const userToEdit = await getUser(user.id)
+  const userToEdit = await getUser(user.id);
+  
 
   render(editUserFormTemplate(userToEdit, ctx), editReviewForm);
 };
