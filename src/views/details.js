@@ -34,6 +34,8 @@ ${currentUser && (currentUser.id == review.user || review.user.id == currentUser
 
 const detailsTemplate = (movie, ctx, type, currentUser, userBookmarks, reviews, alreadyReviewed) => html`
 <section class="specific-movie-details">
+${console.log(userBookmarks)}
+${console.log(movie.id)}
   <div class='details-header'>
   <div class="movie-poster">
     <img src="${movie.image}" alt="Movie Poster">

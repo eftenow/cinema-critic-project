@@ -6,7 +6,7 @@ import { setActiveNavLink } from './adminNavigation.js';
 
 
 const adminPanelTemplate = (usersCount, moviesCount, seriesCount, reviewsCount) => html`
-  <div class="admin-cards"> <!-- cards -->
+  <div class="admin-cards"> 
 
 <div class="card-single">
     <div class='card-data'>

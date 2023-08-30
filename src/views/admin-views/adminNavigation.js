@@ -2,7 +2,7 @@ import { html, render} from '../../../node_modules/lit-html/lit-html.js';
 import { getUser } from '../../services/authServices.js';
 
 
-const adminNavTemplate = (user, ctx) => html`
+export const adminNavTemplate = (user, ctx) => html`
 <input type="checkbox" id="nav-toggle">
 <section class="sidebar">
     <div class="sidebar-brand">
