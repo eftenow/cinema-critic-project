@@ -6,7 +6,7 @@ export const adminNavTemplate = (user, ctx) => html`
 <input type="checkbox" id="nav-toggle">
 <section class="sidebar">
     <div class="sidebar-brand">
-        <div class="sidebar-logo"><img src="../../images/logo.png"></div>
+        <a href=''><div class="sidebar-logo"><img src="../../images/logo.png"></div></a>
         <nav class="sidebar-menu">
             <ul>
                 <li>
