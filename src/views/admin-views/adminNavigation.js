@@ -50,6 +50,7 @@ export const adminNavTemplate = (user, ctx) => html`
             <input type="search" placeholder="Search...">
         </div>
 
+        <a href='/myProfile'>
         <div class="user-wrapper-admin"> 
             <img width="40px" height="40px" src="${user.profile.profile_picture}" onerror="this.onerror=null;this.src='../../../images/default-user.png';">
             <div>
@@ -57,6 +58,7 @@ export const adminNavTemplate = (user, ctx) => html`
             <small>${user.role}</small>
             </div>
         </div>
+        </a>
     </header>
     <main class="main-section-admin"> <!-- main -->
     <div id="notification"></div>
