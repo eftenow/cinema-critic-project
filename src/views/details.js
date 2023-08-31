@@ -10,7 +10,7 @@ import { addNewReview, getReviewsForMovie, showNotification, userAlreadyReviewed
 
 export const reviewTemplate = (ctx, review, currentUser, isProfileOwner) => html`
 <div class="review">
-${currentUser && (currentUser.id == review.user || review.user.id == currentUser.id)
+${currentUser && (currentUser.id == review.user || review.user.id == currentUser.id || currentUser.role == 'Administrator')
     ? html`
   <section class='user-review-btns'>
   <button @click="${(e) => editReviewHandler(ctx, e, review)}" class='edit-review-btn' data-review-id="${review.id}"><i class="fa-regular fa-pen-to-square"></i></button>
