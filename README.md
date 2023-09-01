@@ -26,20 +26,20 @@
 
 <h2>Technology Stack</h2>
 <p>The main client application is built using Vanilla JS, utilizing limited external libraries for routing, templating, bundling. This approach allowed us to practice and apply core JavaScript concepts effectively.</p>
+
 <ul>
-    <li><b>Templating engine</li>
-    <p>I used lit-html as the templating engine due to its lightweight, simplicity, and speed. Having prior experience with the library made it a comfortable choice.</p>
-
-    <li>Routing</li>
+    <li> <b>Templating engine</b>
+    <p>I used lit-html as the templating engine due to its lightweight, simplicity, and speed. Having prior experience with the library made it a comfortable choice.</p>      </li>
+    <li> <b>Routing</b>
     <p>For client-side routing in the Single Page Application, I selected a simple and straightforward router that fulfilled the requirement.</p>
-
-    <li>Bundler</li>
+    </li>
+    <li><b>Bundler</b>
     <p>Webpack served as the primary bundler, although I utilized it at a basic level, employing "npx webpack" for the job.</p>
-
-    <li>Deployment</li>
-    <p>To deploy the client, I leveraged Firebase for its user-friendly interface and ease of use.</p>
+    </li>
+    <li><b>Deployment</b>
+    <p>To deploy the client, I leveraged Firebase for its user-friendly interface and ease of use.</p></li>
+   
 </ul>
-
 
 
 <h2><font color="#8e47f8">Description</font></h2>
