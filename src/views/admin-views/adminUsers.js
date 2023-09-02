@@ -71,7 +71,7 @@ const editUserFormTemplate = (user, ctx) => html`
         <input type='text'  id="new-avatar-url" value="${user.profile.profile_picture}">
         
         </div>
-        <form @submit ="${(e) => saveChangesHandler(e, ctx, '/admin/Users', user.id)}">
+        <form @submit ="${(e) => saveChangesHandler(e, ctx, ctx.path, user.id)}">
         <p class="user-role user-role-set" style="text-align: center;">${user.role}</p>
         <div class="input-group">
             <label for="username">Username:</label>

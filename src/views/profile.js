@@ -2,10 +2,11 @@ import { html } from '../../node_modules/lit-html/lit-html.js';
 import { getUser, getUserByUsername } from '../services/authServices.js';
 import { getAllGenres } from '../services/itemServices.js';
 import { getUserReviews } from '../services/reviewServices.js';
+import { editUserData } from './admin-views/adminUsers.js';
 import { hideUserReviews, renderUserReviews } from './userReviews.js';
 import { hideUserWatchlist, renderUserWatchlist } from './userWatchlist.js';
 
-export const profileTemplate = (ctx, user, userReviews, isProfileOwner) => html`
+export const profileTemplate = (ctx, user, userReviews, isProfileOwner, visitorIsAdmin) => html`
 <div class="user-container">
     <div class="user-card">
         <img class="profile-img" src="${user.profile.profile_picture}"
@@ -15,10 +16,17 @@ export const profileTemplate = (ctx, user, userReviews, isProfileOwner) => html`
 
             <h2>${user.username}</h2>
             ${isProfileOwner ? html`
-  <span>
-    <a href="/settings" class="edit-account"><i class="fa-solid fa-pencil"></i> <span class='edit-profile-text'>Edit Profile</span></a>
-  </span>
-` : ''}
+        <span>
+            <a href="/settings" class="edit-account"><i class="fa-solid fa-pencil"></i> <span class='edit-profile-text'>Edit Profile</span></a>
+        </span>
+        ` : ''}
+
+        ${visitorIsAdmin && !isProfileOwner ? html`
+        <span>
+            <button @click='${(e) => editUserData(ctx, e, user)}' class="edit-account"><i class="fas fa-edit"></i></button>
+        </span>
+        ` : ''}
+
             <h4>User Reviews: <span><b>${userReviews.length}</b></span></h4>
             
             <ul>
@@ -59,9 +67,10 @@ export const profileTemplate = (ctx, user, userReviews, isProfileOwner) => html`
 
 export async function renderProfile(ctx) {
     const user = await getUser();
+    const visitor = await getUser();
 
     if (user){
-        await displayUserProfile(ctx, user);
+        await displayUserProfile(ctx, user, true, visitor);
     } else{
         ctx.redirect('/login');
     }
@@ -72,20 +81,22 @@ export async function renderProfile(ctx) {
 export async function renderUserProfile(ctx) {
     const username = ctx.path.split('/')[2];
     const user = await getUserByUsername(username);
-    const currentUser = await getUser();
-    const isProfileOwner = user.id == currentUser.id || currentUser.role == 'Administrator';
+    const visitor = await getUser();
+    const isProfileOwner = user.id == visitor.id;
 
-    await displayUserProfile(ctx, user, isProfileOwner);
+    await displayUserProfile(ctx, user, isProfileOwner, visitor);
 }
 
 
-async function displayUserProfile(ctx, user, isProfileOwner) {
+async function displayUserProfile(ctx, user, isProfileOwner, visitor) {
     const userReviews = await getUserReviews(user.id);
     userReviews.forEach((rev) => {
         rev.username = user.username,
             rev.profileImg = user.profileImg
     });
-    const profile = profileTemplate(ctx, user, userReviews, isProfileOwner);
+    console.log(visitor);
+    const visitorIsAdmin = visitor.role == 'Administrator';
+    const profile = profileTemplate(ctx, user, userReviews, isProfileOwner, visitorIsAdmin);
     ctx.render(profile);
 }
 
