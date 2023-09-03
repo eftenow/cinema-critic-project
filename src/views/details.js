@@ -21,8 +21,8 @@ ${currentUser && (currentUser.id == review.user || review.user.id == currentUser
     : ''}
     <h3 class="review-title-details">${review.review_title}</h3>
     <div class="review-header">
-    ${console.log(currentUser)}
-    <a href='user/${review.username || review.user.username}'><img src="${isProfileOwner ? review.user.profile.profile_picture : currentUser.profile.profile_picture}" alt="Avatar" onerror="this.onerror=null; this.src='../../images/default-user.png';"></a>
+  ${console.log(isProfileOwner)}
+    <a href='user/${review.username || review.user.username}'><img src="${isProfileOwner  ? currentUser?.profile.profile_picture : review.user.profile.profile_picture}" alt="Avatar" onerror="this.onerror=null; this.src='../../images/default-user.png';"></a>
       <div class="review-info">
         <a href='user/${review.username || review.user.username}' class="reviewer-name">${review.username || review.user.username}</a>
         <p class="movie-score reviewer-rating">Rating: ${review.rating} <i id="star-review" class="fa-solid fa-star"></i></p>
@@ -35,8 +35,6 @@ ${currentUser && (currentUser.id == review.user || review.user.id == currentUser
 
 const detailsTemplate = (movie, ctx, type, currentUser, userBookmarks, reviews, alreadyReviewed) => html`
 <section class="specific-movie-details">
-${console.log(userBookmarks)}
-${console.log(movie.id)}
   <div class='details-header'>
   <div class="movie-poster">
     <img src="${movie.image}" alt="Movie Poster">
