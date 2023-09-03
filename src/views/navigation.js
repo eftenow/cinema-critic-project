@@ -55,7 +55,7 @@ ${isAuthorized && (user.role == 'Administrator' || user.role == 'Moderator')
                     <span>></span></a>`
         : html`
                 ${user.role == 'Administrator' || user.role == 'Moderator'
-                ?`
+                ?html`
                 <a class=sub-menu-link href="/createMovie" @click="${toggleNavMenu}">
                     <p>Create Movie</p>
                     <span>></span></a>
@@ -108,9 +108,9 @@ ${isAuthorized && (user.role == 'Administrator' || user.role == 'Moderator')
                 <a href="/admin" class=sub-menu-link @click="${toggleMenu}">
                 <i class="fa-solid fa-wrench"></i>
                     <p>Admin Panel</p>
-                    <span>></span>`
+                    <span>></span> </a>`
                 : ''}
-                </a>
+                
             </div>
         </li>
         `
