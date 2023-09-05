@@ -13,12 +13,12 @@ const watchlistMovieTemplate = (movie, isProfileGuest) => html`
     </div>
     <div class="review-content">
       <a href="/${movie.type}/${movie.id}"><h3 class="review-title">${truncateTextByWordsWatchlist(movie.name)}</h3></a>
-      <p class="review-rating">${movie.genres}</p>
+      <p class="review-rating">${movie.genres.join(', ')}</p>
       <p class="review-text">${truncateTextByChars(movie.description, 420)}</p>
       <div class="review-buttons">
         <a @click=${scrollToTop} id='watchlist-details' class="more-info btn" href="/${movie.type}/${movie.id}">Details</a>
       </div>
-      ${!isProfileGuest ? html`
+      ${isProfileGuest ? html`
   <button id='watchlist-bookmark-btn' class="add-to-watchlist" @click='${toggleBookmarkIcon}'>
     <span id='to-add' class="fa-stack fa-2x" @click=${() => removeUserBookmark(movie.id, movie.id, movie.type)}>
       <i id="bookmark-checked" class="fa-solid fa-bookmark fa-stack-2x"></i>
