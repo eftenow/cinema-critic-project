@@ -2,7 +2,13 @@
 
 <h1><font color="#8e47f8"><a href="https://cinema-critics.web.app/">Cinema Critic</a></font></h1>
 
-<p>Cinema Critic my first personal project, it is a Single-page application, its front-end is built entirely with Vanilla JS, HTML, and CSS, while the back-end utilizes back4app's backend services. I plan to migrate it to Python/Django for the back-end and use PostgreSQL for the database in the near future.</p>
+<p><strong>Cinema Critic</strong> is my first personal project. This Single-page application boasts a front-end constructed exclusively with Vanilla JS, HTML, and CSS. Originally, the back-end was based on a service solution from <a href='https://www.back4app.com' target='_blank' rel='noopener noreferrer'>back4app</a>, which utilizes MongoDB as its database. I have since transitioned the back-end to Python/Django with PostgreSQL as the database. You can find the backend repository <a href='https://github.com/eftenow/cinema-critic-server' target='_blank' rel='noopener noreferrer'>here</a>.</p></p>
+
+<h2><font color="#8e47f8">Description</font></h2>
+
+<p>Cinema Critic offers you detailed information about any movie or series you are interested in. Explore the cast and crew, discover the runtime, read captivating descriptions, and more. Above all, don't forget to create an account and share your thoughts and opinions by leaving reviews for your favorite movies and series. Rate the films, write detailed critiques, and engage in discussions with fellow movie enthusiasts.</p>
+
+<p>Visit Cinema Critic <a href="https://cinema-critics.web.app/"><font color="#8e47f8">here</font></a> and be sure to register and leave a review for your favorite movie or series.</p>
 
 <hr>
 
@@ -42,10 +48,4 @@
 
 
 
-<h2><font color="#8e47f8">Description</font></h2>
 
-<p>Cinema Critic offers you detailed information about any movie or series you are interested in. Explore the cast and crew, discover the runtime, read captivating descriptions, and more. Above all, don't forget to create an account and share your thoughts and opinions by leaving reviews for your favorite movies and series. Rate the films, write detailed critiques, and engage in discussions with fellow movie enthusiasts.</p>
-
-<p>Visit Cinema Critic <a href="https://cinema-critics.web.app/"><font color="#8e47f8">here</font></a> and be sure to register and leave a review for your favorite movie or series. We look forward to hearing your perspective!</p>
-
-<hr>
